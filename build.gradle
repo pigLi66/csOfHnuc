@@ -9,7 +9,7 @@ plugins {
     id 'scala'
     id 'maven-publish'
     id 'org.springframework.boot' version '2.7.0'
-    id "org.jetbrains.kotlin.jvm" version '1.7.20'
+//    id "org.jetbrains.kotlin.jvm" version '1.7.20'
 }
 
 group = 'com.test'
@@ -19,34 +19,40 @@ description = 'apiTestKt'
 
 dependencies {
 
+    // spring
+    implementation 'org.springframework.boot:spring-boot-configuration-processor:2.7.4'
+
     // zookeeper
     implementation('org.apache.curator:curator-framework:5.3.0')
     implementation('org.apache.curator:curator-recipes:5.3.0')
     implementation('org.apache.zookeeper:zookeeper:3.8.0')
-    // jpa
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.3'
-    implementation('com.alibaba:druid-spring-boot-starter:1.1.23')
+
+    // database
     implementation('mysql:mysql-connector-java:8.0.30')
+    implementation('com.alibaba:druid-spring-boot-starter:1.2.13')
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.4'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.4'
+
 //    implementation 'systems.manifold:manifold-ext:2022.1.20'
     implementation 'org.example:Javac-Plugin:1.0-SNAPSHOT'
-    implementation 'org.springframework.boot:spring-boot-starter-web-services:2.6.3'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services:2.7.4'
+
     // kotlin
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-js:1.7.20'
+//    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'
+//    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20'
+//    implementation 'org.jetbrains.kotlin:kotlin-stdlib-js:1.7.20'
+
     // scala
     implementation('org.scala-lang:scala-library:2.12.12')
     implementation('org.scala-lang:scala-compiler:2.12.12')
 
-    implementation('io.netty:netty-example:4.1.77.Final') {
+    implementation('io.netty:netty-example:4.1.84.Final') {
         exclude group: 'io.netty', module: 'netty-tcnative'
     }
 //    implementation 'io.netty:netty-tcnative:2.0.53.Final'
-    // mongodb
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.4'
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.1'
-    implementation 'io.github.openfeign:feign-httpclient:11.8'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4'
+    implementation 'io.github.openfeign:feign-httpclient:11.10'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel:2021.1'
     implementation 'org.springframework.kafka:spring-kafka:2.8.2'
     implementation 'org.bitbucket.swattu:rabbitmq:4.2.5'
@@ -56,9 +62,7 @@ dependencies {
     implementation 'com.github.davidfantasy:shrio-with-jwt-spring-boot-starter:1.0.4'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
-    implementation 'org.springframework.boot:spring-boot-configuration-processor:2.6.3'
-
-    runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.6.3'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.7.4'
 
     testImplementation 'org.springframework.kafka:spring-kafka-test:2.9.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.4'

@@ -1,6 +1,6 @@
-package com.test.apiTest.springboot.channel.mongoDb.mapper
+package com.test.app.mongoDb.mapper
 
-import com.test.apiTest.springboot.channel.mongoDb.model.Comment
+import com.test.app.mongoDb.model.Comment
 import org.springframework.data.domain.{Page, Pageable}
 import org.springframework.data.mongodb.repository.MongoRepository
 

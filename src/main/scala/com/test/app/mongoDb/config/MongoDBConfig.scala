@@ -1,4 +1,4 @@
-package com.test.apiTest.springboot.channel.mongoDb.config
+package com.test.app.mongoDb.config
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationListener

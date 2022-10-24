@@ -1,4 +1,4 @@
-package com.test.apiTest.springboot.channel.mongoDb.model
+package com.test.app.mongoDb.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

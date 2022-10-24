@@ -1,12 +1,10 @@
-package com.test.apiTest.springboot.channel.mongoDb
+package com.test.app.mongoDb.test
 
-import com.test.apiTest.springboot.channel.mongoDb.mapper.ApiLogMapper
-import com.test.apiTest.springboot.channel.mongoDb.model.ApiLog
+import com.test.app.mongoDb.mapper.ApiLogMapper
+import com.test.app.mongoDb.model.ApiLog
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation
-import org.springframework.data.mongodb.core.query.{Criteria, Query, Update}
-import org.springframework.stereotype.Component
 
 //@Component
 class MongoDBService {

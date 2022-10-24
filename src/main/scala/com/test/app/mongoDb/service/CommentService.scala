@@ -1,7 +1,7 @@
-package com.test.apiTest.springboot.channel.mongoDb.service
+package com.test.app.mongoDb.service
 
-import com.test.apiTest.springboot.channel.mongoDb.mapper.CommentMapper
-import com.test.apiTest.springboot.channel.mongoDb.model.Comment
+import com.test.app.mongoDb.mapper.CommentMapper
+import com.test.app.mongoDb.model.Comment
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.{Page, PageRequest}
 import org.springframework.data.mongodb.core.MongoTemplate
