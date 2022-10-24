@@ -9,7 +9,7 @@ plugins {
     id 'scala'
     id 'maven-publish'
     id 'org.springframework.boot' version '2.7.0'
-    id "org.jetbrains.kotlin.jvm" version '1.7.10'
+    id "org.jetbrains.kotlin.jvm" version '1.7.20'
 }
 
 group = 'com.test'
@@ -33,6 +33,7 @@ dependencies {
     // kotlin
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-js:1.7.20'
     // scala
     implementation('org.scala-lang:scala-library:2.12.12')
     implementation('org.scala-lang:scala-compiler:2.12.12')
@@ -49,17 +50,20 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel:2021.1'
     implementation 'org.springframework.kafka:spring-kafka:2.8.2'
     implementation 'org.bitbucket.swattu:rabbitmq:4.2.5'
-    implementation 'org.apache.commons:commons-lang3:3.4'
+//    implementation 'org.apache.commons:commons-lang3:3.4'
     implementation 'com.hankcs:hanlp:portable-1.8.3'
+
     implementation 'com.github.davidfantasy:shrio-with-jwt-spring-boot-starter:1.0.4'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
     implementation 'org.springframework.boot:spring-boot-configuration-processor:2.6.3'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-js:1.6.10'
 
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.6.3'
+
     testImplementation 'org.springframework.kafka:spring-kafka-test:2.9.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.4'
     testImplementation 'junit:junit:4.13.2'
+
     compileOnly 'org.projectlombok:lombok:1.18.24'
 }
 

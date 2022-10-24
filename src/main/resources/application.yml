@@ -1,0 +1,47 @@
+server:
+  port: 18081
+  compression:
+    enabled: true
+spring:
+  application:
+    name: jsy-test-api
+  main:
+    allow-circular-references: true # 解决sentinel循环依赖
+  kafka:
+    boostrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_HOST:127.0.0.1:27017}/${MONGO_DB:articledb}
+  datasource:
+    name: test
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DB:test}?allowMultiQueries=true&characterEncoding=utf-8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+feign:
+  sentinel:
+    enable: true
+  httpclient:
+    enabled: true
+  config:
+    default:
+      connect-timeout: 5000
+      read-timeout: 20000
+
+logging:
+  level:
+    com.test.apiTest.springboot.channel.openfeign.transfer: DEBUG
+
+curator:
+  #重试retryCount次，当会话超时出现后，curator会每间隔elapsedTimeMs毫秒时间重试一次，共重试retryCount次。
+  retryCount: 5
+  elapsedTimeMs: 5000
+  #服务器信息
+  connectString: 127.0.0.1:2181
+  #会话超时时间设置
+  sessionTimeoutMs: 60000
+  #连接超时时间
+  connectionTimeoutMs: 5000
