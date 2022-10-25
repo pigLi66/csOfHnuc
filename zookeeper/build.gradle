@@ -1,0 +1,10 @@
+
+task wrapper(type:Wrapper){
+    gradleVersion('7.4')
+}
+
+dependencies {
+    implementation('org.apache.curator:curator-framework:5.3.0')
+    implementation('org.apache.curator:curator-recipes:5.3.0')
+    implementation('org.apache.zookeeper:zookeeper:3.8.0')
+}

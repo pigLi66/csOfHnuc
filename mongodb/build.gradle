@@ -1,0 +1,10 @@
+
+
+
+task wrapper(type:Wrapper){
+    gradleVersion('7.4')
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.4'
+}

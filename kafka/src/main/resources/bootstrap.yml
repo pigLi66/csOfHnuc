@@ -1,0 +1,29 @@
+server:
+  port: ${config.serviceport:18083}
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: kafka-test
+#  cloud:
+#    nacos:
+#      config:
+#        server-addr: ${NACOS_CFG_ADDR:127.0.0.1:8848}
+#        file-extension: yaml
+#      discovery:
+#        server-addr: ${NACOS_ADDR:127.0.0.1:8848}
+#  sleuth:
+#    enabled: true
+#    http:
+#      legacy:
+#        enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

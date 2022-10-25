@@ -1,0 +1,17 @@
+server:
+  port: ${config.serviceport:18081}
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: mongodb-test
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

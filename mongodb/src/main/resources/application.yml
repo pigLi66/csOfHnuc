@@ -1,0 +1,16 @@
+server:
+  port: 18082
+  compression:
+    enabled: true
+spring:
+  application:
+    name:
+  main:
+    allow-circular-references: true # 解决sentinel循环依赖
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_HOST:127.0.0.1:27017}/${MONGO_DB:articledb}
+
+logging:
+  level:
+    com.test.apiTest.springboot.channel.openfeign.transfer: DEBUG

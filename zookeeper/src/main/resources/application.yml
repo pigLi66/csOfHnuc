@@ -1,0 +1,24 @@
+server:
+  port: 18081
+  compression:
+    enabled: true
+spring:
+  application:
+    name: jsy-test-api
+  main:
+    allow-circular-references: true # 解决sentinel循环依赖
+
+logging:
+  level:
+    com.test.apiTest.springboot.channel.openfeign.transfer: DEBUG
+
+curator:
+  #重试retryCount次，当会话超时出现后，curator会每间隔elapsedTimeMs毫秒时间重试一次，共重试retryCount次。
+  retryCount: 5
+  elapsedTimeMs: 5000
+  #服务器信息
+  connectString: 127.0.0.1:2181
+  #会话超时时间设置
+  sessionTimeoutMs: 60000
+  #连接超时时间
+  connectionTimeoutMs: 5000
