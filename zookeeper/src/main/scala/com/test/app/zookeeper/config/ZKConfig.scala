@@ -1,9 +1,7 @@
 package com.test.app.zookeeper.config
 
-import org.apache.curator.framework.api.CuratorWatcher
 import org.apache.curator.framework.{CuratorFramework, CuratorFrameworkFactory}
 import org.apache.curator.retry.RetryNTimes
-import org.apache.zookeeper.{AddWatchMode, CreateMode, WatchedEvent}
 import org.springframework.context.annotation.{Bean, Configuration}
 
 import javax.annotation.Resource
