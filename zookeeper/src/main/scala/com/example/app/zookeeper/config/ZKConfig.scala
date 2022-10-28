@@ -1,4 +1,4 @@
-package com.test.app.zookeeper.config
+package com.example.app.zookeeper.config
 
 import org.apache.curator.framework.{CuratorFramework, CuratorFrameworkFactory}
 import org.apache.curator.retry.RetryNTimes
@@ -12,15 +12,15 @@ class ZKConfig {
   @Resource
   var properties: ZKProperties = _
 
-//  @Bean(initMethod = "start")
+  //  @Bean(initMethod = "start")
   @Bean
   def curatorFramework: CuratorFramework = {
-    val curator = CuratorFrameworkFactory.newClient(
-      properties.connectString,
-      properties.sessionTimeoutMs,
-      properties.connectionTimeoutMs,
-      new RetryNTimes(properties.retryCount, properties.elapsedTimeMs)
-    )
+    val curator = CuratorFrameworkFactory.builder()
+      .connectString(properties.connectString)
+      .sessionTimeoutMs(properties.sessionTimeoutMs)
+      .connectionTimeoutMs(properties.connectionTimeoutMs)
+      .retryPolicy(new RetryNTimes(properties.retryCount, properties.elapsedTimeMs))
+      .build()
     curator.start()
     curator
   }

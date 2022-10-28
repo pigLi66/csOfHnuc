@@ -1,4 +1,4 @@
-package com.test.app.zookeeper.config
+package com.example.app.zookeeper.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component

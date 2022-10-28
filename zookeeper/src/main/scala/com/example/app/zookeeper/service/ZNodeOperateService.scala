@@ -1,4 +1,4 @@
-package com.test.app.zookeeper.service
+package com.example.app.zookeeper.service
 
 import org.apache.curator.framework.CuratorFramework
 import org.apache.curator.framework.api.{CreateBuilder, CuratorWatcher}
@@ -7,8 +7,11 @@ import org.apache.zookeeper.{AddWatchMode, CreateMode, WatchedEvent}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+/**
+ * zookeeper节点相关操作示例
+ */
 @Service
-class ZKService {
+class ZNodeOperateService {
 
   @Autowired
   var curatorFramework:CuratorFramework = _
@@ -173,21 +176,4 @@ class ZKService {
 
   }
 
-
-
-
-
-  def main(args: Array[String]): Unit = {
-
-    // 永久监听器
-    curatorFramework.watchers().add()
-      .withMode(AddWatchMode.PERSISTENT_RECURSIVE)
-      .usingWatcher(new CuratorWatcher {
-        override def process(event: WatchedEvent): Unit = {
-          println(event.getType.name())
-        }
-      })
-      .forPath("/zk_test")
-
-  }
 }

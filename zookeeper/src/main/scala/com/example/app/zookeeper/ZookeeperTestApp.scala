@@ -1,4 +1,4 @@
-package com.test.app.zookeeper
+package com.example.app.zookeeper
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
