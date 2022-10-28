@@ -2,6 +2,7 @@ package com.example.app.zookeeper.service
 
 import org.apache.curator.framework.CuratorFramework
 import org.apache.curator.framework.api.CuratorWatcher
+import org.apache.curator.framework.recipes.locks.InterProcessMutex
 import org.apache.zookeeper.Watcher.Event.EventType
 import org.apache.zookeeper.{CreateMode, WatchedEvent}
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,6 +16,13 @@ class ZNodeService {
   @Autowired
   var curatorFramework: CuratorFramework = _
 
+  /**
+   * 手动实现分布式锁，不推荐
+   *
+   * @param handleMethod
+   * @tparam T
+   * @return
+   */
   def syncHandle[T](handleMethod: => T): T = {
     val lockPath = lock()
     try {
@@ -41,7 +49,7 @@ class ZNodeService {
 
       index match {
         case -1 => throw new RuntimeException("数据异常")
-        case _ > 0 => waiting(child.get(index - 1))
+        case idx if idx > 0 => waiting(child.get(idx - 1))
       }
     }
 
@@ -66,6 +74,18 @@ class ZNodeService {
   def unlock(lockPath: String): Unit = {
     curatorFramework.delete()
       .forPath(lockPath)
+  }
+
+
+  def curatorLock[T](handleMethod: => T): T = {
+    val lock = new InterProcessMutex(curatorFramework, "/locks")
+    //    获取互斥锁 - 阻塞直到它可用。注意：同一个线程可以重入调用acquire。每次获取调用都必须通过调用release()来平衡
+    lock.acquire()
+    try {
+      handleMethod
+    } finally {
+      lock.release()
+    }
   }
 
 }
