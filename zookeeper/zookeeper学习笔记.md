@@ -12,12 +12,18 @@
   面试题重点！
   Zookeeper采用半数选举原则。
 ##### 第一次启动
+投票过半数，服务器id大的胜出
 ![img.png](img/第一次启动.png)
 zookeeper集群在启动时，每个实例会依次注册到集群。
 1. 每个实例先给自己投一票
 2. 然后每个实例注册到集群后，依次与以注册的实例比较myid，myid大的获得选票
 3. 集群中第一个获得半数以上的实例，成为集群的leader，其他的自动变成follower
 4. 集群的leader一旦产生，启动过程中其他集群获得再多的选票，也不会把leader让出去了
+
+##### 第二次以后启动
+1. EPOCH大的为leader
+2. EPOCH相同，事务id大的为leader
+3. 事务id相同，服务器id大的为leader
 
 #### Zookeeper 写原理
 依然是半数原则，不过类似mysql的读写分离，follower是没有写权限的，只有leader有
@@ -35,3 +41,21 @@ zookeeper集群在启动时，每个实例会依次注册到集群。
 3. 半数follower写入完成，应答ack后，给转发写请求的follower返回ack
 4. 接收到ack的follower响应客户端写入成功
 5. 剩下没写入的follower继续进行写入
+
+
+#### Zookeeper 部署多少合适
+安装奇数台zookeeper
+生产中的经验：
+1. 10台服务器：3 zk
+2. 20台服务器：5 zk
+3. 100台服务器：11 zk
+4. 200台服务器：11 zk
+
+<style>
+.reaFont{
+  color: red;
+}
+</style>
+
+<span class="reaFont">服务器台数多，会提高可靠性，但是也会提高通信延迟</span>
+
