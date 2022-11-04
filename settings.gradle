@@ -6,3 +6,5 @@
 include('mongodb', 'zookeeper', 'kafka')
 
 rootProject.name = 'csOfHnuc'
+include 'autoredpack'
+
