@@ -1,16 +1,32 @@
 <template>
   <div class="login">
     <h1>Bot Login</h1>
-    <input type="text" name="u" placeholder="Username" required="required"/>
-    <input type="password" name="p" placeholder="Password" required="required"/>
-    <button type="submit" class="btn btn-primary btn-block btn-large">登录</button>
+    <input v-model="id" type="text" name="u" placeholder="Username" required="required"/>
+    <input v-model="pwd" type="password" name="p" placeholder="Password" required="required"/>
+    <button @click="login" type="submit" class="btn btn-primary btn-block btn-large">登录</button>
   </div>
 </template>
 
-<script>
-export default {
-  name: "HomeView"
-}
+<script lang="ts">
+import {defineComponent} from "vue";
+import router from "@/router";
+export default defineComponent({
+  data() {
+    return {
+      id: "",
+      pwd: ""
+    }
+  },
+
+  methods: {
+    login(): void {
+      console.log(this.id + this.pwd)
+      // alert(this.id.toString() + this.pwd.toString())
+      // this.$router.push("/")
+      router.push({path:"/msg"})
+    }
+  }
+})
 </script>
 
 <style scoped>
@@ -75,7 +91,7 @@ export default {
   /*-ms-transition: background-position 0.1s linear;*/
   /*-o-transition: background-position 0.1s linear;*/
   /*transition: background-position 0.1s linear;*/
-  background-image: linear-gradient(to top,#4a77d4, rgba(255,255,255, 0));
+  background-image: linear-gradient(to top, #4a77d4, rgba(255, 255, 255, 0));
 }
 
 .btn-primary, .btn-primary:hover {
