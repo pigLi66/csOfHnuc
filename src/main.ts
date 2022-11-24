@@ -4,6 +4,9 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import VueNativeSocket from 'vue-native-websocket-vue3';
+import axios from "axios";
+
+axios.defaults.withCredentials = true; //true允许跨域
 
 const app = createApp(App)
 

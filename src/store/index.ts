@@ -7,6 +7,7 @@ export default createStore({
     botState:"",
     // 机器人名字
     botName:"",
+    token:"",
     // 机器人id
     botId:"",
     socket: {

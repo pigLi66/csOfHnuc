@@ -10,6 +10,15 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import router from "@/router";
+import * as model from '@/model/index'
+import {IResp, StateCode} from "@/model";
+import store from '../store'
+
+interface ApiLoginResp {
+  id: number
+  token: string
+}
+
 export default defineComponent({
   data() {
     return {
@@ -20,10 +29,22 @@ export default defineComponent({
 
   methods: {
     login(): void {
-      console.log(this.id + this.pwd)
-      // alert(this.id.toString() + this.pwd.toString())
-      // this.$router.push("/")
-      router.push({path:"/msg"})
+      // console.log(this.id + this.pwd)
+      model.service({
+        method: 'POST',
+        path: '/api/user/login',
+        data: JSON.stringify({
+          "id": this.id,
+          "pwd": this.pwd
+        })
+      }).then((resp: IResp<ApiLoginResp>) => {
+        const {code, data} = resp
+        if (code === StateCode.success) {
+          console.log(data)
+          store.state.token = data.token
+          router.push({path: "/msg"})
+        }
+      })
     }
   }
 })
