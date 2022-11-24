@@ -3,7 +3,7 @@
  *
  * This project uses @Incubating APIs which are subject to change.
  */
-include('mongodb', 'zookeeper', 'kafka')
+include('mongodb', 'zookeeper', 'kafka', 'wechat')
 
 rootProject.name = 'csOfHnuc'
 include 'autoredpack'
