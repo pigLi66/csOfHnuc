@@ -1,4 +1,4 @@
-package com.slamacraft.plugin.redpack.window
+package com.slamacraft.plugin.tools.window
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow

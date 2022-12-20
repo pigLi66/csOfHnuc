@@ -1,4 +1,4 @@
-package com.slamacraft.plugin.redpack.listeners
+package com.slamacraft.plugin.tools.listeners
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project

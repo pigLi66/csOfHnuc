@@ -1,4 +1,4 @@
-package com.slamacraft.plugin.redpack.window
+package com.slamacraft.plugin.tools.window
 
 import com.hankcs.hanlp.HanLP
 import com.intellij.notification.NotificationGroupManager
@@ -10,9 +10,9 @@ import com.intellij.ui.components.JBTextField
 import com.intellij.ui.dsl.builder.*
 import com.intellij.ui.dsl.gridLayout.HorizontalAlign
 import com.intellij.ui.dsl.gridLayout.VerticalAlign
-import com.slamacraft.plugin.redpack.common.SummaryExtractor
-import com.slamacraft.plugin.redpack.context.UserContext
-import com.slamacraft.plugin.redpack.model.*
+import com.slamacraft.plugin.tools.common.SummaryExtractor
+import com.slamacraft.plugin.tools.context.UserContext
+import com.slamacraft.plugin.tools.model.*
 import java.time.LocalDateTime
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors

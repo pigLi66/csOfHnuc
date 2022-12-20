@@ -1,4 +1,4 @@
-package com.slamacraft.plugin.redpack.services
+package com.slamacraft.plugin.tools.services
 
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Storage

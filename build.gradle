@@ -2,24 +2,57 @@ def properties(String key) {
     project.findProperty(key).toString()
 }
 
-group = properties("pluginGroup")
-version = properties("pluginVersion")
+// 这里指定这个项目所引入的插件
+plugins {
+    id('java')
+    id("org.jetbrains.kotlin.jvm") version "1.7.22"
+    // Gradle IntelliJ Plugin
+    id("org.jetbrains.intellij") version "1.11.0"
+    // Gradle Changelog Plugin
+    id("org.jetbrains.changelog") version "2.0.0"
+    // Gradle Qodana Plugin
+    id("org.jetbrains.qodana") version "0.1.13"
+    // Gradle Kover Plugin
+    id("org.jetbrains.kotlinx.kover") version "0.6.1"
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
 
-subprojects {
-    plugins {
-        id('java')
-        id("org.jetbrains.kotlin.jvm") version "1.7.21"
-        // Gradle IntelliJ Plugin
-        id("org.jetbrains.intellij") version "1.10.0"
-        // Gradle Changelog Plugin
-        id("org.jetbrains.changelog") version "2.0.0"
-        // Gradle Qodana Plugin
-        id("org.jetbrains.qodana") version "0.1.13"
-        // Gradle Kover Plugin
-        id("org.jetbrains.kotlinx.kover") version "0.6.1"
-        id 'com.github.johnrengelman.shadow' version '7.1.2'
+allprojects {
+
+    group = properties("pluginGroup")
+    version = properties("pluginVersion")
+    // 这里从上面那些插件中引入，作为所有项目都引入的插件
+    apply plugin: 'java'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+    apply plugin: 'org.jetbrains.intellij'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.github.johnrengelman.shadow'
+
+    intellij {
+        pluginName = properties("pluginName")
+        version = properties("platformVersion")
+//        version = '2021.3.3'
+        type = properties("platformType")
+//    plugins = properties("platformPlugins").split(",")
     }
 
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
+        maven { url "https://maven.aliyun.com/repository/google" }
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+    }
+}
+
+subprojects {
+
+    // 子模块通用依赖
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.21")
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
@@ -27,13 +60,6 @@ subprojects {
 
     kotlin {
         jvmToolchain(11)
-    }
-
-    intellij {
-        pluginName = properties("pluginName")
-        version = properties("platformVersion")
-        type = properties("platformType")
-//    plugins = properties("platformPlugins").split(",")
     }
 
     wrapper {
@@ -61,15 +87,5 @@ subprojects {
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
 //    channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
     }
-}
-
-
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven { url "https://maven.aliyun.com/repository/jcenter" }
-    maven { url "https://maven.aliyun.com/repository/google" }
-    maven { url "https://maven.aliyun.com/repository/central" }
-    maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
 }
 

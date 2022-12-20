@@ -1,11 +1,11 @@
-package com.slamacraft.plugin.redpack.handler
+package com.slamacraft.plugin.tools.handler
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.slamacraft.plugin.redpack.common.JsonMapper
-import com.slamacraft.plugin.redpack.context.UserContext
-import com.slamacraft.plugin.redpack.model.PageTaskReq
-import com.slamacraft.plugin.redpack.model.Req
-import com.slamacraft.plugin.redpack.model.Resp
+import com.slamacraft.plugin.tools.common.JsonMapper
+import com.slamacraft.plugin.tools.context.UserContext
+import com.slamacraft.plugin.tools.model.PageTaskReq
+import com.slamacraft.plugin.tools.model.Req
+import com.slamacraft.plugin.tools.model.Resp
 import org.apache.commons.io.IOUtils
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.WildcardType

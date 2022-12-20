@@ -1,4 +1,4 @@
-package com.slamacraft.plugin.redpack
+package com.slamacraft.plugin.tools
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls

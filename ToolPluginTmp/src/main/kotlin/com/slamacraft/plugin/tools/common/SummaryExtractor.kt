@@ -1,4 +1,4 @@
-package com.slamacraft.plugin.redpack.common
+package com.slamacraft.plugin.tools.common
 
 import com.hankcs.hanlp.HanLP
 import java.math.BigDecimal

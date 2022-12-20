@@ -1,0 +1,25 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.slamacraft.auto-red-pack</id>
+    <name>自动写红书包</name>
+    <vendor>JetBrains</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.slamacraft.plugin.tools.services.LoginStateService"/>
+<!--        <projectService serviceImplementation="com.slamacraft.plugin.tools.services.MyProjectService"/>-->
+
+        <toolWindow factoryClass="com.slamacraft.plugin.tools.window.RedPackToolWindowFactory"
+                    id="Auto RedPack"
+                    secondary="true"
+                    anchor="right"></toolWindow>
+
+        <notificationGroup displayType="BALLOON" id="RedPack Group"></notificationGroup>
+    </extensions>
+
+    <applicationListeners>
+<!--        <listener class="com.slamacraft.plugin.tools.listeners.MyProjectManagerListener"-->
+<!--                  topic="com.intellij.openapi.project.ProjectManagerListener"/>-->
+    </applicationListeners>
+</idea-plugin>

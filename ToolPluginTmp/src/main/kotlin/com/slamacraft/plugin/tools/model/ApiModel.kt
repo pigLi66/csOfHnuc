@@ -1,9 +1,9 @@
- package com.slamacraft.plugin.redpack.model
+ package com.slamacraft.plugin.tools.model
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ObjectNode
-import com.slamacraft.plugin.redpack.common.JsonMapper
+import com.slamacraft.plugin.tools.common.JsonMapper
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

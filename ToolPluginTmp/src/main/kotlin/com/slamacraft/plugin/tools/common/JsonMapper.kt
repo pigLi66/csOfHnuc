@@ -1,4 +1,4 @@
-package com.slamacraft.plugin.redpack.common
+package com.slamacraft.plugin.tools.common
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.DeserializationFeature

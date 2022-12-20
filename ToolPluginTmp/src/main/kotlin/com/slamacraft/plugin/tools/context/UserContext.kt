@@ -1,11 +1,11 @@
-package com.slamacraft.plugin.redpack.context
+package com.slamacraft.plugin.tools.context
 
 import com.intellij.credentialStore.CredentialAttributes
 import com.intellij.credentialStore.Credentials
 import com.intellij.credentialStore.generateServiceName
 import com.intellij.ide.passwordSafe.PasswordSafe
-import com.slamacraft.plugin.redpack.model.LoginReq
-import com.slamacraft.plugin.redpack.model.LoginResp
+import com.slamacraft.plugin.tools.model.LoginReq
+import com.slamacraft.plugin.tools.model.LoginResp
 import java.time.LocalDateTime
 
 object UserContext {
