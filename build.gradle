@@ -15,7 +15,7 @@ plugins {
 
 ext {
     // 定义变量
-    scalaVersion = '2.12.12'
+    scalaVersion = '2.13.10'
     junitVersion = '4.13.2'
     springBootVersion = '2.7.4'
     springCloudVersion = '2020.0.4-SNAPSHOT'
@@ -69,6 +69,8 @@ subprojects {
 
     // 子模块通用依赖
     dependencies {
+        implementation('org.scala-lang:scala-compiler:3.2.1')
+
         implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.4' // 识别bootstrap.yml文件
 
         implementation "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"

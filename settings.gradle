@@ -6,5 +6,4 @@
 include('mongodb', 'zookeeper', 'kafka', 'wechat')
 
 rootProject.name = 'csOfHnuc'
-include 'autoredpack'
 
