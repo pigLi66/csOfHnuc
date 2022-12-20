@@ -1,0 +1,10 @@
+
+//group 'org.slamacraft.plugin'
+//version 'tool-plugin'
+
+dependencies {
+    implementation("com.mastfrog:jackson:2.9.4")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.0")
+    implementation("com.hankcs:hanlp:portable-1.8.3")
+    implementation("commons-io:commons-io:2.11.0")
+}

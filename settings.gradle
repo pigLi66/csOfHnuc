@@ -1,0 +1,3 @@
+rootProject.name = "csOfHnuc plugin parent"
+include 'ToolPluginTmp'
+
