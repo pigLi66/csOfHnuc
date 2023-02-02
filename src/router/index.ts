@@ -1,5 +1,7 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import store from "@/store";
+import HomeView from "@/views/HomeView.vue";
+import * as path from "path";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -11,6 +13,32 @@ const routes: Array<RouteRecordRaw> = [
         path: '/login',
         name: 'login',
         component: () => import("@/views/LoginPage.vue"),
+    },
+    {
+        path: '/home',
+        name: 'home',
+        component: () => HomeView,
+        // 配置子路由
+        children: [
+            {
+                path: "/goods",
+                name: "goods",
+                meta: {
+                    isShow: true,
+                    title: "商品列表"
+                },
+                component: import("@/views/GoodsView.vue")
+            },
+            {
+                path: "/user",
+                name: "user",
+                meta: {
+                    isShow: true,
+                    title: "用户列表"
+                },
+                component: import("@/views/UserView.vue")
+            },
+        ]
     },
 ]
 

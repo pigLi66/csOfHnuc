@@ -8,8 +8,8 @@
         label-width="60px"
         class="demo-ruleForm"
     >
-      <h2>测试系统</h2>
-      <el-form-item label="账号" prop="username">
+      <h2>LOG IN</h2>
+      <el-form-item label="账号" prop="username" class="input-box">
         <el-input v-model="loginForm.username" autocomplete="off"/>
       </el-form-item>
       <el-form-item label="密码" prop="password">
@@ -22,10 +22,10 @@
 
       <el-form-item>
         <el-button class="login-button" type="primary" @click="submit">
-          登录
+          L O G I N
         </el-button>
         <el-button class="login-button" @click="reset">
-          重置
+          R E S E T
         </el-button>
       </el-form-item>
     </el-form>
@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import {defineComponent} from "vue";
 import * as loginApi from '@/request/api'
 import {FormInstance} from "element-plus";
 import {LoginData} from "@/type/Login";
@@ -80,33 +80,8 @@ export default defineComponent({
     reset() {
       this.loginForm.password = ""
       this.loginForm.username = ""
-    }
-
-    // login(): void {
-    //   (this.$refs['loginFormRef'] as FormInstance).validate((valid: boolean) => {
-    //     if (valid) {
-    //       loginApi.login({
-    //         method: 'POST',
-    //         path: '/api/user/login',
-    //         data: {
-    //           "username": this.loginForm.username,
-    //           "password": this.loginForm.password
-    //         }
-    //       })
-    //       model.service({
-    //
-    //       }).then((resp: IResp<ApiLoginResp>) => {
-    //         const {code, data} = resp
-    //         if (code === StateCode.success) {
-    //           console.log(data)
-    //           store.state.token = data.token
-    //           router.push({path: "/msg"})
-    //         }
-    //       })
-    //     }
-    //   })
-    // }
-  }
+    },
+  },
 })
 </script>
 
@@ -122,17 +97,37 @@ export default defineComponent({
   .demo-ruleForm {
     width: 500px;
     margin: 200px auto;
-    background: #ffffff;
+    background: #2a2b38;
     padding: 30px; /*外边距*/
     border-radius: 20px;
   }
 
+  .el-input{
+    --el-fill-color-blank: #1f2029;
+    --el-border-color: #1f2029;
+    --el-color-primary: #535568;
+    --el-text-color-disabled: #535568;
+    --el-border: #535568;
+  }
+
+  .el-input__inner{
+    background: #2a2b38;
+  }
+
   .login-button {
     width: 48%;
+    color: #535568;
+    font-weight: bolder;
+    --el-color-primary: #ffeba7;
+    --el-color-primary-dark-2:  #c3ab80;
+    --el-color-primary-light-3: #dcc593;
   }
 
   h2 {
+    color: #c4c3ca;
+    font-weight: bolder;
     margin-bottom: 40px;
   }
 }
+
 </style>

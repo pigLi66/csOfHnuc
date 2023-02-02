@@ -2,6 +2,15 @@
   <router-view></router-view>
 </template>
 
+<script setup>
+
+import {onMounted} from "vue";
+
+onMounted(()=>{
+  document.body.style.setProperty("--el-text-color-regular", "#c4c3ca")
+})
+</script>
+
 <style lang="scss">
 *{
   /*配置内外边距为0，因为不同浏览器的默认边距可能不一样*/
