@@ -1,29 +1,37 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
+import store from "@/store";
 
 const routes: Array<RouteRecordRaw> = [
     {
-        path:"/",
-        redirect:"/login"
+        // redirect 表示当路径是'/'时，默认跳转到路径 login 对应的页面。
+        path: "/",
+        redirect: "/login"
     },
     {
         path: '/login',
         name: 'login',
         component: () => import("@/views/LoginPage.vue"),
     },
-    {
-        path: '/home',
-        name: 'home',
-        component: () => import("@/components/MainContent.vue")
-    }, {
-        path: "/msg",
-        name: "msg",
-        component: ()=>import("@/views/MsgList.vue")
-    }
 ]
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 })
+
+// 挂载路由导航守卫，to准备到哪去，from从哪里来，next下一步去哪
+// router.beforeEach((to, from, next) => {
+//     // 放行登录
+//     if (to.path === '/login') {
+//         return next()
+//     }
+//     // 检查token，没有token直接去登录界面
+//     // const token = store.state.token;
+//     // if (!token) {
+//     //     return next('/login')
+//     // } else {
+//     //     return next()
+//     // }
+// })
 
 export default router

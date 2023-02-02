@@ -13,7 +13,11 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@element-plus/icons-vue": "^2.0.10",
     "core-js": "^3.8.3",
+    "echarts": "^5.4.0",
+    "element-plus": "^2.2.22",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.21",
     "register-service-worker": "^1.7.2",
     "request": "^2.88.2",
