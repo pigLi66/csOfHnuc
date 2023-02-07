@@ -2,14 +2,6 @@
   <router-view></router-view>
 </template>
 
-<script setup>
-
-import {onMounted} from "vue";
-
-onMounted(()=>{
-  document.body.style.setProperty("--el-text-color-regular", "#c4c3ca")
-})
-</script>
 
 <style lang="scss">
 *{

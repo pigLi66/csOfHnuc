@@ -22,10 +22,10 @@
 
       <el-form-item>
         <el-button class="login-button" type="primary" @click="submit">
-          L O G I N
+          登 录
         </el-button>
         <el-button class="login-button" @click="reset">
-          R E S E T
+          重 置
         </el-button>
       </el-form-item>
     </el-form>
@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import * as loginApi from '@/request/api'
+import * as loginApi from '@/request/loginApi'
 import {FormInstance} from "element-plus";
 import {LoginData} from "@/type/Login";
 import store from "@/store";
@@ -95,31 +95,36 @@ export default defineComponent({
   text-align: center;
 
   .demo-ruleForm {
-    width: 500px;
+    width: 400px;
     margin: 200px auto;
     background: #2a2b38;
     padding: 30px; /*外边距*/
     border-radius: 20px;
   }
 
-  .el-input{
+  .el-input {
+    height: 40px;
+    -el-text-color-regular: #c4c3ca;
     --el-fill-color-blank: #1f2029;
     --el-border-color: #1f2029;
     --el-color-primary: #535568;
     --el-text-color-disabled: #535568;
     --el-border: #535568;
+    --el-input-hover-border-color: #434458;
   }
 
-  .el-input__inner{
+  .el-input__inner {
     background: #2a2b38;
   }
 
   .login-button {
-    width: 48%;
+    width: 45%;
     color: #535568;
     font-weight: bolder;
+    margin-top: 40px;
+    height: 40px;
     --el-color-primary: #ffeba7;
-    --el-color-primary-dark-2:  #c3ab80;
+    --el-color-primary-dark-2: #c3ab80;
     --el-color-primary-light-3: #dcc593;
   }
 
