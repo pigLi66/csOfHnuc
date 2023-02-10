@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
+import axios, {InternalAxiosRequestConfig} from "axios";
 import {ElMessage} from "element-plus";
 import store from "@/store";
 
@@ -11,33 +11,35 @@ export const service = axios.create({
     }
 })
 
-// 配置请求拦截器，请求头设置token
-axios.interceptors.request.use((options: AxiosRequestConfig) => {
-    const token = store.state.token;
-    if (token && options.headers) {
-        options.headers['Authorization'] = token
-    }
-    return options
-})
-
-// 配置响应拦截
-axios.interceptors.response.use((res)=>{
-    const code:number = res.data.code;
-    if(code != 200){
-        // 发送请求失败,将信息返回出去
-        return Promise.reject(res.data)
-    }
-    return res.data
-}, (error)=>{   // 错误信息处理，例如请求超时等
-    ElMessage.error(error.message)
-})
-
-
 export interface IResp<T = any> {
     code: string
     message: string
     data: T
 }
+
+
+// 配置请求拦截器，请求头设置token
+service.interceptors.request.use(( options: InternalAxiosRequestConfig) => {
+    const token = store.state.token;
+    if (token && options.headers) {
+        options.headers['Authorization'] = token
+    }
+    return options
+}, error => Promise.reject(error))
+
+// 配置响应拦截
+service.interceptors.response.use((res)=>{
+    const code:number = res.data.code;
+    if(code != 200){
+        // 发送请求失败,将信息返回出去
+        ElMessage.error(res.data.message)
+        return Promise.reject(res.data)
+    }
+    return res.data
+}, (error)=>{   // 错误信息处理，例如请求超时等
+    ElMessage.error(error.message)
+    return Promise.reject(error)
+})
 
 // export function service({method, path, data}: IReq): Promise<IResp> {
 //     return new Promise((resolve) => {

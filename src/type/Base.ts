@@ -6,6 +6,8 @@ export interface BasePageReq {
 export interface BasePageResp<T> {
     pageNum: number
     pageSize: number
+    total:number
+    totalPage:number
     list: T[]
 }
 

@@ -69,7 +69,9 @@ export default defineComponent({
     submit() {
       (this.$refs['loginFormRef'] as FormInstance).validate((isValid: boolean) => {
         if (isValid) {
+          console.log(isValid)
           loginApi.login(this.loginForm).then((res) => {
+            console.log(res.data)
             store.state.token = res.data.token
             router.push("/home")
           })

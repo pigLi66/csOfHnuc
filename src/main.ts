@@ -4,7 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import VueNativeSocket from 'vue-native-websocket-vue3';
-import axios, {AxiosRequestConfig} from "axios";
+import axios from "axios";
 import ElementPLus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'font-awesome/css/font-awesome.min.css'
@@ -23,8 +23,7 @@ app.use(store)
     .use(ElementPLus)
     .mount('#app');
 
-app.use(VueNativeSocket,
-    {
+app.use(VueNativeSocket , "", {
         store: store,   // 启用Vuex集成
         format: "json", // 数据发送格式
         connectManually: true,  // 开启手动调用connect()链接服务器,
