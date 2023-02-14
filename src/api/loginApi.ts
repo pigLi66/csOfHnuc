@@ -1,4 +1,4 @@
-import {service} from "@/request/index";
+import {service} from "@/api/index";
 import {LoginForm} from "@/type/Login";
 
 export function login(data: LoginForm) {

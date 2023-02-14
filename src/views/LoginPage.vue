@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import * as loginApi from '@/request/loginApi'
+import * as loginApi from '@/api/loginApi'
 import {FormInstance} from "element-plus";
 import {LoginData} from "@/type/Login";
 import store from "@/store";

@@ -43,12 +43,12 @@ service.interceptors.response.use((res)=>{
 
 // export function service({method, path, data}: IReq): Promise<IResp> {
 //     return new Promise((resolve) => {
-//         const request: AxiosRequestConfig = {
+//         const api: AxiosRequestConfig = {
 //             url: path,
 //             method: method,
 //             data: JSON.stringify(data)
 //         }
-//         axios.create().request(request)
+//         axios.create().api(api)
 //             .then((response: AxiosResponse<IResp>) => {
 //                 resolve(response.data);
 //             }).catch((reason) => {ElMessage.error(reason.message)})

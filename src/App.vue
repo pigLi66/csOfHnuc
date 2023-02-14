@@ -2,6 +2,16 @@
   <router-view></router-view>
 </template>
 
+<script lang="ts">
+
+export default {
+  mounted() {
+    // document.body.style.setProperty("--el-color-primary", "#ffeba7")
+    // document.body.style.setProperty("--el-color-primary-dark-2", "#c3ab80")
+    // document.body.style.setProperty("--el-color-primary-light-3", "#dcc593")
+  }
+}
+</script>
 
 <style lang="scss">
 *{

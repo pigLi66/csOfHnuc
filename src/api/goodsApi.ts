@@ -1,4 +1,4 @@
-import {service} from "@/request/index";
+import {service} from "@/api/index";
 import {PageGoodsReq, PageGoodsResp} from "@/type/Goods";
 
 export function goodsPage(req: PageGoodsReq){
