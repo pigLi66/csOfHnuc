@@ -1,0 +1,12 @@
+
+group 'org.slamacraft.hnuc'
+
+ext {
+    gatewayVersion = '3.0.2'
+}
+
+dependencies {
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${nacosConfigVersion}")
+    implementation("org.springframework.cloud:spring-cloud-starter-gateway:${gatewayVersion}")
+//    implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:${gatewayVersion}")
+}

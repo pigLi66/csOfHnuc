@@ -6,7 +6,6 @@
 
 plugins {
     id 'java'
-    id 'scala'
     id 'maven-publish'
     id 'org.springframework.boot' version '2.7.4'
     id 'io.spring.dependency-management' version "1.0.11.RELEASE" //spring的依赖管理插件
@@ -15,20 +14,28 @@ plugins {
 
 ext {
     // 定义变量
-    scalaVersion = '2.13.10'
     junitVersion = '4.13.2'
-    springBootVersion = '2.7.4'
-    springCloudVersion = '2020.0.4-SNAPSHOT'
-    springCloudAlibabaVersion = '0.9.0.RELEASE'
+    springBootVersion = '2.4.2'
+    springCloudVersion = '2020.0.2'
+    springCloudAlibabaVersion = '2021.1'
+    nacosVersion = "2.0.1"
+    seataVersion = "1.4.2"
+    springCloudContextVersion = "3.0.2"
+    nacosConfigVersion = "2021.1"
+    hutoolVersion = "5.5.8"
+    mbpVersion = "3.3.0"
+    esVersion = "7.9.1"
+    rocketMqVersion = "2.2.0"
+    orikaVersion = "1.5.4"
+    openFeignVersion = "10.10.1"
 }
 
 allprojects {
-    group = 'com.test'
+    group = 'org.slamacraft.hnuc'
     version = '0.0.1-SNAPSHOT'
     description = 'apiTestKt'
 
     apply plugin: 'java'
-    apply plugin: 'scala'
     apply plugin: 'maven-publish'
 
     tasks.withType(JavaCompile) {
@@ -36,13 +43,13 @@ allprojects {
     }
 
     repositories {
-        //        google()
-        mavenCentral()
         mavenLocal()
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        mavenCentral()
     }
 
     publishing {
@@ -52,6 +59,10 @@ allprojects {
             }
         }
     }
+}
+
+task setupDependencies{
+
 }
 
 subprojects {
@@ -64,21 +75,43 @@ subprojects {
         imports {
             mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
             mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+            mavenBom("com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}")
+            // 工具类
+            mavenBom("cn.hutool:hutool-core:${hutoolVersion}")
+            mavenBom("cn.hutool:hutool-http:${hutoolVersion}")
+            mavenBom("cn.hutool:hutool-crypt:${hutoolVersion}")
+            mavenBom "ma.glasnost.orika:orika-core:${orikaVersion}"
+            // 数据库
+            mavenBom("com.baomidou:mybatis-plus-boot-starter:${mbpVersion}")
+            // swagger
+            mavenBom("com.github.xiaoymin:knife4j-spring-boot-starter:${springCloudContextVersion}")
+            mavenBom("com.github.xiaoymin:knife4j-micro-spring-boot-starter:${springCloudContextVersion}")
+            // ES
+            mavenBom "org.elasticsearch.client:elasticsearch-rest-high-level-client:${esVersion}"
+            mavenBom "org.elasticsearch:elasticsearch:${esVersion}"
+            mavenBom "org.elasticsearch.client:elasticsearch-rest-client:${esVersion}"
+            // MQ
+            mavenBom "org.apache.rocketmq:rocketmq-spring-boot-starter:${rocketMqVersion}"
         }
     }
 
     // 子模块通用依赖
     dependencies {
-        implementation('org.scala-lang:scala-compiler:3.2.1')
-
         implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.4' // 识别bootstrap.yml文件
-
         implementation "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
-        implementation "org.springframework.boot:spring-boot-starter-web-services:$springBootVersion"
-        implementation "org.springframework.cloud:spring-cloud-alibaba:$springCloudAlibabaVersion"
+//        implementation "org.springframework.boot:spring-boot-starter-web-services:$springBootVersion"
+//        implementation "org.springframework.cloud:spring-cloud-alibaba:$springCloudAlibabaVersion"
+//        implementation("com.alibaba.nacos:nacos-client:${nacosVersion}")
 
-        implementation("org.scala-lang:scala-library:$scalaVersion")
-        implementation("org.scala-lang:scala-compiler:$scalaVersion")
+        // 日志
+        implementation("log4j:log4j:1.2.17")
+
+        // 编译
+        compileOnly("org.projectlombok:lombok:1.18.26")
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
+
+        implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${nacosConfigVersion}")
 
         runtimeOnly "org.springframework.boot:spring-boot-devtools:$springBootVersion"
 
@@ -87,46 +120,3 @@ subprojects {
         testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     }
 }
-
-
-//dependencies {
-//
-//    // zookeeper
-//    implementation('org.apache.curator:curator-framework:5.3.0')
-//    implementation('org.apache.curator:curator-recipes:5.3.0')
-//    implementation('org.apache.zookeeper:zookeeper:3.8.0')
-//
-//    // database
-//    implementation('mysql:mysql-connector-java:8.0.30')
-//    implementation('com.alibaba:druid-spring-boot-starter:1.2.13')
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.4'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.4'
-//
-////    implementation 'systems.manifold:manifold-ext:2022.1.20'
-////    implementation 'org.example:Javac-Plugin:1.0-SNAPSHOT'
-//    implementation 'org.springframework.boot:spring-boot-starter-web-services:2.7.4'
-//
-//    // kotlin
-////    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'
-////    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20'
-////    implementation 'org.jetbrains.kotlin:kotlin-stdlib-js:1.7.20'
-//
-//    implementation('io.netty:netty-example:4.1.84.Final') {
-//        exclude group: 'io.netty', module: 'netty-tcnative'
-//    }
-////    implementation 'io.netty:netty-tcnative:2.0.53.Final'
-//
-//    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4'
-//    implementation 'io.github.openfeign:feign-httpclient:11.10'
-//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel:2021.1'
-//    implementation 'org.springframework.kafka:spring-kafka:2.8.2'
-//    implementation 'org.bitbucket.swattu:rabbitmq:4.2.5'
-////    implementation 'org.apache.commons:commons-lang3:3.4'
-//    implementation 'com.hankcs:hanlp:portable-1.8.3'
-//
-//    implementation 'com.github.davidfantasy:shrio-with-jwt-spring-boot-starter:1.0.4'
-//    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-//
-//
-//    testImplementation 'org.springframework.kafka:spring-kafka-test:2.9.0'
-//}

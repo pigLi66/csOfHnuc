@@ -1,0 +1,7 @@
+findProject(':mall4cloud-common:mall4cloud-common-cache')?.name = 'mall4cloud-common-cache'
+include 'mall4cloud-common:mall4cloud-common-core'
+findProject(':mall4cloud-common:mall4cloud-common-core')?.name = 'mall4cloud-common-core'
+include 'mall4cloud-common:mall4cloud-common-db'
+findProject(':mall4cloud-common:mall4cloud-common-db')?.name = 'mall4cloud-common-db'
+include 'mall4cloud-common:mall4cloud-common-core:mall4cloud-common-security'
+findProject(':mall4cloud-common:mall4cloud-common-core:mall4cloud-common-security')?.name = 'mall4cloud-common-security'
