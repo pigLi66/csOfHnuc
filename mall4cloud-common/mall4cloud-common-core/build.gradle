@@ -1,0 +1,17 @@
+
+group 'org.slamacraft.hnuc'
+version '0.0.1-SNAPSHOT'
+
+dependencies {
+    implementation("org.springframework.cloud:spring-cloud-context:${springCloudContextVersion}")
+    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:${springCloudContextVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-validation:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-json:${springBootVersion}")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:${springCloudContextVersion}")
+    implementation("io.github.openfeign:feign-httpclient:${openFeignVersion}")
+    implementation("cn.hutool:hutool-core:${hutoolVersion}")
+    implementation("cn.hutool:hutool-crypto:${hutoolVersion}")
+    implementation("cn.hutool:hutool-http:${hutoolVersion}")
+    implementation("ma.glasnost.orika:orika-core:${orikaVersion}")
+}

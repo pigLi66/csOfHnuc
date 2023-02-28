@@ -1,16 +1,13 @@
-
+//角色权限微服务
 group 'org.slamacraft.hnuc'
-
-ext {
-    gatewayVersion = '3.0.2'
-}
+version '0.0.1-SNAPSHOT'
 
 dependencies {
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}")
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:${springCloudContextVersion}")
-    implementation("org.springframework.cloud:spring-cloud-starter-gateway:${gatewayVersion}")
+//    implementation("com.slamacraft.hnuc:mall4cloud-common-db:0.0.1-SNAPSHOT")
+//    implementation("com.slamacraft.hnuc:mall4cloud-common-security:0.0.1-SNAPSHOT")
 
-//    implementation("om.github.xiaoymin:knife4j-spring-boot-starter:${knife4jVersion}")
-    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:3.0.2'
+    compileOnly(project(":mall4cloud-common:mall4cloud-common-db"))
 }

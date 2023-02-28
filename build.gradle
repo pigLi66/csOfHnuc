@@ -28,6 +28,7 @@ ext {
     rocketMqVersion = "2.2.0"
     orikaVersion = "1.5.4"
     openFeignVersion = "10.10.1"
+    knife4jVersion = "3.0.2"
 }
 
 allprojects {
@@ -85,8 +86,8 @@ subprojects {
             // 数据库
             mavenBom("com.baomidou:mybatis-plus-boot-starter:${mbpVersion}")
             // swagger
-            mavenBom("com.github.xiaoymin:knife4j-spring-boot-starter:${springCloudContextVersion}")
-            mavenBom("com.github.xiaoymin:knife4j-micro-spring-boot-starter:${springCloudContextVersion}")
+            mavenBom("com.github.xiaoymin:knife4j-spring-boot-starter:${knife4jVersion}")
+            mavenBom("com.github.xiaoymin:knife4j-micro-spring-boot-starter:${knife4jVersion}")
             // ES
             mavenBom "org.elasticsearch.client:elasticsearch-rest-high-level-client:${esVersion}"
             mavenBom "org.elasticsearch:elasticsearch:${esVersion}"
