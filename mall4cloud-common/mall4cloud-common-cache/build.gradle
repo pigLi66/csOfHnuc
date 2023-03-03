@@ -1,8 +1,0 @@
-// 公共核心包
-group 'org.slamacraft.hnuc'
-version '0.0.1-SNAPSHOT'
-
-dependencies {
-//    implementation("org.slamacraft.hnuc:mall4cloud-common-core:0.0.1-SNAPSHOT")
-}
-
