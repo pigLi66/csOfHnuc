@@ -63,7 +63,6 @@ export default {
 
   methods: {
     page() {
-      console.log(this.pageForm.pageNum)
       goodsPage(this.pageForm).then(res => {
         this.pageData = res
       })

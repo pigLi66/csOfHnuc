@@ -1,8 +1,17 @@
 import {service} from "@/api/index";
+import {PageUserReq} from "@/type/User";
 
-export function listUser(){
+export function pageUser(req:PageUserReq){
     return service({
-        url:"/role/path",
+        url:"/user/page",
         method:"GET",
+        params: req
+    })
+}
+
+export function listRole(){
+    return service({
+        url:"/role/list",
+        method:"GET"
     })
 }

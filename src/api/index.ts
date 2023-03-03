@@ -11,12 +11,6 @@ export const service = axios.create({
     }
 })
 
-export interface IResp<T = any> {
-    code: string
-    message: string
-    data: T
-}
-
 
 // 配置请求拦截器，请求头设置token
 service.interceptors.request.use(( options: InternalAxiosRequestConfig) => {
