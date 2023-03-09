@@ -1,6 +1,6 @@
 import axios, {InternalAxiosRequestConfig} from "axios";
-import {ElMessage} from "element-plus";
 import store from "@/store";
+import {useMessage} from 'naive-ui'
 
 // 配置请求
 export const service = axios.create({
@@ -26,12 +26,12 @@ service.interceptors.response.use((res)=>{
     const code:number = res.data.code;
     if(code != 200){
         // 发送请求失败,将信息返回出去
-        ElMessage.error(res.data.message)
+        useMessage().error(res.data.message)
         return Promise.reject(res.data)
     }
     return res.data
 }, (error)=>{   // 错误信息处理，例如请求超时等
-    ElMessage.error(error.message)
+    useMessage().error(error.message)
     return Promise.reject(error)
 })
 
