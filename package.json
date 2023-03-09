@@ -23,6 +23,7 @@
     "request": "^2.88.2",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
+    "vue-float-label": "^1.6.1",
     "vue-native-websocket-vue3": "^3.1.6",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
@@ -34,6 +35,7 @@
     "@types/request": "^2.48.8",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
+    "@vicons/antd": "^0.12.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-pwa": "~5.0.0",
@@ -48,10 +50,12 @@
     "electron-packager": "^17.1.1",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "naive-ui": "^2.34.3",
     "node-sass": "^7.0.3",
     "sass-loader": "^13.1.0",
     "ts-loader": "~8.2.0",
     "typescript": "~4.5.5",
+    "vfonts": "^0.0.3",
     "vue-cli-plugin-electron-builder": "~2.1.1"
   },
   "eslintConfig": {
