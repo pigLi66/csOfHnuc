@@ -9,37 +9,37 @@ const routes: Array<RouteRecordRaw> = [
         path: "/",
         redirect: "/login"
     },
-    {
-        path: '/login',
-        name: 'login',
-        component: () => import("@/views/NewLoginView.vue"),
-    },
-    {
-        path: '/home',
-        name: 'home',
-        component: () => HomeView,
-        // 配置子路由
-        children: [
-            {
-                path: "/goods",
-                name: "goods",
-                meta: {
-                    isShow: true,
-                    title: "商品列表"
-                },
-                component: import("@/views/GoodsView.vue")
-            },
-            {
-                path: "/user",
-                name: "user",
-                meta: {
-                    isShow: true,
-                    title: "用户列表"
-                },
-                component: import("@/views/UserView.vue")
-            },
-        ]
-    },
+    // {
+    //     path: '/login',
+    //     name: 'login',
+    //     component: () => import("@/views/NewLoginView.vue"),
+    // },
+    // {
+    //     path: '/home',
+    //     name: 'home',
+    //     component: () => HomeView,
+    //     // 配置子路由
+    //     children: [
+    //         {
+    //             path: "/goods",
+    //             name: "goods",
+    //             meta: {
+    //                 isShow: true,
+    //                 title: "商品列表"
+    //             },
+    //             component: import("@/views/GoodsView.vue")
+    //         },
+    //         {
+    //             path: "/user",
+    //             name: "user",
+    //             meta: {
+    //                 isShow: true,
+    //                 title: "用户列表"
+    //             },
+    //             component: import("@/views/UserView.vue")
+    //         },
+    //     ]
+    // },
 ]
 
 const router = createRouter({
