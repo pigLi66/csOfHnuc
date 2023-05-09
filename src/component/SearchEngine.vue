@@ -1,24 +1,20 @@
 <template>
     <div class="search">
-        <!--        <div class="search-icon-div">-->
-        <!--            <el-icon>-->
-        <!--                <Search/>-->
-        <!--            </el-icon>-->
-        <!--        </div>-->
-        <div>
-            <el-autocomplete
-                    placeholder="请输入内容"
-                    v-model="word"
-                    @keyup.enter.native="search()"
-                    class="search-input"
-                    :fetch-suggestions="autoComplete"
-                    ref="input"
-                    @select="search()"
-            >
+        <el-autocomplete
+                placeholder="请输入内容"
+                v-model="word"
+                @keyup.enter="search()"
+                class="search-input"
+                style="width: 60%"
+                :fetch-suggestions="autoComplete"
+                :popper-append-to-body='false'
+                ref="input"
+                @select="search()"
+        >
+            <template #prepend>
                 <el-select
                         class="search-engine-select"
                         v-model="searchEngines.select"
-                        slot="prepend"
                         placeholder="请选择"
                         @change="searchEnginesChanged"
                 >
@@ -31,14 +27,19 @@
                         <span style="float: left">{{ item.label }}</span>
                     </el-option>
                 </el-select>
+            </template>
+            <template #append>
                 <el-button
                         class="search-button"
-                        slot="append"
-                        icon="el-icon-search"
                         @click="search()"
-                ></el-button>
-            </el-autocomplete>
-        </div>
+                >
+                    <el-icon>
+                        <search/>
+                    </el-icon>
+                </el-button>
+            </template>
+
+        </el-autocomplete>
     </div>
 </template>
 
@@ -47,7 +48,11 @@
 import axios from "axios";
 import Router from "vue-router";
 import {defineComponent} from "vue";
-import {ElMessage} from "element-plus";
+import {ElMessage, FormInstance} from "element-plus";
+import * as loginApi from "@/api/loginApi";
+import store from "@/store";
+import router from "@/router";
+import {Search} from "@element-plus/icons-vue";
 
 const default_suggest_url =
     "https://suggestion.baidu.com/su?wd=%word%&cb=window.baidu.sug";
@@ -70,6 +75,7 @@ type EngineOption = {
 
 export default defineComponent({
     name: "SearchEngine",
+    components: {Search},
     props: {
         user_id: Number,
     },
@@ -139,7 +145,7 @@ export default defineComponent({
             }
         },
         async search() {
-            var searchUrl = this.searchEngines.main_url.replace("%word%", this.word);
+            const searchUrl = this.searchEngines.main_url.replace("%word%", this.word);
             window.open(searchUrl);
             this.autoComplete("");
             try {
@@ -153,7 +159,7 @@ export default defineComponent({
             }
             this.word = "";
         },
-        async autoComplete(queryString: string | [] | undefined, cb: any = null) {
+        async autoComplete(queryString: any, cb: any = null) {
             if (
                 queryString === "" ||
                 queryString === [] ||
@@ -162,6 +168,7 @@ export default defineComponent({
                 try {
                     cb([]);
                 } catch (e) {
+                    console.log(e)
                 }
             } else {
                 let autoCompleteUrl = this.searchEngines.suggest_url.replace(
@@ -172,8 +179,8 @@ export default defineComponent({
                     let script = document.createElement("script");
                     script.src = autoCompleteUrl;
                     eval(this.searchEngines.suggest_func);
-                    document.querySelector("head")!!.appendChild(script);
-                    document.querySelector("head")!!.removeChild(script);
+                    document.querySelector("head")?.appendChild(script);
+                    document.querySelector("head")?.removeChild(script);
                 } catch (e: any) {
                     console.log(e);
                     ElMessage.error(e.response.data.msg)
@@ -185,22 +192,48 @@ export default defineComponent({
         this.searchEnginesGet();
     },
     mounted() {
-        this.$refs["input"].focus();
+        // (this.$refs['input'] as FormInstance)
+        // (this.$refs['input'] as FormInstance).validate((isValid: boolean) => {
+        //     if (isValid) {
+        //         console.log(isValid)
+        //         loginApi.login(this.loginForm).then((res) => {
+        //             console.log(res.data)
+        //             store.state.token = res.data.token
+        //             router.push("/home")
+        //         })
+        //     }
+        // })
+        // this.$refs["input"].focus();
     },
 });
 </script>
 
 <style scoped lang="scss">
 
+.search {
+  width: 100%;
+  //text-align: center;
+  horiz-align: center;
 
-.search-icon-div {
-
+  .search-input {
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 70%;
+  }
 }
 
-.search-input {
-  margin-left: 50px;
-  margin-right: 50px;
-  width: 60%;
+.search-icon-div {
+  padding-top: 80px;
+  padding-bottom: 60px;
+}
+
+
+.search-engine-select {
+  width: 100px;
+}
+
+.search-button {
+  width: 70px;
 }
 
 </style>

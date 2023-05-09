@@ -1,9 +1,9 @@
 export interface LoginForm {
-    username: string
+    email: string
     password: string
 }
 
 export class LoginData implements LoginForm{
     password = "";
-    username = "";
+    email = "";
 }

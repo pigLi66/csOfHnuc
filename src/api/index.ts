@@ -14,10 +14,10 @@ export const service = axios.create({
 
 // 配置请求拦截器，请求头设置token
 service.interceptors.request.use((options: InternalAxiosRequestConfig) => {
-    const token = store.state.token;
-    if (token && options.headers) {
-        options.headers['Authorization'] = token
-    }
+    // const token = store.state.user.token;
+    // if (token && options.headers) {
+    //     options.headers['Authorization'] = token
+    // }
     return options
 }, error => Promise.reject(error))
 

@@ -1,10 +1,22 @@
 <template>
+
     <div class="app" v-if="initial">
+        <!--        固定背景-->
+        <div class="bg-div">
+            <div class="bg-filter">
+                <img src="../src/assets/bg.jpg" style="width: 100vw; height: 100vh"/>
+            </div>
+        </div>
+        <!--        回到顶部-->
+        <el-backtop :right="40" :bottom="100"/>
         <github-conner/>
-<!--        <el-row class="loginRow">-->
-<!--        </el-row>-->
-        <el-row>
+        <login/>
+        <el-row class="search-row">
+            <h1 class="title">工作搜索</h1>
             <search-engine/>
+        </el-row>
+        <el-row>
+            <ToolsView/>
         </el-row>
     </div>
 </template>
@@ -13,9 +25,13 @@
 
 import githubConner from "@/component/common/GithubConner.vue";
 import SearchEngine from "@/component/SearchEngine.vue";
+import Login from "@/component/Login.vue";
+import ToolsView from "@/views/ToolsView.vue";
 
 export default {
     components: {
+        ToolsView,
+        Login,
         SearchEngine,
         githubConner,
     },
@@ -51,4 +67,30 @@ html, body, #app {
   text-align: center;
 }
 
+.search-row {
+  //margin-top: 40vh;
+  margin-bottom: 55vh;
+
+  .title {
+    margin-top: 30vh;
+    margin-bottom: 5vh;
+    text-align: center;
+    horiz-align: center;
+    width: 100%;
+    color: white;
+    text-shadow: 2px 2px 10px #ececec;
+  }
+}
+
+.bg-div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  .bg-filter {
+    position: fixed;
+    filter: blur(6px); // 磨砂质感
+    transform: scale(1.2)
+  }
+}
 </style>
