@@ -3,10 +3,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import axios from "axios";
-
-import Vuex from 'vuex'
 import {createApp} from 'vue'
-import VCharts from 'vue-echarts'
 import VueCookies from "vue-cookies";
 import VueClipboard from 'vue-clipboard2'
 import VueNativeSocket from 'vue-native-websocket-vue3';
@@ -21,6 +18,8 @@ import 'vfonts/Lato.css' // 通用字体
 import 'vfonts/FiraCode.css' // 等宽字体
 import 'font-awesome/css/font-awesome.min.css'
 
+import {VueMasonryPlugin} from 'vue-masonry'
+
 axios.defaults.withCredentials = true; //true允许跨域
 
 const app = createApp(App)
@@ -30,6 +29,7 @@ globalProperties.$echarts = echarts
 globalProperties.$axios = axios
 
 app.use(VueCookies)
+    .use(VueMasonryPlugin)
     // .use(Vuex)
     // .use(VCharts)
     .use(VueClipboard)

@@ -16,7 +16,8 @@
             <search-engine/>
         </el-row>
         <el-row>
-            <ToolsView/>
+            <!--            <tools-view/>-->
+            <tools-view/>
         </el-row>
     </div>
 </template>
@@ -31,6 +32,7 @@ import ToolsView from "@/views/ToolsView.vue";
 export default {
     components: {
         ToolsView,
+        // Widgets,
         Login,
         SearchEngine,
         githubConner,

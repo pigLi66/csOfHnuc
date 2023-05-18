@@ -63,7 +63,7 @@
                     </el-button>
                 </el-form-item>
             </el-form>
-            <!--            <el-button type="text" slot="reference">登录</el-button>-->
+            <!--            <el-button type="text" v-slot="reference">登录</el-button>-->
         </el-popover>
 
         <!--        登录之后显示操作下拉框-->
@@ -92,7 +92,7 @@ import {defineComponent} from "vue";
 import {ElMessage, FormInstance} from "element-plus";
 import {LoginData} from "@/type/Login";
 import store from "@/store";
-import * as loginApi from '../api/loginApi'
+import * as loginApi from '../api/LoginApi'
 
 const api = {
     userLogin: "/login/userLogin",

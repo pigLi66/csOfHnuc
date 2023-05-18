@@ -49,7 +49,7 @@ import axios from "axios";
 import Router from "vue-router";
 import {defineComponent} from "vue";
 import {ElMessage, FormInstance} from "element-plus";
-import * as loginApi from "@/api/loginApi";
+import * as loginApi from "@/api/LoginApi";
 import store from "@/store";
 import router from "@/router";
 import {Search} from "@element-plus/icons-vue";
@@ -77,7 +77,7 @@ export default defineComponent({
     name: "SearchEngine",
     components: {Search},
     props: {
-        user_id: Number,
+        userId: Number,
     },
     data() {
         return {
@@ -150,7 +150,7 @@ export default defineComponent({
             this.autoComplete("");
             try {
                 const {data: res} = await axios.post(api.searchLog, {
-                    user_id: this.user_id,
+                    userId: this.userId,
                     engine_id: this.searchEngines.select_engine_id,
                     search_text: this.word,
                 });
