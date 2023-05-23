@@ -16,6 +16,7 @@ module.exports = {
         "eslint:recommended",
 
         "@vue/typescript/recommended",
+        '@vue/standard',
 
         // "@react-native-community"y
 

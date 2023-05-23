@@ -1,89 +1,119 @@
 <template>
-    <div class="tools-view">
-        <div class="tools-context">
-            <el-tabs tab-position="left" class="demo-tabs">
-                <el-tab-pane v-for="category in categoryList" :key="category" :label="category.name">
-                    <div v-masonry style="width: 100%;" item-selector=".tool-card">
-                        <button v-masonry-tile
-                             class="tool-card"
-                             v-for="item in [1,2,3,4,5,6,7,8,9]"
-                             :key="item">
-                            <moyu-form/>
-                        </button>
-                    </div>
-                </el-tab-pane>
-            </el-tabs>
+  <div class="tools-view">
+    <div>
+      <el-row>
+        <el-tabs tab-position="left" class="demo-tabs" v-model="currentTab">
+          <el-tab-pane
+            v-for="category in categoryList"
+            :key="category.key"
+            :label="category.name"
+          />
+        </el-tabs>
+
+        <div class="scroll-content">
+          <h3 class="category-title">摸鱼组件</h3>
+          <moyu-card class="tool-card" :shrink="true" />
         </div>
+      </el-row>
     </div>
+
+    <el-dialog v-model="dialogVisible" title="Warning" width="30%" center>
+      <span>
+        It should be noted that the content will not be aligned in center by
+        default
+      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogVisible = false">
+            Confirm
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
-<script>
-import {defineComponent} from "vue";
-import MoyuForm from "@/component/widgets/MoyuForm.vue";
+<script lang="ts">
+import { defineComponent } from "vue";
+import MoyuCard from "@/component/widgets/MoyuCard.vue";
 
 export default defineComponent({
-    name: "ToolsView",
-    components: {MoyuForm},
+  name: "ToolsView",
+  components: {
+    MoyuCard,
+  },
 
-    data() {
-        return {
-            categoryList: [
-                {name: "摸鱼组件", key: "moyu", count: 12},
-                {name: '工具组件', key: 'tool', count: 3},
-                {name: '其他组件', key: 'other', count: 30}
-            ]
-        }
-    }
-})
+  data() {
+    return {
+      categoryList: [
+        { name: "摸鱼组件", key: "moyu", count: 12 },
+        { name: "工具组件", key: "tool", count: 3 },
+        { name: "其他组件", key: "other", count: 30 },
+      ],
+      items: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      currentTab: "moyu",
+      dialogVisible: false,
+    };
+  },
+
+  methods: {
+    displayDialog() {
+      this.dialogVisible = true;
+    },
+  },
+});
 </script>
 
 <style scoped lang="scss">
-
 .tools-view {
   width: 100vw;
   height: 100vh;
-  margin: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-
-  border-radius: 30px;
 }
 
-.tool-category-col {
-  width: 20vw;
-  height: 100%;
-  horiz-align: center;
-  vertical-align: center;
+.category-title {
+  text-align: left;
+  color: var(--el-text-color-primary);
 }
 
-.tool-category {
-  margin-top: 50px;
-}
-
-.tool-list {
-  width: 80vw;
-}
-
-.category-button {
+.tools-view {
   margin-left: 20px;
   margin-right: 20px;
-  width: 100%;
-  border-radius: 0px;
-}
-
-.tools-context {
-  margin: 20px;
 }
 
 .tool-card {
-    width: calc(100vh / 2);
-    margin: 1%;
-    border: rgba(255, 255, 255, 0);
-    border-radius: 10px;
+  width: 200px;
+  margin: 1%;
+  border: rgba(255, 255, 255, 0);
+  border-radius: 10px;
 }
 
 .tool-card:hover {
-    transform: scale(1.05, 1.05);
-    transition: all 0.3s ease;
+  transform: scale(1.05, 1.05);
+  transition: all 0.3s ease;
 }
 
+.demo-tabs {
+  width: 10%;
+}
+
+.scroll-content {
+  width: 90%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+.scroll-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-content::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scroll-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
 </style>

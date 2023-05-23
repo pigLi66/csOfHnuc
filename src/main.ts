@@ -18,7 +18,7 @@ import 'vfonts/Lato.css' // 通用字体
 import 'vfonts/FiraCode.css' // 等宽字体
 import 'font-awesome/css/font-awesome.min.css'
 
-import {VueMasonryPlugin} from 'vue-masonry'
+// import {VueMasonryPlugin} from 'vue-masonry'
 
 axios.defaults.withCredentials = true; //true允许跨域
 
@@ -29,7 +29,6 @@ globalProperties.$echarts = echarts
 globalProperties.$axios = axios
 
 app.use(VueCookies)
-    .use(VueMasonryPlugin)
     // .use(Vuex)
     // .use(VCharts)
     .use(VueClipboard)
