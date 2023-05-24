@@ -1,38 +1,3 @@
-<template>
-  <div class="tools-view">
-    <div>
-      <el-row>
-        <el-tabs tab-position="left" class="demo-tabs" v-model="currentTab">
-          <el-tab-pane
-            v-for="category in categoryList"
-            :key="category.key"
-            :label="category.name"
-          />
-        </el-tabs>
-
-        <div class="scroll-content">
-          <h3 class="category-title">摸鱼组件</h3>
-          <moyu-card class="tool-card" :shrink="true" />
-        </div>
-      </el-row>
-    </div>
-
-    <el-dialog v-model="dialogVisible" title="Warning" width="30%" center>
-      <span>
-        It should be noted that the content will not be aligned in center by
-        default
-      </span>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogVisible = false">
-            Confirm
-          </el-button>
-        </span>
-      </template>
-    </el-dialog>
-  </div>
-</template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
@@ -64,6 +29,37 @@ export default defineComponent({
   },
 })
 </script>
+<template>
+  <div class="tools-view">
+    <div>
+      <el-row>
+        <el-tabs tab-position="left" class="demo-tabs" v-model="currentTab">
+          <el-tab-pane v-for="category in categoryList" :key="category.key" :label="category.name" />
+        </el-tabs>
+
+        <div class="scroll-content">
+          <h3 class="category-title">摸鱼组件</h3>
+          <moyu-card class="tool-card" />
+        </div>
+      </el-row>
+    </div>
+
+    <el-dialog v-model="dialogVisible" title="Warning" width="30%" center>
+      <span>
+        It should be noted that the content will not be aligned in center by
+        default
+      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogVisible = false">
+            Confirm
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
+</template>
 
 <style scoped lang="scss">
 .tools-view {
