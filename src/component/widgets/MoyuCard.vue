@@ -6,11 +6,12 @@ export default defineComponent({
   components: { ToolCard },
   name: "MoyuCard",
   props: {
-    
+    fixed: Boolean
   },
 
   data() {
     return {
+      name: this.$options.name,
       form: {
         hourlyWage: 0,
         moyuTime: 0,
@@ -24,7 +25,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <tool-card>
+  <tool-card :name="name" :fixed="fixed" style="width: 200px;">
     <el-statistic :value="200" @click="dialogVisible = true">
       <template #title>
         <div style="

@@ -70,7 +70,7 @@ export default defineComponent({
         main_url: "",
         suggest_url: "",
         suggest_func: "",
-        options: Array<EngineOption>(),
+        options: [] as EngineOption[],
       },
     };
   },

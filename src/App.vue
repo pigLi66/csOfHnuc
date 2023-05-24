@@ -10,10 +10,7 @@ import DragBox from "./component/drag/DragBox.vue"
 import DragContainer from "./component/drag/DragContainer.vue"
 import { snapToGrid } from "./component/drag/types"
 import MoyuCard from "./component/widgets/MoyuCard.vue"
-
-interface BoxMap {
-  [key: string]: { top: number; left: number; title: string };
-}
+import store from "./store"
 
 export default defineComponent({
   components: {
@@ -32,7 +29,7 @@ export default defineComponent({
       initial: true,
       opacity: 1,
       HTML5Backend: HTML5Backend,
-      boxes: this.initToolCards(),
+      state: store.state,
     }
   },
 
@@ -45,12 +42,6 @@ export default defineComponent({
   },
 
   methods: {
-    initToolCards(): BoxMap {
-      return {
-        a: { top: 20, left: 80, title: "Drag me around" },
-        b: { top: 20, left: 20, title: "Drag me too" },
-      }
-    },
 
     handleScroll() {
       const scrollTop = window.scrollY
@@ -68,8 +59,7 @@ export default defineComponent({
 
     dragMove(id: string, left: number, top: number) {
       [left, top] = snapToGrid(left, top)
-
-      Object.assign(this.boxes[id], { left, top })
+      Object.assign(store.state.fixedToolCard[id], { left, top })
     },
   },
 })
@@ -95,12 +85,12 @@ export default defineComponent({
         :drag-move="dragMove"
       >
         <drag-box
-          v-for="(value, key) in boxes"
+          v-for="(value, key) in state.fixedToolCard"
           :id="key"
           :key="key"
           v-bind="value"
         >
-          <moyu-card :fixed="false" style="width: 200px;"></moyu-card>
+          <moyu-card v-if="key === 'MoyuCard'" fixed></moyu-card>
         </drag-box>
       </drag-container>
 
