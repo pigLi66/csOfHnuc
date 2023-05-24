@@ -1,13 +1,24 @@
 <script lang="ts">
 import { defineComponent } from "vue"
+import store from '../../store'
+import { ElMessage } from "element-plus"
 
 export default defineComponent({
   name: "ToolCard",
+
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
+    fixed: Boolean,
+  },
 
   data() {
     return {
       initial: true,
       opacity: 0,
+      state: store.state
     }
   },
 
@@ -28,6 +39,28 @@ export default defineComponent({
       const opacity = Math.min(scrollFraction, 1)
       this.opacity = opacity
     },
+
+    addFixedToolCard() {
+      const fixedToolCard = this.state.fixedToolCard
+      if (fixedToolCard[this.name]) {
+        ElMessage.error(`已经添加了，请勿重复添加`)
+      } else {
+        fixedToolCard[this.name] = { top: 32, left: 32 }
+      }
+      console.log(fixedToolCard)
+    },
+
+    deleteFixedToolCard() {
+      const fixedToolCard = this.state.fixedToolCard
+      if (fixedToolCard[this.name]) {
+        delete fixedToolCard[this.name]
+      }
+    },
+
+    isFixed():boolean {
+      const fixedToolCard = this.state.fixedToolCard
+      return fixedToolCard[this.name] !== undefined
+    },
   },
 })
 </script>
@@ -35,11 +68,16 @@ export default defineComponent({
 <template>
   <div>
     <el-card class="bg-div" :style="{ borderColor: `rgb(200,200,200, ${opacity}` }" shadow="hover">
-      <el-button class="operate-icon" text circle>
-          <el-icon>
-            <Delete />
-          </el-icon>
-        </el-button>
+      <el-button v-if="fixed" class="operate-icon" text circle @click="deleteFixedToolCard">
+        <el-icon>
+          <Delete />
+        </el-icon>
+      </el-button>
+      <el-button v-if="!fixed && !isFixed()" class="operate-icon" text circle @click="addFixedToolCard">
+        <el-icon>
+          <CirclePlus />
+        </el-icon>
+      </el-button>
       <slot />
     </el-card>
   </div>
@@ -70,7 +108,7 @@ export default defineComponent({
 .bg-div:hover .operate-icon {
   opacity: 0.7;
   position: absolute;
-  color: var('--el-text-color-primary');
   transform: translate(-80%, 60%);
+  color: var(--el-text-color-primary);
 }
 </style>

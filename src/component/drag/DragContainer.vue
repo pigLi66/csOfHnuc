@@ -7,6 +7,7 @@ const props = defineProps<{
   dragMove:(id: string, left: number, top: number) => undefined;
 }>()
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [, drop] = useDrop(() => ({
   accept: ItemTypes.BOX,
   drop(item: DragItem, monitor) {
@@ -25,7 +26,7 @@ const [, drop] = useDrop(() => ({
 </script>
 
 <template>
-  <div :ref="drop" :style="{ overflow: 'hidden', clear: 'both' }">
+  <div :ref="drop" :style="{ clear: 'both' }">
     <slot />
   </div>
 </template>

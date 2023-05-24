@@ -12,6 +12,7 @@ const props = defineProps<{
   top: number
 }>()
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [collect, drag, preview] = useDrag(() => ({
   type: ItemTypes.BOX,
   item: props,
@@ -24,6 +25,7 @@ onMounted(() => {
   preview(getEmptyImage(), { captureDraggingState: true })
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { isDragging } = toRefs(collect)
 </script>
 

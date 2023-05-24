@@ -85,7 +85,9 @@ export default defineComponent({
         </div>
       </div>
 
-      <github-conner style="z-index: 9999;"/>
+      <el-row  style="z-index: 90;">
+        <github-conner/>
+      </el-row>
       <!-- 组件拖动窗口 -->
       <drag-container
         class="drag-container"
@@ -98,7 +100,7 @@ export default defineComponent({
           :key="key"
           v-bind="value"
         >
-          <moyu-card></moyu-card>
+          <moyu-card :fixed="false" style="width: 200px;"></moyu-card>
         </drag-box>
       </drag-container>
 
@@ -145,11 +147,11 @@ body,
 }
 
 .search-row {
-  margin-top: 30vh;
-  margin-bottom: 30vh;
+  margin-top: 45vh;
+  margin-bottom: 45vh;
+  z-index: 20;
 
   .title {
-    margin-top: 30vh;
     margin-bottom: 5vh;
     text-align: center;
     horiz-align: center;
@@ -160,8 +162,7 @@ body,
 }
 
 .drag-container {
-  margin-left: 5vw;
-  width: 90vw;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
   z-index: 10;
