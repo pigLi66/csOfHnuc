@@ -1,40 +1,20 @@
 <template>
     <div class="search">
-        <el-autocomplete
-                placeholder="请输入内容"
-                v-model="word"
-                @keyup.enter="search()"
-                class="search-input"
-                style="width: 60%"
-                :fetch-suggestions="autoComplete"
-                :popper-append-to-body='false'
-                ref="input"
-                @select="search()"
-        >
+        <el-autocomplete placeholder="请输入内容" v-model="word" @keyup.enter="search()" class="search-input" style="width: 60%"
+            :fetch-suggestions="autoComplete" :popper-append-to-body='false' ref="input" @select="search()">
             <template #prepend>
-                <el-select
-                        class="search-engine-select"
-                        v-model="searchEngines.select"
-                        placeholder="请选择"
-                        @change="searchEnginesChanged"
-                >
-                    <el-option
-                            v-for="item in searchEngines.options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                    >
+                <el-select class="search-engine-select" v-model="searchEngines.select" placeholder="请选择"
+                    @change="searchEnginesChanged">
+                    <el-option v-for="item in searchEngines.options" :key="item.value" :label="item.label"
+                        :value="item.value">
                         <span style="float: left">{{ item.label }}</span>
                     </el-option>
                 </el-select>
             </template>
             <template #append>
-                <el-button
-                        class="search-button"
-                        @click="search()"
-                >
+                <el-button class="search-button" @click="search()">
                     <el-icon>
-                        <search/>
+                        <search />
                     </el-icon>
                 </el-button>
             </template>
@@ -47,12 +27,12 @@
 // import md5 from "js-md5";
 import axios from "axios";
 import Router from "vue-router";
-import {defineComponent} from "vue";
-import {ElMessage, FormInstance} from "element-plus";
+import { defineComponent } from "vue";
+import { ElMessage, FormInstance } from "element-plus";
 import * as loginApi from "@/api/LoginApi";
 import store from "@/store";
 import router from "@/router";
-import {Search} from "@element-plus/icons-vue";
+import { Search } from "@element-plus/icons-vue";
 
 const default_suggest_url =
     "https://suggestion.baidu.com/su?wd=%word%&cb=window.baidu.sug";
@@ -75,7 +55,7 @@ type EngineOption = {
 
 export default defineComponent({
     name: "SearchEngine",
-    components: {Search},
+    components: { Search },
     props: {
         userId: Number,
     },
@@ -100,14 +80,14 @@ export default defineComponent({
                 if (this.searchEngines.select == this.searchEngines.options[x].value) {
                     this.searchEngines.select_engine_id = this.searchEngines.options[
                         x
-                        ].id;
+                    ].id;
                     this.searchEngines.main_url = this.searchEngines.options[x].main_url;
                     this.searchEngines.suggest_url = this.searchEngines.options[
                         x
-                        ].suggest_url;
+                    ].suggest_url;
                     this.searchEngines.suggest_func = this.searchEngines.options[
                         x
-                        ].suggest_func;
+                    ].suggest_func;
                     this.searchIcon = this.searchEngines.options[x].icon;
                     return;
                 }
@@ -115,7 +95,7 @@ export default defineComponent({
         },
         async searchEnginesGet() {
             try {
-                const {data: res} = await axios.get(api.searchEngines);
+                const { data: res } = await axios.get(api.searchEngines);
                 for (let s = 0; s < res.data.length; s++) {
                     let suggest_url = default_suggest_url;
                     let suggest_func = default_suggest_func;
@@ -149,7 +129,7 @@ export default defineComponent({
             window.open(searchUrl);
             this.autoComplete("");
             try {
-                const {data: res} = await axios.post(api.searchLog, {
+                const { data: res } = await axios.post(api.searchLog, {
                     userId: this.userId,
                     engine_id: this.searchEngines.select_engine_id,
                     search_text: this.word,
@@ -209,31 +189,29 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-
 .search {
-  width: 100%;
-  //text-align: center;
-  horiz-align: center;
+    width: 100%;
+    //text-align: center;
+    horiz-align: center;
 
-  .search-input {
-    margin-left: 50px;
-    margin-right: 50px;
-    width: 70%;
-  }
+    .search-input {
+        margin-left: 50px;
+        margin-right: 50px;
+        width: 70%;
+    }
 }
 
 .search-icon-div {
-  padding-top: 80px;
-  padding-bottom: 60px;
+    padding-top: 80px;
+    padding-bottom: 60px;
 }
 
 
 .search-engine-select {
-  width: 100px;
+    width: 100px;
 }
 
 .search-button {
-  width: 70px;
+    width: 70px;
 }
-
 </style>

@@ -1,16 +1,15 @@
-
 <script lang="ts">
-import githubConner from "@/component/common/GithubConner.vue";
-import SearchEngine from "@/component/SearchEngine.vue";
-import Login from "@/component/Login.vue";
-import ToolsView from "@/views/ToolsView.vue";
-import { defineComponent } from "vue";
-import { DndProvider } from "vue3-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import DragBox from "./component/drag/DragBox.vue";
-import DragContainer from "./component/drag/DragContainer.vue";
-import { snapToGrid } from "./component/drag/types";
-import MoyuCard from "./component/widgets/MoyuCard.vue";
+import githubConner from "@/component/common/GithubConner.vue"
+import SearchEngine from "@/component/SearchEngine.vue"
+import Login from "@/component/Login.vue"
+import ToolsView from "@/views/ToolsView.vue"
+import { defineComponent } from "vue"
+import { DndProvider } from "vue3-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
+import DragBox from "./component/drag/DragBox.vue"
+import DragContainer from "./component/drag/DragContainer.vue"
+import { snapToGrid } from "./component/drag/types"
+import MoyuCard from "./component/widgets/MoyuCard.vue"
 
 interface BoxMap {
   [key: string]: { top: number; left: number; title: string };
@@ -34,15 +33,15 @@ export default defineComponent({
       opacity: 1,
       HTML5Backend: HTML5Backend,
       boxes: this.initToolCards(),
-    };
+    }
   },
 
   mounted() {
-    document.body.style.setProperty("--el-text-color-primary", "#FFFFFF");
-    window.addEventListener("scroll", this.handleScroll);
+    document.body.style.setProperty("--el-text-color-primary", "#FFFFFF")
+    window.addEventListener("scroll", this.handleScroll)
   },
   beforeUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll)
   },
 
   methods: {
@@ -50,30 +49,30 @@ export default defineComponent({
       return {
         a: { top: 20, left: 80, title: "Drag me around" },
         b: { top: 20, left: 20, title: "Drag me too" },
-      };
+      }
     },
 
     handleScroll() {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const maxScrollTop = documentHeight - windowHeight;
-      const scrollFraction = scrollTop / maxScrollTop;
-      const opacity = Math.max(1 - scrollFraction, 0);
-      this.opacity = opacity;
-      let textColor = `rgb(${256 * opacity}, ${256 * opacity}, ${
+      const scrollTop = window.scrollY
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      const maxScrollTop = documentHeight - windowHeight
+      const scrollFraction = scrollTop / maxScrollTop
+      const opacity = Math.max(1 - scrollFraction, 0)
+      this.opacity = opacity
+      const textColor = `rgb(${256 * opacity}, ${256 * opacity}, ${
         256 * opacity
-      })`;
-      document.body.style.setProperty("--el-text-color-primary", textColor);
+      })`
+      document.body.style.setProperty('--el-text-color-primary', textColor)
     },
 
     dragMove(id: string, left: number, top: number) {
-      [left, top] = snapToGrid(left, top);
+      [left, top] = snapToGrid(left, top)
 
-      Object.assign(this.boxes[id], { left, top });
+      Object.assign(this.boxes[id], { left, top })
     },
   },
-});
+})
 </script>
 
 <template>
@@ -86,25 +85,25 @@ export default defineComponent({
         </div>
       </div>
 
+      <github-conner style="z-index: 9999;"/>
       <!-- 组件拖动窗口 -->
       <drag-container
-          class="drag-container"
-          :snap-to-grid="true"
-          :drag-move="dragMove"
+        class="drag-container"
+        :snap-to-grid="true"
+        :drag-move="dragMove"
+      >
+        <drag-box
+          v-for="(value, key) in boxes"
+          :id="key"
+          :key="key"
+          v-bind="value"
         >
-          <drag-box
-            v-for="(value, key) in boxes"
-            :id="key"
-            :key="key"
-            v-bind="value"
-          >
-            <moyu-card></moyu-card>
-          </drag-box>
-        </drag-container>
+          <moyu-card></moyu-card>
+        </drag-box>
+      </drag-container>
 
       <!--        回到顶部-->
       <el-backtop :right="40" :bottom="100" />
-      <github-conner />
       <login />
       <el-row class="search-row center">
         <h1 class="title">工作搜索</h1>
@@ -146,8 +145,8 @@ body,
 }
 
 .search-row {
-  //margin-top: 40vh;
-  // margin-bottom: 55vh;
+  margin-top: 30vh;
+  margin-bottom: 30vh;
 
   .title {
     margin-top: 30vh;
@@ -161,7 +160,8 @@ body,
 }
 
 .drag-container {
-  width: 100vw;
+  margin-left: 5vw;
+  width: 90vw;
   height: 100vh;
   overflow: hidden;
   z-index: 10;

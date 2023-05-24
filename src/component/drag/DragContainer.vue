@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useDrop } from "vue3-dnd";
-import { ItemTypes, DragItem } from "./types";
+import { useDrop } from "vue3-dnd"
+import { ItemTypes, DragItem } from "./types"
 
 const props = defineProps<{
   snapToGrid: boolean;
-  dragMove: (id: string, left: number, top: number) => undefined;
-}>();
+  dragMove:(id: string, left: number, top: number) => undefined;
+}>()
 
 const [, drop] = useDrop(() => ({
   accept: ItemTypes.BOX,
@@ -13,15 +13,15 @@ const [, drop] = useDrop(() => ({
     const delta = monitor.getDifferenceFromInitialOffset() as {
       x: number;
       y: number;
-    };
+    }
 
-    let left = Math.round(item.left + delta.x);
-    let top = Math.round(item.top + delta.y);
-    props.dragMove(item.id, left, top);
+    const left = Math.round(item.left + delta.x)
+    const top = Math.round(item.top + delta.y)
+    props.dragMove(item.id, left, top)
 
-    return undefined;
+    return undefined
   },
-}));
+}))
 </script>
 
 <template>

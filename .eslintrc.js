@@ -1,52 +1,47 @@
 module.exports = {
+  root: true,
 
-    root: true,
+  env: {
+    node: true,
+    "vue/setup-compiler-macros": true,
+  },
 
-    env: {
+  extends: [
+    "plugin:vue/vue3-essential",
 
-        node: true,
-        'vue/setup-compiler-macros': true,
+    "eslint:recommended",
 
-    },
+    "@vue/typescript/recommended",
+    "@vue/standard",
+  ],
 
-    extends: [
+  parserOptions: {
+    ecmaVersion: 2020,
+  },
 
-        "plugin:vue/vue3-essential",
+  rules: {
+    quotes: "off",
+    "comma-dangle": "off",
+    "no-extra-semi": "off",
+    semi: "false",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-extra-semi": "error",
+    "space-before-function-paren": ["error", "never"],
+    "vue/no-mutating-props": "off",
+    "vue/multi-word-component-names": "off",
+    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 
-        "eslint:recommended",
+    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
 
-        "@vue/typescript/recommended",
-        '@vue/standard',
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": "off",
 
-        // "@react-native-community"y
+    "@typescript-eslint/no-var-requires": 0,
 
-    ],
+    "@typescript-eslint/explicit-module-boundary-types": ["off"],
 
-    parserOptions: {
+    "@typescript-eslint/no-explicit-any": ["off"],
 
-        ecmaVersion: 2020,
-
-    },
-
-    rules: {
-
-        "vue/no-mutating-props": "off",
-        "vue/multi-word-component-names": "off",
-        "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-
-        "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-
-        "no-empty-function": "off",
-        "@typescript-eslint/no-empty-function": "off",
-
-        "@typescript-eslint/no-var-requires": 0,
-
-        "@typescript-eslint/explicit-module-boundary-types": ["off"],
-
-        "@typescript-eslint/no-explicit-any": ["off"],
-
-        // "no-empty-pattern": true,
-
-    },
-
+    // "no-empty-pattern": true,
+  },
 };

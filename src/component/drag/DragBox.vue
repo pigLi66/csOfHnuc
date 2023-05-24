@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { useDrag, DragSourceMonitor } from "vue3-dnd";
-import { ItemTypes } from "./types";
-import { getEmptyImage } from "react-dnd-html5-backend";
-import { toRefs } from "@vueuse/core";
-import { onMounted } from "vue";
+import { useDrag, DragSourceMonitor } from "vue3-dnd"
+import { ItemTypes } from "./types"
+import { getEmptyImage } from "react-dnd-html5-backend"
+import { toRefs } from "@vueuse/core"
+import { onMounted } from "vue"
 
 const props = defineProps<{
-  id: string;
-  title: string;
-  left: number;
-  top: number;
-}>();
+  id: string
+  title: string
+  left: number
+  top: number
+}>()
 
 const [collect, drag, preview] = useDrag(() => ({
   type: ItemTypes.BOX,
@@ -18,13 +18,13 @@ const [collect, drag, preview] = useDrag(() => ({
   collect: (monitor: DragSourceMonitor) => ({
     isDragging: monitor.isDragging(),
   }),
-}));
+}))
 
 onMounted(() => {
-  preview(getEmptyImage(), { captureDraggingState: true });
-});
+  preview(getEmptyImage(), { captureDraggingState: true })
+})
 
-const { isDragging } = toRefs(collect);
+const { isDragging } = toRefs(collect)
 </script>
 
 <template>

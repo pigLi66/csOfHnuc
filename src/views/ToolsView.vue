@@ -35,8 +35,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import MoyuCard from "@/component/widgets/MoyuCard.vue";
+import { defineComponent } from "vue"
+import MoyuCard from "@/component/widgets/MoyuCard.vue"
 
 export default defineComponent({
   name: "ToolsView",
@@ -54,15 +54,15 @@ export default defineComponent({
       items: [{ id: 1 }, { id: 2 }, { id: 3 }],
       currentTab: "moyu",
       dialogVisible: false,
-    };
+    }
   },
 
   methods: {
     displayDialog() {
-      this.dialogVisible = true;
+      this.dialogVisible = true
     },
   },
-});
+})
 </script>
 
 <style scoped lang="scss">

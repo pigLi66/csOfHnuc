@@ -30,7 +30,7 @@
 <script>
 export default {
   name: "githubConner"
-};
+}
 </script>
 <style>
 .github-corner:hover .octo-arm {

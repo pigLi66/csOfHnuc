@@ -6,11 +6,7 @@ export default defineComponent({
   components: { ToolCard },
   name: "MoyuCard",
   props: {
-    userId: Number,
-    widgetId: Number,
-    buttons: Array,
-    flush: Number,
-    shrink: Boolean, // 是否缩小卡片
+    
   },
 
   data() {
@@ -31,13 +27,11 @@ export default defineComponent({
   <tool-card>
     <el-statistic :value="200" @click="dialogVisible = true">
       <template #title>
-        <div
-          style="
+        <div style="
             display: inline-flex;
             align-items: center;
             color: var(--el-text-color-primary);
-          "
-        >
+          ">
           您今天已经赚了
         </div>
       </template>
