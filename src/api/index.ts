@@ -3,12 +3,15 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 import store from "@/store";
 import { ElMessage } from "element-plus";
 
+axios.defaults.withCredentials = true
+
 // 配置请求
 export const service = axios.create({
-  baseURL: "http://127.0.0.1:4523/m1/2240180-0-default",
+  // baseURL: "http://127.0.0.1:4523/m1/2240180-0-default",
   timeout: 5000,
   headers: {
     "Content-Type": "application/json;charset=utf-8",
+    Authorization: "123"
   },
 });
 
@@ -19,6 +22,7 @@ service.interceptors.request.use(
     // if (token && options.headers) {
     //     options.headers['Authorization'] = token
     // }
+    options.withCredentials = true
     return options;
   },
   (error) => Promise.reject(error)

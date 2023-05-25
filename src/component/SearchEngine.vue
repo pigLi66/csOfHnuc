@@ -1,12 +1,6 @@
 <script lang="ts">
-// import md5 from "js-md5";
-// import axios from "axios";
 import { defineComponent } from "vue";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ElMessage } from "element-plus";
-// import * as loginApi from "@/api/LoginApi";
-// import store from "@/store";
-// import router from "@/router";
 import { Search } from "@element-plus/icons-vue";
 
 interface EngineOption {

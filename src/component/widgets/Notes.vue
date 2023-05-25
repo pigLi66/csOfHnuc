@@ -1,4 +1,4 @@
-<!-- eslint-disable eqeqeq -->
+eslint-disable eqeqeq
 <template>
   <section>
     <el-main class="noPadding" style="height: 300px">
@@ -306,7 +306,6 @@ import * as noteApi from "@/api/NotesApi";
 import { defineComponent } from "vue";
 import { Notes } from "@/type/Notes";
 import { ElMessage, ElMessageBox } from "element-plus";
-import * as Objects from "../../tools/Objects";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const api = {
@@ -389,7 +388,8 @@ export default defineComponent({
     },
     async notesGet() {
       const resp = await noteApi.get({
-        userId: Objects.requireNonNull(this.userId),
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        userId: this.userId!,
       });
       this.notesData = resp.data.list;
       if (this.notesData.length !== 0) {
@@ -419,7 +419,8 @@ export default defineComponent({
     },
     async del(notesName: string) {
       ElMessageBox.confirm("确认删除吗?", "提示", {}).then(async() => {
-        const i = Objects.requireNonNull(this.notesGetIndex(notesName));
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const i = this.notesGetIndex(notesName)!;
         this.edit.noteIndex = i;
         this.notesData.splice(i, 1);
         await this.notesSave();
@@ -459,7 +460,8 @@ export default defineComponent({
     },
     async notifySubmit() {
       await noteApi.notify({
-        userId: Objects.requireNonNull(this.userId),
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        userId: this.userId!,
         title: this.notify.form.title,
         content: this.notify.form.content,
         method: this.notify.form.notifyMethod.select,
@@ -471,7 +473,8 @@ export default defineComponent({
     },
     async revertClicked() {
       const resp = await noteApi.revert({
-        userId: Objects.requireNonNull(this.userId),
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        userId: this.userId!,
       });
       this.revert.list = resp.data.list;
       this.revert.visible = true;

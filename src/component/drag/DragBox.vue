@@ -7,7 +7,6 @@ import { onMounted } from "vue"
 
 const props = defineProps<{
   id: string
-  title: string
   left: number
   top: number
 }>()

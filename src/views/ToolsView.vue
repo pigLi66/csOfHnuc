@@ -1,12 +1,13 @@
-
 <script lang="ts">
-import { defineComponent } from "vue"
-import MoyuCard from "@/component/widgets/MoyuCard.vue"
+import { defineComponent } from "vue";
+import MoyuCard from "@/component/widgets/MoyuCard.vue";
+import LeetcodeCard from "@/component/widgets/LeetcodeCard.vue";
 
 export default defineComponent({
   name: "ToolsView",
   components: {
     MoyuCard,
+    LeetcodeCard,
   },
 
   data() {
@@ -19,27 +20,34 @@ export default defineComponent({
       items: [{ id: 1 }, { id: 2 }, { id: 3 }],
       currentTab: "moyu",
       dialogVisible: false,
-    }
+    };
   },
 
   methods: {
     displayDialog() {
-      this.dialogVisible = true
+      this.dialogVisible = true;
     },
   },
-})
+});
 </script>
 <template>
   <div class="tools-view">
     <div>
       <el-row>
         <el-tabs tab-position="left" class="demo-tabs" v-model="currentTab">
-          <el-tab-pane v-for="category in categoryList" :key="category.key" :label="category.name" />
+          <el-tab-pane
+            v-for="category in categoryList"
+            :key="category.key"
+            :label="category.name"
+          />
         </el-tabs>
 
         <div class="scroll-content">
           <h3 class="category-title">摸鱼组件</h3>
-          <moyu-card class="tool-card" />
+          <el-row>
+            <moyu-card class="tool-card" />
+            <leetcode-card class="tool-card" />
+          </el-row>
         </div>
       </el-row>
     </div>

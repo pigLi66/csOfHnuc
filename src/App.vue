@@ -1,16 +1,17 @@
 <script lang="ts">
-import githubConner from "@/component/common/GithubConner.vue"
-import SearchEngine from "@/component/SearchEngine.vue"
-import Login from "@/component/Login.vue"
-import ToolsView from "@/views/ToolsView.vue"
-import { defineComponent } from "vue"
-import { DndProvider } from "vue3-dnd"
-import { HTML5Backend } from "react-dnd-html5-backend"
-import DragBox from "./component/drag/DragBox.vue"
-import DragContainer from "./component/drag/DragContainer.vue"
-import { snapToGrid } from "./component/drag/types"
-import MoyuCard from "./component/widgets/MoyuCard.vue"
-import store from "./store"
+import githubConner from "@/component/common/GithubConner.vue";
+import SearchEngine from "@/component/SearchEngine.vue";
+import Login from "@/component/Login.vue";
+import ToolsView from "@/views/ToolsView.vue";
+import { defineComponent } from "vue";
+import { DndProvider } from "vue3-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import DragBox from "./component/drag/DragBox.vue";
+import DragContainer from "./component/drag/DragContainer.vue";
+import { snapToGrid } from "./component/drag/types";
+import MoyuCard from "./component/widgets/MoyuCard.vue";
+import store from "./store";
+import LeetcodeCard from "./component/widgets/LeetcodeCard.vue";
 
 export default defineComponent({
   components: {
@@ -22,6 +23,7 @@ export default defineComponent({
     DragBox,
     DragContainer,
     MoyuCard,
+    LeetcodeCard,
   },
 
   data() {
@@ -30,39 +32,38 @@ export default defineComponent({
       opacity: 1,
       HTML5Backend: HTML5Backend,
       state: store.state,
-    }
+    };
   },
 
   mounted() {
-    document.body.style.setProperty("--el-text-color-primary", "#FFFFFF")
-    window.addEventListener("scroll", this.handleScroll)
+    document.body.style.setProperty("--el-text-color-primary", "#FFFFFF");
+    window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
-    window.removeEventListener("scroll", this.handleScroll)
+    window.removeEventListener("scroll", this.handleScroll);
   },
 
   methods: {
-
     handleScroll() {
-      const scrollTop = window.scrollY
-      const windowHeight = window.innerHeight
-      const documentHeight = document.documentElement.scrollHeight
-      const maxScrollTop = documentHeight - windowHeight
-      const scrollFraction = scrollTop / maxScrollTop
-      const opacity = Math.max(1 - scrollFraction, 0)
-      this.opacity = opacity
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const maxScrollTop = documentHeight - windowHeight;
+      const scrollFraction = scrollTop / maxScrollTop;
+      const opacity = Math.max(1 - scrollFraction, 0);
+      this.opacity = opacity;
       const textColor = `rgb(${256 * opacity}, ${256 * opacity}, ${
         256 * opacity
-      })`
-      document.body.style.setProperty('--el-text-color-primary', textColor)
+      })`;
+      document.body.style.setProperty("--el-text-color-primary", textColor);
     },
 
     dragMove(id: string, left: number, top: number) {
-      [left, top] = snapToGrid(left, top)
-      Object.assign(store.state.fixedToolCard[id], { left, top })
+      [left, top] = snapToGrid(left, top);
+      Object.assign(store.state.fixedToolCard[id], { left, top });
     },
   },
-})
+});
 </script>
 
 <template>
@@ -75,8 +76,8 @@ export default defineComponent({
         </div>
       </div>
 
-      <el-row  style="z-index: 90;">
-        <github-conner/>
+      <el-row style="z-index: 90">
+        <github-conner />
       </el-row>
       <!-- 组件拖动窗口 -->
       <drag-container
@@ -91,6 +92,7 @@ export default defineComponent({
           v-bind="value"
         >
           <moyu-card v-if="key === 'MoyuCard'" fixed></moyu-card>
+          <leetcode-card v-if="key === 'LeetcodeCard'" fixed></leetcode-card>
         </drag-box>
       </drag-container>
 
