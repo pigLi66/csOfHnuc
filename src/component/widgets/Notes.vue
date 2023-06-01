@@ -302,7 +302,7 @@ eslint-disable eqeqeq
 </template>
 <script lang="ts">
 import WidgetButton from "../common/WidgetButton.vue";
-import * as noteApi from "@/api/NotesApi";
+import * as noteApi from "@/api/notesApi";
 import { defineComponent } from "vue";
 import { Notes } from "@/type/Notes";
 import { ElMessage, ElMessageBox } from "element-plus";

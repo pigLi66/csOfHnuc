@@ -3,15 +3,12 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 import store from "@/store";
 import { ElMessage } from "element-plus";
 
-axios.defaults.withCredentials = true
-
 // 配置请求
 export const service = axios.create({
-  // baseURL: "http://127.0.0.1:4523/m1/2240180-0-default",
+  baseURL: process.env.VUE_APP_BACKEND_URL,
   timeout: 5000,
   headers: {
     "Content-Type": "application/json;charset=utf-8",
-    Authorization: "123"
   },
 });
 
@@ -22,7 +19,7 @@ service.interceptors.request.use(
     // if (token && options.headers) {
     //     options.headers['Authorization'] = token
     // }
-    options.withCredentials = true
+    options.withCredentials = true;
     return options;
   },
   (error) => Promise.reject(error)
@@ -33,12 +30,12 @@ service.interceptors.response.use(
   (res) => {
     const code: number = res.data.code;
     // eslint-disable-next-line eqeqeq
-    if (code != 200) {
+    if (code && code != 200) {
       // 发送请求失败,将信息返回出去
       ElMessage.error(res.data.message);
       return Promise.reject(res.data);
     }
-    return res.data;
+    return res;
   },
   (error) => {
     // 错误信息处理，例如请求超时等
@@ -46,17 +43,3 @@ service.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// export function service({method, path, data}: IReq): Promise<IResp> {
-//     return new Promise((resolve) => {
-//         const api: AxiosRequestConfig = {
-//             url: path,
-//             method: method,
-//             data: JSON.stringify(data)
-//         }
-//         axios.create().api(api)
-//             .then((response: AxiosResponse<IResp>) => {
-//                 resolve(response.data);
-//             }).catch((reason) => {ElMessage.error(reason.message)})
-//     })
-// }

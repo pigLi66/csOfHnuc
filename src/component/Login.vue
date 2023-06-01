@@ -83,7 +83,7 @@ import { defineComponent } from "vue";
 import { ElMessage, FormInstance } from "element-plus";
 import { LoginData } from "@/type/Login";
 import store from "@/store";
-import * as loginApi from "../api/LoginApi";
+import * as loginApi from "../api/loginApi";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const api = {

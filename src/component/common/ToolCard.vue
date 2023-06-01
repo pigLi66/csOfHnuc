@@ -67,7 +67,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <el-card class="bg-div" :style="{ borderColor: `rgb(200,200,200, ${opacity}` }" shadow="hover">
+    <el-card class="bg-div" :style="{ borderColor: `rgb(200,200,200, ${opacity})` }" shadow="hover">
       <el-button v-if="fixed" class="operate-icon" text circle @click="deleteFixedToolCard">
         <el-icon>
           <Delete />

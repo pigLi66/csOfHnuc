@@ -53,15 +53,12 @@ export default defineComponent({
     </div>
 
     <el-dialog v-model="dialogVisible" title="Warning" width="30%" center>
-      <span>
-        It should be noted that the content will not be aligned in center by
-        default
-      </span>
+      <span> TODO 现在还不知要写什么 </span>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button @click="dialogVisible = false">取消</el-button>
           <el-button type="primary" @click="dialogVisible = false">
-            Confirm
+            确认
           </el-button>
         </span>
       </template>
@@ -93,7 +90,7 @@ export default defineComponent({
 }
 
 .tool-card:hover {
-  transform: scale(1.05, 1.05);
+  transform: translate3d(1%, 1%, 0) scale(1.02);
   transition: all 0.3s ease;
 }
 

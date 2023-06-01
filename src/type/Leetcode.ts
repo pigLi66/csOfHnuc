@@ -1,7 +1,3 @@
-export interface GetQuestionOfTodayResp {
-  questionTitle: string;
-}
-
 export interface GetQuestionResp {
   url: string;
   id: string; // 题目id
@@ -15,4 +11,8 @@ export interface GetQuestionStateResp {
   totalAccepted: string; // 通过次数
   totalSubmission: string; // 提交次数
   acRate: string; // ac率
+}
+export interface GetQuestionOfTodayResp {
+  question: GetQuestionResp;
+  state: GetQuestionStateResp;
 }
