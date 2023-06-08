@@ -6,19 +6,15 @@ import { ElMessage } from "element-plus";
 // 配置请求
 export const service = axios.create({
   baseURL: process.env.VUE_APP_BACKEND_URL,
-  timeout: 5000,
+  timeout: 30000,
   headers: {
-    "Content-Type": "application/json;charset=utf-8",
+    "Content-Type": "application/json",
   },
 });
 
 // 配置请求拦截器，请求头设置token
 service.interceptors.request.use(
   (options: InternalAxiosRequestConfig) => {
-    // const token = store.state.user.token;
-    // if (token && options.headers) {
-    //     options.headers['Authorization'] = token
-    // }
     options.withCredentials = true;
     return options;
   },
@@ -28,11 +24,11 @@ service.interceptors.request.use(
 // 配置响应拦截
 service.interceptors.response.use(
   (res) => {
-    const code: number = res.data.code;
+    const errMsg: string = res.data.errMsg;
     // eslint-disable-next-line eqeqeq
-    if (code && code != 200) {
+    if (errMsg) {
       // 发送请求失败,将信息返回出去
-      ElMessage.error(res.data.message);
+      ElMessage.error(errMsg);
       return Promise.reject(res.data);
     }
     return res;
