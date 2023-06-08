@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     // redirect 表示当路径是'/'时，默认跳转到路径 login 对应的页面。
     path: "/",
-    redirect: "/login",
+    redirect: "/home",
   },
   // {
   //     path: '/login',

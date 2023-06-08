@@ -1,5 +1,5 @@
-import App from "./App.vue";
 import "./registerServiceWorker";
+import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
@@ -16,7 +16,11 @@ import * as echarts from "echarts";
 
 import "vfonts/Lato.css"; // 通用字体
 import "vfonts/FiraCode.css"; // 等宽字体
-import "font-awesome/css/font-awesome.min.css";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"; // 图标
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
 
 // import {VueMasonryPlugin} from 'vue-masonry'
 
@@ -28,12 +32,15 @@ const globalProperties = app.config.globalProperties;
 globalProperties.$echarts = echarts;
 globalProperties.$axios = axios;
 
+library.add(fab, fas, far);
+
 app
   .use(VueCookies)
   // .use(Vuex)
   // .use(VCharts)
   .use(VueClipboard)
-  .use(ElementPLus);
+  .use(ElementPLus)
+  .component("font-awesome-icon", FontAwesomeIcon);
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);

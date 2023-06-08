@@ -21,24 +21,7 @@ export default defineComponent({
       state: store.state
     }
   },
-
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll)
-  },
-  beforeUnmount() {
-    window.removeEventListener("scroll", this.handleScroll)
-  },
-
   methods: {
-    handleScroll() {
-      const scrollTop = window.scrollY
-      const windowHeight = window.innerHeight
-      const documentHeight = document.documentElement.scrollHeight
-      const maxScrollTop = documentHeight - windowHeight
-      const scrollFraction = scrollTop / maxScrollTop
-      const opacity = Math.min(scrollFraction, 1)
-      this.opacity = opacity
-    },
 
     addFixedToolCard() {
       const fixedToolCard = this.state.fixedToolCard
@@ -89,7 +72,7 @@ export default defineComponent({
   height: 100%;
   overflow: hidden;
   z-index: -1;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
 }
 

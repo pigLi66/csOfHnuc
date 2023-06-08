@@ -1,113 +1,190 @@
 <script lang="ts">
-import githubConner from "@/component/common/GithubConner.vue";
-import SearchEngine from "@/component/SearchEngine.vue";
-import Login from "@/component/Login.vue";
-import ToolsView from "@/views/ToolsView.vue";
+import HomeView from "@/views/HomeView.vue";
+import ToolView from "@/views/ToolView.vue";
+import UserView from "@/views/UserView.vue";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { defineComponent } from "vue";
 import { DndProvider } from "vue3-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import DragBox from "./component/drag/DragBox.vue";
-import DragContainer from "./component/drag/DragContainer.vue";
-import { snapToGrid } from "./component/drag/types";
-import MoyuCard from "./component/widgets/MoyuCard.vue";
 import store from "./store";
-import LeetcodeCard from "./component/widgets/LeetcodeCard.vue";
+
+type MenuButton = "Home" | "User" | "Tool" | "Setting";
+
+function strIsMenuType(str: string): str is MenuButton {
+  return (
+    str === "Home" || str === "User" || str === "Tool" || str === "Setting"
+  );
+}
 
 export default defineComponent({
   components: {
-    ToolsView,
-    Login,
-    SearchEngine,
-    githubConner,
     DndProvider,
-    DragBox,
-    DragContainer,
-    MoyuCard,
-    LeetcodeCard,
+    HomeView: HomeView,
+    ToolView: ToolView,
+    UserView: UserView,
   },
 
   data() {
     return {
       initial: true,
-      opacity: 1,
       HTML5Backend: HTML5Backend,
       state: store.state,
+
+      // 菜单相关数据
+      curMenu: "Home" as MenuButton,
+      mouseHover: false,
+      slideWidth: 0,
+      bgSlide: {
+        top: 6,
+        height: 68,
+      },
+      broderSlide: {
+        top: 10,
+        height: 50,
+        opacity: 0,
+      },
+      openMenu: false,
     };
   },
 
-  mounted() {
-    document.body.style.setProperty("--el-text-color-primary", "#FFFFFF");
-    window.addEventListener("scroll", this.handleScroll);
-  },
-  beforeUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-  },
-
   methods: {
-    handleScroll() {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const maxScrollTop = documentHeight - windowHeight;
-      const scrollFraction = scrollTop / maxScrollTop;
-      const opacity = Math.max(1 - scrollFraction, 0);
-      this.opacity = opacity;
-      const textColor = `rgb(${256 * opacity}, ${256 * opacity}, ${
-        256 * opacity
-      })`;
-      document.body.style.setProperty("--el-text-color-primary", textColor);
+    /**
+     *
+     * @param e 点击事件
+     */
+    selectMenu(e: any, curMenu: MenuButton) {
+      console.log(e);
+      const target = e.currentTarget;
+      const top = target.offsetTop;
+      const height = target.offsetHeight;
+      this.bgSlide.top = top;
+      this.bgSlide.height = height;
+      this.curMenu = curMenu;
     },
+    hoverMenuButton(e: any) {
+      const target = e.currentTarget;
+      const top = target.offsetTop;
+      const height = target.offsetHeight;
+      this.broderSlide.top = top;
+      this.broderSlide.height = height;
 
-    dragMove(id: string, left: number, top: number) {
-      [left, top] = snapToGrid(left, top);
-      Object.assign(store.state.fixedToolCard[id], { left, top });
+      this.broderSlide.opacity = 1;
+    },
+    endHoverMenuButton() {
+      this.broderSlide.opacity = 0;
+      this.mouseHover = false;
+    },
+    hoverMenu() {
+      this.openMenu = true;
+    },
+    endHoverMenu() {
+      this.openMenu = false;
     },
   },
+
+  created() {
+    document.documentElement.scrollTop = 0;
+    document.body.style.setProperty("--el-text-color-primary", "#FFFFFF");
+    const curUrl = window.location.href;
+    const split = curUrl.split("?");
+    const path = split[0];
+
+    const param = split[1]
+      ? new Map(
+        split[1].split("&").map((it) => {
+          const paramEntry = it.split("=");
+          return [paramEntry[0], paramEntry[1]];
+        })
+      )
+      : new Map();
+    const stateCurUrl = this.state.curUrl;
+    stateCurUrl.path = path;
+    stateCurUrl.param = param;
+
+    const menuParam = param.get("menu");
+    this.curMenu = menuParam && strIsMenuType(menuParam) ? menuParam : "Home";
+  },
+
+  mounted() {},
 });
 </script>
 
 <template>
-  <DndProvider :backend="HTML5Backend">
-    <div class="app" v-if="initial">
-      <!--        固定背景-->
-      <div class="bg-div" :style="{ opacity: opacity }">
-        <div class="bg-filter">
-          <img src="../src/assets/bg.jpg" style="width: 100vw; height: 100vh" />
+  <DndProvider
+    :backend="HTML5Backend"
+    style="top: 100px; background-color: white"
+  >
+    <el-affix :offset="120">
+      <div :class="{ menu: true, 'menu-open': openMenu }">
+        <div id="nav-1">
+          <ul class="nav">
+            <li
+              :class="{ slide1: true }"
+              :style="{
+                top: bgSlide.top + 'px',
+                height: bgSlide.height + 'px',
+              }"
+            ></li>
+            <li
+              :class="{ slide2: true, squeeze: mouseHover }"
+              :style="{
+                top: broderSlide.top + 'px',
+                height: broderSlide.height + 'px',
+                opacity: broderSlide.opacity,
+              }"
+            ></li>
+            <li>
+              <a
+                class="active"
+                @click="selectMenu($event, 'Home')"
+                @mouseover="hoverMenuButton($event)"
+                @mouseout="endHoverMenuButton()"
+                ><el-icon size="25"><Search /></el-icon
+              ></a>
+            </li>
+            <li>
+              <a
+                @click="selectMenu($event, 'User')"
+                @mouseover="hoverMenuButton($event)"
+                @mouseout="endHoverMenuButton()"
+                ><el-icon size="25"><User /></el-icon
+              ></a>
+            </li>
+            <li v-if="state.user.isLogin">
+              <a
+                @click="selectMenu($event, 'Tool')"
+                @mouseover="hoverMenuButton($event)"
+                @mouseout="endHoverMenuButton()"
+                ><el-icon size="25"><CopyDocument /></el-icon
+              ></a>
+            </li>
+            <li v-if="state.user.isLogin">
+              <a
+                @click="selectMenu($event, 'Setting')"
+                @mouseover="hoverMenuButton($event)"
+                @mouseout="endHoverMenuButton()"
+                ><el-icon size="25"><Setting /></el-icon
+              ></a>
+            </li>
+          </ul>
         </div>
       </div>
-
-      <el-row style="z-index: 90">
-        <github-conner />
-      </el-row>
-      <!-- 组件拖动窗口 -->
-      <drag-container
-        class="drag-container"
-        :snap-to-grid="true"
-        :drag-move="dragMove"
+      <div
+        style="
+          position: absolute;
+          height: 40vh;
+          width: 50px;
+          opacity: 0;
+          z-index: 30;
+        "
+        @mouseover="hoverMenu()"
+        @mouseout="endHoverMenu()"
       >
-        <drag-box
-          v-for="(value, key) in state.fixedToolCard"
-          :id="key"
-          :key="key"
-          v-bind="value"
-        >
-          <moyu-card v-if="key === 'MoyuCard'" fixed></moyu-card>
-          <leetcode-card v-if="key === 'LeetcodeCard'" fixed></leetcode-card>
-        </drag-box>
-      </drag-container>
-
-      <!--        回到顶部-->
-      <el-backtop :right="40" :bottom="100" />
-      <login />
-      <el-row class="search-row center">
-        <h1 class="title">工作搜索</h1>
-        <search-engine />
-      </el-row>
-      <el-row>
-        <!--            <tools-view/>-->
-        <tools-view />
-      </el-row>
-    </div>
+        1
+      </div>
+    </el-affix>
+    <HomeView :class="{ 'hidden-view': curMenu !== 'Home' }"></HomeView>
+    <UserView :class="{ 'hidden-view': curMenu !== 'User' }"></UserView>
+    <ToolView :class="{ 'hidden-view': curMenu !== 'Tool' }"></ToolView>
   </DndProvider>
 </template>
 
@@ -118,59 +195,111 @@ export default defineComponent({
   margin: 0px;
 }
 
+html {
+  height: 100%;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+}
+
+.hidden-view {
+  display: none;
+}
+
+.menu {
+  left: -40px;
+  position: absolute;
+  // top: 30vh;
+  height: 100%;
+  width: 50px;
+  z-index: 50;
+}
+
+.menu:hover {
+  transform: translateX(40px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1.05);
+}
+
+.menu-open {
+  transform: translateX(40px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1.05);
+}
+
+#nav-1 .nav {
+  position: relative;
+  border: none;
+  border-radius: 10em;
+  // display: flex;
+  list-style: none;
+  background: #f5f5f5;
+  box-shadow: 20px 40px 50px #00000044;
+  padding: 5px;
+  vertical-align: middle;
+}
+#nav-1 .nav li {
+  margin: 0px;
+}
+#nav-1 .nav li a {
+  position: relative;
+  // padding: 0.6em 2em;
+  // padding: 5px 5px 20px 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 16px;
+  border: none;
+  color: #333;
+  display: inline-block;
+  text-decoration: none;
+  z-index: 104;
+}
+#nav-1 .slide1,
+#nav-1 .slide2 {
+  position: absolute;
+  width: 40px;
+  border-radius: 10em;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1.05);
+}
+#nav-1 .nav .slide1 {
+  background-color: var(--el-color-primary-light-3);
+  z-index: 33;
+}
+#nav-1 .nav .slide2 {
+  opacity: 0;
+  background: #fff;
+  border: 1px solid #8ab9ff;
+  z-index: 32;
+}
+
+.squeeze {
+  transition: all 1.5s;
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
-body,
-#app {
+body {
   width: 100%;
   height: 100%;
 }
 
-#app {
-  font-family: Helvetica, sans-serif;
-  text-align: center;
-}
-
-.center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  align-items: center;
-  transform: translate(-50%, -50%);
-}
-
-.search-row {
-  margin-top: 45vh;
-  margin-bottom: 45vh;
-  z-index: 20;
-
-  .title {
-    margin-bottom: 5vh;
-    text-align: center;
-    horiz-align: center;
-    width: 100%;
-    color: white;
-    text-shadow: 2px 2px 10px #ececec;
-  }
-}
-
-.drag-container {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  z-index: 10;
-  position: absolute;
-}
-
-.bg-div {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: -1;
-
-  .bg-filter {
-    position: fixed;
-    filter: blur(6px); // 磨砂质感
-    transform: scale(1.2);
-  }
-}
+// body {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: #e0e0e0;
+//   font-family: Montserrat, sans-serif;
+//   line-height: 1.5;
+//   background: linear-gradient(
+//     160deg,
+//     #4567b2 20%,
+//     #8ab9ff 20%,
+//     #8ab9ff 80%,
+//     #4567b2 80%
+//   );
+// }
 </style>

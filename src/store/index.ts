@@ -14,10 +14,15 @@ export default createStore({
       email: "",
       username: "",
       userId: 0,
+      avatar: "",
     },
     // todo 需要从后台接口初始化
-    fixedToolCard: {
-    } as FixedToolCardMap,
+    fixedToolCard: {} as FixedToolCardMap,
+    curUrl: {
+      path: "",
+      anchors: "",
+      param: new Map<string, string>(),
+    },
   },
   getters: {},
   mutations: {},

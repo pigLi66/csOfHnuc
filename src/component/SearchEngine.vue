@@ -111,7 +111,7 @@ export default defineComponent({
             :label="value.name"
             :value="key"
           >
-            <span style="float: left">{{ value.name }}</span>
+            <span style="float: left; font-size: border;">{{ value.name }}</span>
           </el-option>
         </el-select>
       </template>

@@ -4,7 +4,7 @@ import MoyuCard from "@/component/widgets/MoyuCard.vue";
 import LeetcodeCard from "@/component/widgets/LeetcodeCard.vue";
 
 export default defineComponent({
-  name: "ToolsView",
+  name: "Tool",
   components: {
     MoyuCard,
     LeetcodeCard,
@@ -31,7 +31,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="tools-view">
+  <div class="tools-view bg">
     <div>
       <el-row>
         <el-tabs tab-position="left" class="demo-tabs" v-model="currentTab">
@@ -67,19 +67,20 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
+
+body{
+  padding: 0px;
+}
+
 .tools-view {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  margin-left: 0px;
 }
 
 .category-title {
   text-align: left;
   color: var(--el-text-color-primary);
-}
-
-.tools-view {
-  margin-left: 20px;
-  margin-right: 20px;
 }
 
 .tool-card {
@@ -90,7 +91,7 @@ export default defineComponent({
 }
 
 .tool-card:hover {
-  transform: translate3d(1%, 1%, 0) scale(1.02);
+  transform: translate3d(1%, 1%, 0) scale(1.05);
   transition: all 0.3s ease;
 }
 
