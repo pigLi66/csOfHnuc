@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent } from "vue"
-import store from '../../store'
-import { ElMessage } from "element-plus"
+import { defineComponent } from "vue";
+import store from "../../store";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "ToolCard",
@@ -9,7 +9,7 @@ export default defineComponent({
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     fixed: Boolean,
   },
@@ -18,45 +18,62 @@ export default defineComponent({
     return {
       initial: true,
       opacity: 0,
-      state: store.state
-    }
+      state: store.state,
+    };
   },
   methods: {
-
     addFixedToolCard() {
-      const fixedToolCard = this.state.fixedToolCard
+      const fixedToolCard = this.state.fixedToolCard;
       if (fixedToolCard[this.name]) {
-        ElMessage.error(`已经添加了，请勿重复添加`)
+        ElMessage.error(`已经添加了，请勿重复添加`);
       } else {
-        fixedToolCard[this.name] = { top: 32, left: 32 }
+        const position = { top: 32, left: 32 };
+        fixedToolCard[this.name] = position;
+        localStorage[`ToolCard:${this.name}`] = JSON.stringify(position);
       }
-      console.log(fixedToolCard)
     },
 
     deleteFixedToolCard() {
-      const fixedToolCard = this.state.fixedToolCard
+      const fixedToolCard = this.state.fixedToolCard;
       if (fixedToolCard[this.name]) {
-        delete fixedToolCard[this.name]
+        delete fixedToolCard[this.name];
+        delete localStorage[`ToolCard:${this.name}`];
       }
     },
 
-    isFixed():boolean {
-      const fixedToolCard = this.state.fixedToolCard
-      return fixedToolCard[this.name] !== undefined
+    isFixed(): boolean {
+      const fixedToolCard = this.state.fixedToolCard;
+      return fixedToolCard[this.name] !== undefined;
     },
   },
-})
+});
 </script>
 
 <template>
   <div>
-    <el-card class="bg-div" :style="{ borderColor: `rgb(200,200,200, ${opacity})` }" shadow="hover">
-      <el-button v-if="fixed" class="operate-icon" text circle @click="deleteFixedToolCard">
+    <el-card
+      class="bg-div"
+      :style="{ borderColor: `rgba(0,0,0,0)` }"
+      shadow="hover"
+    >
+      <el-button
+        v-if="fixed"
+        class="operate-icon"
+        text
+        circle
+        @click="deleteFixedToolCard"
+      >
         <el-icon>
           <Delete />
         </el-icon>
       </el-button>
-      <el-button v-if="!fixed && !isFixed()" class="operate-icon" text circle @click="addFixedToolCard">
+      <el-button
+        v-if="!fixed && !isFixed()"
+        class="operate-icon"
+        text
+        circle
+        @click="addFixedToolCard"
+      >
         <el-icon>
           <CirclePlus />
         </el-icon>

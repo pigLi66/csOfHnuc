@@ -4,7 +4,7 @@ import MoyuCard from "@/component/widgets/MoyuCard.vue";
 import LeetcodeCard from "@/component/widgets/LeetcodeCard.vue";
 
 export default defineComponent({
-  name: "Tool",
+  name: "ToolView",
   components: {
     MoyuCard,
     LeetcodeCard,
@@ -28,29 +28,34 @@ export default defineComponent({
       this.dialogVisible = true;
     },
   },
+  mounted() {
+    window.scrollTo(0, 0);
+  },
 });
 </script>
 <template>
-  <div class="tools-view bg">
-    <div>
-      <el-row>
-        <el-tabs tab-position="left" class="demo-tabs" v-model="currentTab">
-          <el-tab-pane
-            v-for="category in categoryList"
-            :key="category.key"
-            :label="category.name"
-          />
-        </el-tabs>
+  <div class="view">
+    <el-card class="tool-card-view">
+      <div>
+        <el-row>
+          <el-tabs tab-position="left" class="demo-tabs" v-model="currentTab">
+            <el-tab-pane
+              v-for="category in categoryList"
+              :key="category.key"
+              :label="category.name"
+            />
+          </el-tabs>
 
-        <div class="scroll-content">
-          <h3 class="category-title">摸鱼组件</h3>
-          <el-row>
-            <moyu-card class="tool-card" />
-            <leetcode-card class="tool-card" />
-          </el-row>
-        </div>
-      </el-row>
-    </div>
+          <div class="scroll-content">
+            <h3 class="category-title">摸鱼组件</h3>
+            <el-row>
+              <moyu-card class="tool-card" />
+              <leetcode-card class="tool-card" />
+            </el-row>
+          </div>
+        </el-row>
+      </div>
+    </el-card>
 
     <el-dialog v-model="dialogVisible" title="Warning" width="30%" center>
       <span> TODO 现在还不知要写什么 </span>
@@ -67,9 +72,21 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-
-body{
+body {
   padding: 0px;
+}
+
+.view {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tool-card-view {
+  width: 93vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at bottom, #253241 0%, #171a27 100%);
 }
 
 .tools-view {

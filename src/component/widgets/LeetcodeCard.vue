@@ -19,8 +19,10 @@ export default defineComponent({
     };
   },
 
-  created() {
-    this.initQuestionOfToday();
+  mounted() {
+    if (localStorage.getItem("token")) {
+      this.initQuestionOfToday();
+    }
   },
 
   methods: {
@@ -56,19 +58,16 @@ export default defineComponent({
 </script>
 
 <template>
-  <tool-card
-    :name="name"
-    :fixed="fixed"
-    style="width: 200px"
-    @click="openLeetcode()"
-  >
-    <el-row>
-      <div style="font-size: small">每日一题&nbsp;</div>
-      <div class="level" :style="{ color: levelColor() }">
-        {{ question.level }}
-      </div>
-    </el-row>
-    <div>{{ question.translatedTitle }}</div>
+  <tool-card :name="name" :fixed="fixed" style="width: 200px">
+    <div @click="openLeetcode()">
+      <el-row>
+        <div style="font-size: small">每日一题&nbsp;</div>
+        <div class="level" :style="{ color: levelColor() }">
+          {{ question.level }}
+        </div>
+      </el-row>
+      <div>{{ question.translatedTitle }}</div>
+    </div>
   </tool-card>
 </template>
 

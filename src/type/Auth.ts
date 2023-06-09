@@ -9,7 +9,7 @@ export class LoginData implements LoginForm {
 }
 
 export interface LoginResp {
-  id: number;
+  id: string;
   name: string;
   email: string;
   avatar: string;

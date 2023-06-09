@@ -4,6 +4,7 @@ import { LoginData } from "@/type/Auth";
 import { ElMessage, FormInstance } from "element-plus";
 import { defineComponent } from "vue";
 import * as authApi from "../api/authApi";
+import { RegisterFormReq } from "@/type/User";
 
 export default defineComponent({
   name: "LoginCard",
@@ -15,9 +16,10 @@ export default defineComponent({
 
       userState: store.state.user,
       loginForm: new LoginData(),
+      registerForm: {} as RegisterFormReq,
       rules: {
         email: [
-          { required: true, message: "请输入账户邮箱", trigger: "blur" },
+          { required: true, message: "请输入邮箱", trigger: "blur" },
           {
             pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
             message: "请填写正确的邮箱地址",
@@ -52,20 +54,33 @@ export default defineComponent({
       await (this.$refs.loginFormRef as FormInstance).validate(
         (isValid: boolean) => {
           if (isValid) {
-            console.log(isValid);
             authApi.login(this.loginForm).then((res) => {
               // 设置全局状态
-              const userState = store.state.user;
-              userState.isLogin = true;
-              userState.userId = res.id;
-              userState.username = res.name;
-              userState.avatar = res.avatar;
-              userState.email = res.email;
               this.visible = false;
-              this.$cookies.set("email", userState.userId);
-              this.$cookies.set("username", userState.username);
-              this.$cookies.set("userId", userState.userId);
-              this.$cookies.set("avatar", userState.avatar);
+              localStorage.setItem("token", res.token);
+              localStorage.setItem("email", res.email);
+              localStorage.setItem("username", res.name);
+              localStorage.setItem("userId", res.id);
+              localStorage.setItem("avatar", res.avatar);
+              // location.reload();
+              ElMessage.success("登录成功");
+            });
+          }
+        }
+      );
+    },
+    async register() {
+      await (this.$refs.registerFormRef as FormInstance).validate(
+        (isValid: boolean) => {
+          if (isValid) {
+            authApi.login(this.loginForm).then((res) => {
+              // 设置全局状态
+              this.visible = false;
+              localStorage.setItem("token", res.token);
+              localStorage.setItem("email", res.email);
+              localStorage.setItem("username", res.name);
+              localStorage.setItem("userId", res.id);
+              localStorage.setItem("avatar", res.avatar);
               // location.reload();
               ElMessage.success("登录成功");
             });
@@ -83,14 +98,19 @@ export default defineComponent({
     id="container"
   >
     <div class="form-container sign-up-container">
-      <el-form ref="loginFormRef" :model="loginForm" :rules="rules" status-icon>
+      <el-form
+        ref="registerFormRef"
+        :model="loginForm"
+        :rules="rules"
+        status-icon
+      >
         <h1 style="margin-bottom: 10%">创建账户</h1>
         <el-form-item prop="email">
           <el-input
             size="large"
-            v-model="loginForm.email"
+            v-model="registerForm.name"
             placeholder="名称"
-            @keyup.enter="login()"
+            @keyup.enter="register()"
           >
             <template #prefix>
               <font-awesome-icon :icon="['far', 'user']" />
@@ -100,9 +120,9 @@ export default defineComponent({
         <el-form-item prop="email">
           <el-input
             size="large"
-            v-model="loginForm.email"
+            v-model="registerForm.email"
             placeholder="邮箱"
-            @keyup.enter="login()"
+            @keyup.enter="register()"
           >
             <template #prefix>
               <font-awesome-icon :icon="['far', 'envelope']" />
@@ -112,10 +132,10 @@ export default defineComponent({
         <el-form-item prop="password" class="password-input">
           <el-input
             size="large"
-            v-model="loginForm.password"
+            v-model="registerForm.password"
             placeholder="密码"
             show-password
-            @keyup.enter="login()"
+            @keyup.enter="register()"
           >
             <template #prefix>
               <font-awesome-icon :icon="['fas', 'lock']" />
@@ -127,9 +147,9 @@ export default defineComponent({
           class="login-button"
           size="large"
           type="primary"
-          @click="login()"
+          @click="register()"
         >
-          登录
+          注册
         </el-button>
       </el-form>
     </div>

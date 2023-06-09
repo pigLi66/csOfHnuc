@@ -1,15 +1,11 @@
-//
-登录页不往父组件传递任何信息，登录/登出只会操作cookie后刷新页面以重加载父组件，父组件自行判断cookie状态
-// 登录页接受三个参数，父组件从cookie获取的用户id、用户名、登录名 //
-用户id用于判定按钮展示"登录"还是用户名，用户名用于在页面上展示，登录名用于传入子组件，便于修改用户信息（如改密码）时减少填写量
-
+<!-- eslint-disable space-before-function-paren -->
 <script lang="ts">
 import LoginCard from "@/component/LoginCard.vue";
 import store from "@/store";
-import { ElMessage } from "element-plus";
 import { Md5 } from "ts-md5";
+import { logout } from "@/api/authApi";
 import { defineComponent } from "vue";
-import * as authApi from "../api/authApi";
+import { ElMessageBox } from "element-plus";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const api = {
@@ -17,12 +13,13 @@ const api = {
   userLoginSalt: "/login/userLoginSalt",
 };
 export default defineComponent({
-  name: "login",
+  name: "UserView",
+  components: { LoginCard },
   data() {
     return {
       state: store.state,
-
       userState: store.state.user,
+      localStorage,
     };
   },
   methods: {
@@ -35,86 +32,97 @@ export default defineComponent({
     },
 
     logout() {
-      this.$cookies.remove("email");
-      this.$cookies.remove("username");
-      this.$cookies.remove("userId");
-      ElMessage.success("退出成功");
-      location.reload();
+      ElMessageBox.confirm("确定退出账号吗？").then(async () => {
+        await logout();
+        location.reload();
+      });
     },
   },
-  created() {},
-  async mounted() {
-    const code = this.state.curUrl.param.get("code");
-    console.log(code);
-    if (!store.state.user.isLogin && code) {
-      const res = await authApi.loginByGithub(code);
-      if (res) {
-        this.state.user.isLogin = true;
-        const userState = store.state.user;
-        userState.isLogin = true;
-        userState.userId = res.id;
-        userState.username = res.name;
-        userState.avatar = res.avatar;
-        userState.email = res.email;
-        this.$cookies.set("email", userState.email);
-        this.$cookies.set("username", userState.username);
-        this.$cookies.set("userId", userState.userId);
-        this.$cookies.set("avatar", userState.avatar);
-        // location.reload();
-        ElMessage.success("登录成功");
-      }
-    }
+  mounted() {
+    window.scrollTo(0, 0);
   },
-  components: { LoginCard },
 });
 </script>
 <template>
-  <div style="height: 100vh; width: 100vw;">
-    <div class="view">
-      <LoginCard v-if="!state.user.isLogin" style="top: 15vh"></LoginCard>
-      <el-card v-if="state.user.isLogin"> 你好 </el-card>
-    </div>
+  <div class="view">
+    <LoginCard v-if="!state.user.isLogin"></LoginCard>
+    <el-card v-if="state.user.isLogin" class="user-card-view">
+      <el-container>
+        <!-- 左侧的用户个人界面 -->
+        <el-aside width="200px">
+          HELLO
+          <el-divider />
+          <el-avatar
+            shape="circle"
+            :size="70"
+            :src="localStorage.getItem('avatar')"
+          />
+          <div class="main-info">{{ localStorage.getItem("username") }}</div>
+          <div class="main-info email-info">
+            {{ localStorage.getItem("email") }}
+          </div>
+          <!-- 用户信息设置 -->
+          <el-row style="justify-content: center; margin-top: 30px">
+            <el-button class="user-info-icon-button" circle>
+              <font-awesome-icon :icon="['fas', 'gear']" size="xl" />
+            </el-button>
+            <!-- 消息提醒 -->
+            <el-button class="user-info-icon-button" circle>
+              <el-badge :value="1" class="item" type="primary">
+                <font-awesome-icon :icon="['fas', 'bell']" size="xl" />
+              </el-badge>
+            </el-button>
+            <!-- 登出 -->
+            <el-button class="user-info-icon-button" circle @click="logout()">
+              <font-awesome-icon
+                :icon="['fas', 'right-from-bracket']"
+                size="xl"
+              />
+            </el-button>
+          </el-row>
+        </el-aside>
+        <!-- 右侧主要内容 -->
+        <el-main>建设中，还不知道用来做什么</el-main>
+      </el-container>
+      <div class="user-info"></div>
+    </el-card>
   </div>
 </template>
 <style scoped lang="scss">
 .view {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.login-title {
-  margin-bottom: 3vh;
-  text-align: center;
-  width: 100%;
-  color: white;
-  text-shadow: 2px 2px 10px #ececec;
+.user-card-view {
+  width: 93vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at bottom, #253241 0%, #171a27 100%);
 }
 
-.login-component {
-  position: absolute;
-  left: calc(50% - 12.5vw);
-  top: calc(50% - 30vh);
-  width: 25vw;
-  height: 50vh;
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  left: 0px;
+  border: var(--el-text-color-primary);
 }
 
-.login-form-row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.main-info {
+  margin-top: 20px;
+  font-size: large;
 }
 
-.login-button {
-  width: 9vw;
+.email-info {
+  color: #919599;
+  font-size: small;
 }
 
-.other-way-login-row {
-  color: black;
-  margin-top: 3vh;
-
-  .other-way-login-button {
-    border-color: rgba(255, 255, 255, 0);
-  }
+.user-info-icon-button {
+  background-color: rgba(39, 43, 48, 0);
+  border-color: rgba(255, 255, 255, 0);
+  color: var(--card-border-color);
 }
 </style>

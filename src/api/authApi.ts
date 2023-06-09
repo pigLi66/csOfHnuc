@@ -36,3 +36,18 @@ export function loginByGithub(code: string): Promise<LoginResp> {
     };
   });
 }
+
+export async function logout() {
+  return service({
+    url: "/auth",
+    method: "DELETE",
+  }).then((resp) => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    localStorage.removeItem("avatar");
+    localStorage.removeItem("token");
+    location.reload();
+    return resp;
+  });
+}
