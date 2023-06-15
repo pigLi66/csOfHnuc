@@ -78,6 +78,9 @@ export default defineComponent({
           <CirclePlus />
         </el-icon>
       </el-button>
+      <!-- <template #header>
+        <slot name="header"></slot>
+      </template> -->
       <slot />
     </el-card>
   </div>

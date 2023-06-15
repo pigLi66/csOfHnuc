@@ -41,4 +41,17 @@ body {
   background-attachment: fixed;
   overflow: hidden;
 }
+
+.el-popper.is-customized {
+  /* Set padding to ensure the height is 32px */
+  padding: 3px 6px;
+  color: white;
+  background: linear-gradient(90deg, rgb(133, 157, 202), rgb(62, 146, 179));
+}
+
+.el-popper.is-customized .el-popper__arrow::before {
+  background: linear-gradient(45deg, rgb(133, 157, 202), rgb(62, 146, 179));
+  right: 0;
+}
+
 </style>

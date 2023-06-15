@@ -1,15 +1,19 @@
 <script lang="ts">
 import SearchEngine from "@/component/SearchEngine.vue";
+import CustomCard from "@/component/common/CustomCard.vue";
 import githubConner from "@/component/common/GithubConner.vue";
+import StarBg from "@/component/common/StarBg.vue";
 import DragBox from "@/component/drag/DragBox.vue";
 import DragContainer from "@/component/drag/DragContainer.vue";
 import { snapToGrid } from "@/component/drag/types";
 import LeetcodeCard from "@/component/widgets/LeetcodeCard.vue";
 import MoyuCard from "@/component/widgets/MoyuCard.vue";
 import store from "@/store";
+import html from "@/views/test";
+import { ElMessage } from "element-plus";
 import { defineComponent } from "vue";
-import StarBg from "@/component/common/StarBg.vue";
-// import TwilightBg from "@/component/common/TwilightBg.vue";
+import WaveBg from "@/component/common/WaveBg.vue";
+import SearchBall from "@/component/SearchBall.vue";
 
 export default defineComponent({
   name: "SearchView",
@@ -21,7 +25,9 @@ export default defineComponent({
     MoyuCard,
     LeetcodeCard,
     StarBg,
-    // TwilightBg,
+    CustomCard,
+    WaveBg,
+    SearchBall,
   },
 
   data() {
@@ -30,6 +36,7 @@ export default defineComponent({
       opacity: 1,
       state: store.state,
       localStorage,
+      html: html,
     };
   },
 
@@ -43,8 +50,19 @@ export default defineComponent({
     async saveDragToLocal(id: string, left: number, top: number) {
       localStorage[`ToolCard:${id}`] = JSON.stringify({ left: left, top: top });
     },
+
+    getComponentByKey(key: string) {
+      const components: any = this.$options.components;
+      const result = components[key];
+      if (result) {
+        return result;
+      } else {
+        ElMessage.error(`卡片${key}加载失败`);
+      }
+    },
   },
   mounted() {
+    // 从localStorage获取官方卡片
     this.$nextTick(() => {
       window.scrollTo(0, 0);
     });
@@ -62,12 +80,16 @@ export default defineComponent({
 
 <template>
   <div class="app" v-if="initial">
-    <StarBg v-if="true"></StarBg>
-    <TwilightBg v-if="false"></TwilightBg>
+    <github-conner />
+    <!-- <StarBg v-if="true"></StarBg> -->
+    <!-- <TwilightBg v-if="false"></TwilightBg> -->
+    <SearchBall class="fixed-ball"></SearchBall>
+    <WaveBg></WaveBg>
+    <search-engine class="search-engine" />
 
-    <el-row style="z-index: 90">
+    <!-- <el-row style="z-index: 90">
       <github-conner />
-    </el-row>
+    </el-row> -->
 
     <!-- 组件拖动窗口 -->
     <drag-container
@@ -75,20 +97,32 @@ export default defineComponent({
       :snap-to-grid="true"
       :drag-move="dragMove"
     >
+      <!-- 加载官方的卡片 -->
       <drag-box
         v-for="(value, key) in state.fixedToolCard"
         :id="key"
         :key="key"
         v-bind="value"
       >
-        <moyu-card v-if="key === 'MoyuCard'" fixed></moyu-card>
-        <leetcode-card v-if="key === 'LeetcodeCard'" fixed></leetcode-card>
+        <component :is="getComponentByKey(key as string)"></component>
       </drag-box>
+      <!-- 遍历加载用户自定义卡片 -->
+      <drag-box
+        v-for="(value, key) in state.fixedCustomCard"
+        :id="key"
+        :key="key"
+        v-bind="value"
+      >
+        <CustomCard :name="key" :html="value.html" />
+      </drag-box>
+      <!-- <DragBox>
+        <CustomCard name="test" :html="html"></CustomCard>
+      </DragBox> -->
     </drag-container>
 
     <!--        回到顶部-->
     <el-backtop :right="40" :bottom="100" />
-    <el-row class="search-row center">
+    <!-- <el-row class="search-row center">
       <h1 class="title">
         {{
           localStorage.getItem("titleName")
@@ -97,7 +131,7 @@ export default defineComponent({
         }}
       </h1>
       <search-engine />
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
@@ -118,6 +152,16 @@ body,
 #app {
   font-family: Helvetica, sans-serif;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.fixed-ball {
+  position: fixed;
+  top: calc(50% - 100px);
+  left: calc(50% - 100px);
+  // transform: translate(-50%, -50%);
 }
 
 .center {
@@ -128,18 +172,12 @@ body,
   transform: translate(-50%, -50%);
 }
 
-.search-row {
-  margin-top: 45vh;
-  margin-bottom: 45vh;
+.search-engine {
+  width: 60%;
   z-index: 20;
-
-  .title {
-    margin-bottom: 5vh;
-    text-align: center;
-    width: 100%;
-    color: white;
-    text-shadow: 2px 2px 10px #ececec;
-  }
+  position: fixed;
+  top: 65%;
+  left: 0%;
 }
 
 .drag-container {
@@ -148,5 +186,7 @@ body,
   overflow: hidden;
   z-index: 10;
   position: absolute;
+  left: 0;
+  top: 10%;
 }
 </style>

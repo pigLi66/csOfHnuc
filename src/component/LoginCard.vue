@@ -1,10 +1,10 @@
 <script lang="ts">
 import store from "@/store";
-import { LoginData } from "@/type/Auth";
+import { LoginData } from "@/type/api/Auth";
 import { ElMessage, FormInstance } from "element-plus";
 import { defineComponent } from "vue";
 import * as authApi from "../api/authApi";
-import { RegisterFormReq } from "@/type/User";
+import { RegisterFormReq } from "@/type/api/User";
 
 export default defineComponent({
   name: "LoginCard",

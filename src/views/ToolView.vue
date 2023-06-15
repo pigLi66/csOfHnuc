@@ -1,22 +1,20 @@
+<!-- eslint-disable vue/no-unused-components -->
 <script lang="ts">
 import { defineComponent } from "vue";
 import MoyuCard from "@/component/widgets/MoyuCard.vue";
 import LeetcodeCard from "@/component/widgets/LeetcodeCard.vue";
+import ToolCardListItem from "@/component/common/ToolCardListItem.vue";
 
 export default defineComponent({
   name: "ToolView",
   components: {
     MoyuCard,
     LeetcodeCard,
+    ToolCardListItem,
   },
 
   data() {
     return {
-      categoryList: [
-        { name: "摸鱼组件", key: "moyu", count: 12 },
-        { name: "工具组件", key: "tool", count: 3 },
-        { name: "其他组件", key: "other", count: 30 },
-      ],
       items: [{ id: 1 }, { id: 2 }, { id: 3 }],
       currentTab: "moyu",
       dialogVisible: false,
@@ -36,38 +34,49 @@ export default defineComponent({
 <template>
   <div class="view">
     <el-card class="tool-card-view">
-      <div>
-        <el-row>
-          <el-tabs tab-position="left" class="demo-tabs" v-model="currentTab">
-            <el-tab-pane
-              v-for="category in categoryList"
-              :key="category.key"
-              :label="category.name"
-            />
-          </el-tabs>
-
-          <div class="scroll-content">
-            <h3 class="category-title">摸鱼组件</h3>
-            <el-row>
-              <moyu-card class="tool-card" />
-              <leetcode-card class="tool-card" />
-            </el-row>
-          </div>
-        </el-row>
-      </div>
+      <el-contianer>
+        <el-header>卡片菜单</el-header>
+        <el-container>
+          <!-- 左侧的用户个人界面 -->
+          <el-aside width="100px">
+            <ul>
+              <li><a href="#摸鱼">摸鱼</a></li>
+              <li><a href="#工具">工具</a></li>
+              <li><a href="#生产力">生产力</a></li>
+            </ul>
+          </el-aside>
+          <!-- 右侧主要内容 -->
+          <el-main>
+            <el-scrollbar height="80vh">
+              <ToolCardListItem
+                name="MoyuCard"
+                title="摸鱼卡片"
+                desc="摸鱼的卡片"
+              >
+                <template #prefix>
+                  <font-awesome-icon
+                    :icon="['fas', 'fish']"
+                    style="color: var(--el-color-primary)"
+                  />
+                </template>
+              </ToolCardListItem>
+              <ToolCardListItem
+                name="LeetcodeCard"
+                title="力扣每日一题"
+                desc="力扣每日一题"
+              >
+                <template #prefix>
+                  <el-image
+                    src="https://leetcode.cn/favicon.ico"
+                    style="width: 30px"
+                  ></el-image>
+                </template>
+              </ToolCardListItem>
+            </el-scrollbar>
+          </el-main>
+        </el-container>
+      </el-contianer>
     </el-card>
-
-    <el-dialog v-model="dialogVisible" title="Warning" width="30%" center>
-      <span> TODO 现在还不知要写什么 </span>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">
-            确认
-          </el-button>
-        </span>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
@@ -87,52 +96,5 @@ body {
   width: 93vw;
   height: 100vh;
   background: radial-gradient(ellipse at bottom, #253241 0%, #171a27 100%);
-}
-
-.tools-view {
-  width: 100%;
-  height: 100%;
-  margin-left: 0px;
-}
-
-.category-title {
-  text-align: left;
-  color: var(--el-text-color-primary);
-}
-
-.tool-card {
-  width: 200px;
-  margin: 1%;
-  border: rgba(255, 255, 255, 0);
-  border-radius: 10px;
-}
-
-.tool-card:hover {
-  transform: translate3d(1%, 1%, 0) scale(1.05);
-  transition: all 0.3s ease;
-}
-
-.demo-tabs {
-  width: 10%;
-}
-
-.scroll-content {
-  width: 90%;
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
-}
-
-.scroll-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.scroll-content::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-.scroll-content::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 3px;
 }
 </style>

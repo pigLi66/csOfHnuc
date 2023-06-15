@@ -304,7 +304,7 @@ eslint-disable eqeqeq
 import WidgetButton from "../common/WidgetButton.vue";
 import * as noteApi from "@/api/notesApi";
 import { defineComponent } from "vue";
-import { Notes } from "@/type/Notes";
+import { Notes } from "@/type/api/Notes";
 import { ElMessage, ElMessageBox } from "element-plus";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

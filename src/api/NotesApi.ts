@@ -1,5 +1,5 @@
 import {service} from "@/api/index";
-import {NotifyReq, SaveReq} from "@/type/Notes";
+import {NotifyReq, SaveReq} from "@/type/api/Notes";
 
 export function get(data: { userId: number}) {
     return service({

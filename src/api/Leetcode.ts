@@ -1,4 +1,4 @@
-import { GetQuestionOfTodayResp } from "../type/Leetcode";
+import { GetQuestionOfTodayResp } from "../type/api/Leetcode";
 import { service } from "@/api/index";
 
 export function getQuestionOfToday(): Promise<GetQuestionOfTodayResp> {

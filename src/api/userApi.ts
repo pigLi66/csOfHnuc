@@ -1,5 +1,5 @@
 import { service } from "@/api/index";
-import { RegisterFormReq, RegisterFormResp } from "@/type/User";
+import { RegisterFormReq, RegisterFormResp } from "@/type/api/User";
 
 export async function login(data: RegisterFormReq): Promise<RegisterFormResp> {
   return service({

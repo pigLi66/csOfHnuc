@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ToolCard from "../common/ToolCard.vue";
-import { GetQuestionResp, GetQuestionStateResp } from "@/type/Leetcode";
+import { GetQuestionResp, GetQuestionStateResp } from "@/type/api/Leetcode";
 import { getQuestionOfToday } from "@/api/leetcode";
 
 export default defineComponent({
