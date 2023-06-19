@@ -1,11 +1,11 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import ToolCard from "../common/ToolCard.vue";
-import { GetQuestionResp, GetQuestionStateResp } from "@/type/api/Leetcode";
-import { getQuestionOfToday } from "@/api/leetcode";
+import {GetQuestionResp, GetQuestionStateResp} from "@/type/api/Leetcode";
+import {getQuestionOfToday} from "@/api/leetcode";
 
 export default defineComponent({
-  components: { ToolCard },
+  components: {ToolCard},
   name: "LeetcodeCard",
   props: {
     fixed: Boolean,
@@ -20,9 +20,7 @@ export default defineComponent({
   },
 
   mounted() {
-    if (localStorage.getItem("token")) {
-      this.initQuestionOfToday();
-    }
+    this.initQuestionOfToday();
   },
 
   methods: {
@@ -59,15 +57,25 @@ export default defineComponent({
 
 <template>
   <tool-card :name="name" :fixed="fixed" style="width: 200px">
-    <div @click="openLeetcode()">
-      <el-row>
-        <div style="font-size: small">每日一题&nbsp;</div>
-        <div class="level" :style="{ color: levelColor() }">
+    <el-descriptions title="每日一题"
+                     size="small"
+                     column="1"
+                     @click="openLeetcode()">
+      <template #extra>
+        <div class="level" :style="{ color: levelColor()}">
           {{ question.level }}
         </div>
-      </el-row>
-      <div>{{ question.translatedTitle }}</div>
-    </div>
+      </template>
+      <el-descriptions-item class="desc-item">
+        {{ question.translatedTitle }}
+      </el-descriptions-item>
+      <el-descriptions-item >
+        <el-tag size="small" v-for="tag in question.topicTags" :key="tag"
+                class="tag">
+          {{ tag }}
+        </el-tag>
+      </el-descriptions-item>
+    </el-descriptions>
   </tool-card>
 </template>
 
@@ -75,8 +83,17 @@ export default defineComponent({
 .level {
   font-size: small;
   font-weight: bolder;
-  background-color: azure;
+  //background-color: azure;
   border-radius: 21px;
+}
+
+.tag {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.desc-item {
+  background-color: rgba(0, 0, 0, 0)
 }
 
 .green {

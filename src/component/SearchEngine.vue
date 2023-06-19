@@ -97,6 +97,7 @@ export default defineComponent({
       :popper-append-to-body="false"
       ref="input"
       debounce="0"
+      placement="top"
       @select="search()"
     >
       <template #prepend>
@@ -111,7 +112,7 @@ export default defineComponent({
             :label="value.name"
             :value="key"
           >
-            <span style="float: left; font-size: border;">{{ value.name }}</span>
+            <span style="float: left;">{{ value.name }}</span>
           </el-option>
         </el-select>
       </template>
@@ -146,6 +147,8 @@ export default defineComponent({
 
 .search-engine-select {
   width: 100px;
+  font-weight: bold;
+  background-color: white;
 }
 
 .search-button {

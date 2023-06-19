@@ -4,7 +4,7 @@ import { ItemTypes, DragItem } from "./types"
 
 const props = defineProps<{
   snapToGrid: boolean;
-  dragMove:(id: string, left: number, top: number) => undefined;
+  dragMove:(id: string, left: number, top: number) => void;
 }>()
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

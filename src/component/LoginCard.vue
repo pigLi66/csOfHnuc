@@ -204,7 +204,7 @@ export default defineComponent({
     <div class="overlay-container">
       <div class="overlay">
         <div class="overlay-panel overlay-left">
-          <h1>WELCOME</h1>
+          <h1 style="color: white">WELCOME</h1>
           <p>
             我们需要更多的摸鱼<br />
             We need more 摸鱼<br />
@@ -226,7 +226,7 @@ export default defineComponent({
           </button> -->
         </div>
         <div class="overlay-panel overlay-right">
-          <h1>HELLO FRIEND</h1>
+          <h1 style="color: white">HELLO FRIEND</h1>
           <p>快来加入摸鱼<s>&nbsp;团伙&nbsp;</s>大家庭</p>
           <!-- <button class="ghost" id="signUp" @click="isSignUp = true">
             Sign Up
@@ -264,6 +264,7 @@ body {
 
 h1 {
   font-weight: bold;
+  color: #aec8d3;
   margin: 0;
 }
 

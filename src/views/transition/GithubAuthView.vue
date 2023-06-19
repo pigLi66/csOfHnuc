@@ -38,7 +38,7 @@ export default defineComponent({
         state.curUrl.param.set("menu", "User");
         ElMessage.success("Github登录成功，正在跳转至主页");
         return setTimeout(() => {
-          return this.$router.push("/home?menu=User");
+          return this.$router.push("/home");
         }, 3000);
       }
     }

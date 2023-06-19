@@ -7,7 +7,7 @@ import { logout } from "@/api/authApi";
 import { defineComponent } from "vue";
 import { ElMessageBox, FormInstance } from "element-plus";
 import html from "@/views/test";
-import CustomCardListItem from "@/component/common/CustomCardListItem.vue";
+import CustomCardListItem from "@/component/scrollbar/CustomCardListItem.vue";
 
 export interface AddCardForm {
   title: string;

@@ -17,7 +17,7 @@
         border: 0;
         left: 0;
         transform: scale(-1, 1);
-        z-index: 1;
+        z-index: 99;
       "
       aria-hidden="true"
     >

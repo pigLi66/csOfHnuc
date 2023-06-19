@@ -2,7 +2,7 @@
 import SearchEngine from "@/component/SearchEngine.vue";
 import CustomCard from "@/component/common/CustomCard.vue";
 import githubConner from "@/component/common/GithubConner.vue";
-import StarBg from "@/component/common/StarBg.vue";
+import StarBg from "@/component/bg/StarBg.vue";
 import DragBox from "@/component/drag/DragBox.vue";
 import DragContainer from "@/component/drag/DragContainer.vue";
 import { snapToGrid } from "@/component/drag/types";
@@ -12,7 +12,7 @@ import store from "@/store";
 import html from "@/views/test";
 import { ElMessage } from "element-plus";
 import { defineComponent } from "vue";
-import WaveBg from "@/component/common/WaveBg.vue";
+import WaveBg from "@/component/bg/WaveBg.vue";
 import SearchBall from "@/component/SearchBall.vue";
 
 export default defineComponent({
@@ -83,9 +83,9 @@ export default defineComponent({
     <github-conner />
     <!-- <StarBg v-if="true"></StarBg> -->
     <!-- <TwilightBg v-if="false"></TwilightBg> -->
+    <search-engine class="search-engine" />
     <SearchBall class="fixed-ball"></SearchBall>
     <WaveBg></WaveBg>
-    <search-engine class="search-engine" />
 
     <!-- <el-row style="z-index: 90">
       <github-conner />
@@ -104,7 +104,7 @@ export default defineComponent({
         :key="key"
         v-bind="value"
       >
-        <component :is="getComponentByKey(key as string)"></component>
+        <component :is="getComponentByKey(key as string)" fixed></component>
       </drag-box>
       <!-- 遍历加载用户自定义卡片 -->
       <drag-box
@@ -115,23 +115,10 @@ export default defineComponent({
       >
         <CustomCard :name="key" :html="value.html" />
       </drag-box>
-      <!-- <DragBox>
-        <CustomCard name="test" :html="html"></CustomCard>
-      </DragBox> -->
     </drag-container>
 
     <!--        回到顶部-->
     <el-backtop :right="40" :bottom="100" />
-    <!-- <el-row class="search-row center">
-      <h1 class="title">
-        {{
-          localStorage.getItem("titleName")
-            ? localStorage.getItem("titleName")
-            : "工作搜索"
-        }}
-      </h1>
-      <search-engine />
-    </el-row> -->
   </div>
 </template>
 
@@ -187,6 +174,6 @@ body,
   z-index: 10;
   position: absolute;
   left: 0;
-  top: 10%;
+  top: 0%;
 }
 </style>

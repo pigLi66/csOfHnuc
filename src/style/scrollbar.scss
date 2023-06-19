@@ -1,0 +1,6 @@
+// 随机左边框
+@for $i from 0 through 30 {
+  .scrollbar-item:nth-child(1n+#{$i}) {
+    border-left: 5px solid rgba(random(255), random(255), random(255), 0.3);
+  }
+}

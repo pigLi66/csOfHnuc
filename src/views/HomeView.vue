@@ -3,9 +3,9 @@
 import SearchView from "@/views/SearchView.vue";
 import ToolView from "@/views/ToolView.vue";
 import UserView from "@/views/UserView.vue";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { defineComponent } from "vue";
-import { DndProvider } from "vue3-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import {defineComponent} from "vue";
+import {DndProvider} from "vue3-dnd";
 import store from "@/store";
 import SettingView from "@/views/SettingView.vue";
 
@@ -13,7 +13,7 @@ type MenuButton = "Home" | "User" | "Tool" | "Setting";
 
 function strIsMenuType(str: string): str is MenuButton {
   return (
-    str === "Home" || str === "User" || str === "Tool" || str === "Setting"
+      str === "Home" || str === "User" || str === "Tool" || str === "Setting"
   );
 }
 
@@ -90,7 +90,8 @@ export default defineComponent({
   mounted() {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
-    document.body.style.setProperty("--el-text-color-primary", "#FFFFFF");
+    // document.body.style.setProperty("--el-text-color-primary", "#FFFFFF");
+
 
     this.state.user.isLogin = localStorage.getItem("token") !== null;
 
@@ -103,23 +104,23 @@ export default defineComponent({
 
 <template>
   <DndProvider
-    :backend="HTML5Backend"
-    style="top: 100px; background-color: white"
+      :backend="HTML5Backend"
+      style="top: 100px; background-color: white"
   >
     <el-affix :offset="120">
       <div :class="{ menu: true, 'menu-open': openMenu }">
         <div id="nav-1">
           <ul class="nav">
             <li
-              :class="{ slide1: true }"
-              :style="{
+                :class="{ slide1: true }"
+                :style="{
                 top: bgSlide.top + 'px',
                 height: bgSlide.height + 'px',
               }"
             ></li>
             <li
-              :class="{ slide2: true, squeeze: mouseHover }"
-              :style="{
+                :class="{ slide2: true, squeeze: mouseHover }"
+                :style="{
                 top: broderSlide.top + 'px',
                 height: broderSlide.height + 'px',
                 opacity: broderSlide.opacity,
@@ -127,50 +128,68 @@ export default defineComponent({
             ></li>
             <li>
               <a
-                class="active"
-                @click="selectMenu($event, 'Home')"
-                @mouseover="hoverMenuButton($event)"
-                @mouseout="endHoverMenuButton()"
-                ><el-icon size="25"><Search /></el-icon
-              ></a>
+                  class="active"
+                  @click="selectMenu($event, 'Home')"
+                  @mouseover="hoverMenuButton($event)"
+                  @mouseout="endHoverMenuButton()"
+              >
+                <el-icon size="25">
+                  <Search/>
+                </el-icon
+                >
+              </a>
             </li>
             <li>
               <a
-                @click="selectMenu($event, 'User')"
-                @mouseover="hoverMenuButton($event)"
-                @mouseout="endHoverMenuButton()"
-                ><el-icon size="25"><User /></el-icon
-              ></a>
+                  @click="selectMenu($event, 'User')"
+                  @mouseover="hoverMenuButton($event)"
+                  @mouseout="endHoverMenuButton()"
+              >
+                <el-icon size="25">
+                  <User/>
+                </el-icon
+                >
+              </a>
             </li>
             <li>
               <a
-                @click="selectMenu($event, 'Setting')"
-                @mouseover="hoverMenuButton($event)"
-                @mouseout="endHoverMenuButton()"
-                ><el-icon size="25"><Setting /></el-icon
-              ></a>
+                  @click="selectMenu($event, 'Setting')"
+                  @mouseover="hoverMenuButton($event)"
+                  @mouseout="endHoverMenuButton()"
+              >
+                <el-icon size="25">
+                  <Setting/>
+                </el-icon
+                >
+              </a>
             </li>
             <li>
               <a
-                @click="selectMenu($event, 'Tool')"
-                @mouseover="hoverMenuButton($event)"
-                @mouseout="endHoverMenuButton()"
-                ><el-icon size="25"><CopyDocument /></el-icon
-              ></a>
+                  @click="selectMenu($event, 'Tool')"
+                  @mouseover="hoverMenuButton($event)"
+                  @mouseout="endHoverMenuButton()"
+              >
+                <el-icon size="25">
+                  <CopyDocument/>
+                </el-icon
+                >
+              </a>
             </li>
           </ul>
         </div>
       </div>
       <div
-        style="
+          style="
           position: absolute;
           height: 40vh;
           width: 50px;
           opacity: 0;
+          left: 0px;
+          top:30vh;
           z-index: 30;
         "
-        @mouseover="hoverMenu()"
-        @mouseout="endHoverMenu()"
+          @mouseover="hoverMenu()"
+          @mouseout="endHoverMenu()"
       >
         1
       </div>
@@ -191,7 +210,7 @@ export default defineComponent({
 .menu {
   left: -40px;
   position: absolute;
-  // top: 30vh;
+  top: 30vh;
   height: 100%;
   width: 50px;
   z-index: 50;
@@ -218,9 +237,11 @@ export default defineComponent({
   padding: 5px;
   vertical-align: middle;
 }
+
 #nav-1 .nav li {
   margin: 0px;
 }
+
 #nav-1 .nav li a {
   position: relative;
   // padding: 0.6em 2em;
@@ -234,6 +255,7 @@ export default defineComponent({
   text-decoration: none;
   z-index: 104;
 }
+
 #nav-1 .slide1,
 #nav-1 .slide2 {
   position: absolute;
@@ -241,10 +263,12 @@ export default defineComponent({
   border-radius: 10em;
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1.05);
 }
+
 #nav-1 .nav .slide1 {
   background-color: var(--el-color-primary-light-3);
   z-index: 33;
 }
+
 #nav-1 .nav .slide2 {
   opacity: 0;
   background: #fff;

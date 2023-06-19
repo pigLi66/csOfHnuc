@@ -1,12 +1,12 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import ToolCard from "../common/ToolCard.vue";
 
 export default defineComponent({
-  components: { ToolCard },
+  components: {ToolCard},
   name: "MoyuCard",
   props: {
-    fixed: Boolean
+    fixed: Boolean // 是否已经固定到了主页
   },
 
   data() {
@@ -16,7 +16,7 @@ export default defineComponent({
         hourlyWage: 0,
         moyuTime: 0,
       },
-      dialogVisible: false,
+      dialogVisible: false, // 点击dialog
     };
   },
 
@@ -25,13 +25,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <tool-card :name="name" :fixed="fixed" style="width: 200px;">
+  <tool-card :name="name" :fixed="fixed" style="width: 150px;">
     <el-statistic :value="200" @click="dialogVisible = true">
       <template #title>
         <div style="
             display: inline-flex;
             align-items: center;
-            color: var(--el-text-color-primary);
           ">
           您今天已经赚了
         </div>
@@ -40,7 +39,7 @@ export default defineComponent({
         <span class="green">
           &nbsp;24%
           <el-icon>
-            <CaretTop />
+            <CaretTop/>
           </el-icon>
         </span>
       </template>
@@ -49,7 +48,7 @@ export default defineComponent({
     <el-dialog v-model="dialogVisible" title="Warning" width="30%" center append-to-body>
       <template #header>
         <span>摸鱼EPR</span>
-        <el-divider />
+        <el-divider/>
       </template>
 
       <span>
@@ -81,9 +80,13 @@ export default defineComponent({
   align-items: center;
   flex-wrap: wrap;
   font-size: 12px;
-  color: var(--el-text-color-regular);
+  //color: var(--el-text-color-regular);
   margin-top: 16px;
   text-align: center;
+}
+
+.el-statistic__content {
+  color: #000;
 }
 
 .statistic-footer .footer-item {

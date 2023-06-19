@@ -1,4 +1,12 @@
-<script lang="ts"></script>
+<script lang="ts">
+import {defineComponent } from "vue";
+
+export default defineComponent({
+  mounted() {
+    document.body.style.setProperty("--el-statistic-content-color", "#cc6c6c")
+  }
+})
+</script>
 
 <template>
   <RouterView></RouterView>
@@ -44,13 +52,14 @@ body {
 
 .el-popper.is-customized {
   /* Set padding to ensure the height is 32px */
-  padding: 3px 6px;
+  padding: 10px 12px;
   color: white;
-  background: linear-gradient(90deg, rgb(133, 157, 202), rgb(62, 146, 179));
+  font-size: 14px;
+  background: linear-gradient(90deg, rgb(163, 203, 236), rgb(142, 216, 245));
 }
 
 .el-popper.is-customized .el-popper__arrow::before {
-  background: linear-gradient(45deg, rgb(133, 157, 202), rgb(62, 146, 179));
+  background: linear-gradient(45deg,  rgb(163, 203, 236), rgb(142, 216, 245));
   right: 0;
 }
 
