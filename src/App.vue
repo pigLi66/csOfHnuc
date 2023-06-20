@@ -3,7 +3,9 @@ import {defineComponent } from "vue";
 
 export default defineComponent({
   mounted() {
-    document.body.style.setProperty("--el-statistic-content-color", "#cc6c6c")
+    let style = document.body.style;
+    style.setProperty("--el-statistic-content-color", "#cc6c6c")
+    style.setProperty("--el-fill-color-blank", "rgba(0,0,0,0)")
   }
 })
 </script>

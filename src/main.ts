@@ -16,6 +16,7 @@ import * as echarts from "echarts";
 
 import "vfonts/Lato.css"; // 通用字体
 import "vfonts/FiraCode.css"; // 等宽字体
+import "./assets/font/font.css"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"; // 图标
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";

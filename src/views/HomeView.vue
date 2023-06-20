@@ -214,11 +214,11 @@ export default defineComponent({
   height: 100%;
   width: 50px;
   z-index: 50;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1.05);
 }
 
 .menu:hover {
   transform: translateX(40px);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1.05);
 }
 
 .menu-open {

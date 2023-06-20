@@ -66,31 +66,6 @@ export default defineComponent({
         ...this.menuOperate,
         删除: this.deleteFixedToolCard
       }, e)
-
-      // // 窗口高度
-      // let winWidth = window.innerWidth;
-      // let winHeight = window.innerHeight
-      // // 鼠标点击位置
-      // let posX = e.pageX
-      // let posY = e.pageY
-      // // 菜单宽高
-      // let menu: any = e.target
-      // let menuWidth = menu.getBoundingClientRect().width
-      // let menuHeight = menu.getBoundingClientRect().height
-      //
-      // let fixedPos = this.state.fixedToolCard[this.name]
-      // if (!fixedPos) return;
-      //
-      // // 菜单显示位置
-      // // let posLeft = posX + menuWidth - fixedPos.top >= winWidth
-      // //     ? posX - menuWidth - fixedPos.left
-      // //     : posX - fixedPos.left;
-      // // let posTop = posY + menuHeight - fixedPos.top >= winHeight
-      // //     ? posY - menuHeight - fixedPos.top
-      // //     : posY - fixedPos.top;
-      // this.menu.left = posX - fixedPos.left
-      // this.menu.top = posY - fixedPos.top
-      // this.menu.isOpen = true
     },
   },
 
@@ -105,7 +80,7 @@ export default defineComponent({
 <template>
   <div>
     <!--suppress TypeScriptValidateTypes -->
-    <div @contextmenu="openMenu">
+    <div @contextmenu="openMenu" :style="{cursor: fixed ? 'all-scroll': ''}">
       <slot/>
     </div>
 

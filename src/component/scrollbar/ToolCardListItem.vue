@@ -82,7 +82,7 @@ export default defineComponent({
               <el-tooltip
                   content="收藏卡片"
                   show-after="500"
-                  placement="left"
+                  placement="top"
                   effect="customized"
               >
                 <el-button circle class="item-opt-btn-star"
@@ -96,7 +96,7 @@ export default defineComponent({
                   v-if="!isFixed()"
                   content="将卡片添加到主页"
                   show-after="500"
-                  placement="right"
+                  placement="top"
                   effect="customized"
               >
                 <el-button
@@ -112,7 +112,7 @@ export default defineComponent({
                   v-if="isFixed()"
                   content="移除主页的卡片"
                   show-after="500"
-                  placement="right"
+                  placement="top"
                   effect="customized"
               >
                 <el-button

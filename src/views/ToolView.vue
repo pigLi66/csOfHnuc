@@ -4,10 +4,14 @@ import {defineComponent} from "vue";
 import MoyuCard from "@/component/widgets/MoyuCard.vue";
 import LeetcodeCard from "@/component/widgets/LeetcodeCard.vue";
 import ToolCardListItem from "@/component/scrollbar/ToolCardListItem.vue";
+import SearchInput from "@/component/common/SearchInput.vue";
+import ParallaxMountainBg from "@/component/bg/ParallaxMountainBg.vue";
 
 export default defineComponent({
   name: "ToolView",
   components: {
+    ParallaxMountainBg,
+    SearchInput,
     MoyuCard,
     LeetcodeCard,
     ToolCardListItem,
@@ -18,6 +22,9 @@ export default defineComponent({
       items: [{id: 1}, {id: 2}, {id: 3}],
       currentTab: "moyu",
       dialogVisible: false,
+      searchInput: {
+        keyword: ''
+      }
     };
   },
 
@@ -34,13 +41,22 @@ export default defineComponent({
 <template>
   <div class="view">
     <div class="tool-card-view">
-      <el-contianer>
+      <el-container style="align-content: center;flex-wrap: wrap">
         <el-header class="header-container">
-          <div>
+          <ParallaxMountainBg style="position: absolute; top:0; left: 0; width: 100%;height: 12vh;z-index: 1"/>
+          <el-row style="padding-top: 20px;z-index: 2;font-family: 'tonsil';color: #4f4f4f">
+            <el-col :span="7">
+              这里或许有你想要的
+            </el-col>
+            <el-col :span="10">
+              <SearchInput v-model:value="searchInput.keyword"/>
+            </el-col>
+            <el-col :span="7">
 
-          </div>
+            </el-col>
+          </el-row>
         </el-header>
-        <el-container>
+        <el-container style="width: 93vw">
           <!-- 左侧的用户个人界面 -->
           <el-aside class="aside-container">
             <el-card class="side-card">
@@ -76,7 +92,7 @@ export default defineComponent({
             </el-scrollbar>
           </el-main>
         </el-container>
-      </el-contianer>
+      </el-container>
     </div>
   </div>
 </template>
@@ -94,13 +110,14 @@ body {
 }
 
 .tool-card-view {
-  width: 93vw;
+  width: 100vw;
   height: 100vh;
   //background: radial-gradient(ellipse at bottom, #253241 0%, #171a27 100%);
 }
 
 .header-container {
-  height: 15vh;
+  height: 12vh;
+  padding: 0;
   background: linear-gradient(to right,
       #cfdff0,
       #fff3f3,
