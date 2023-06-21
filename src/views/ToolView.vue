@@ -1,11 +1,17 @@
 <!-- eslint-disable vue/no-unused-components -->
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, markRaw} from "vue";
 import MoyuCard from "@/component/widgets/MoyuCard.vue";
 import LeetcodeCard from "@/component/widgets/LeetcodeCard.vue";
-import ToolCardListItem from "@/component/scrollbar/ToolCardListItem.vue";
+import ToolCardItem from "@/component/scrollbar/ToolCardItem.vue";
 import SearchInput from "@/component/common/SearchInput.vue";
 import ParallaxMountainBg from "@/component/bg/ParallaxMountainBg.vue";
+
+type CardItem = {
+  component: any,
+  title: string,
+  desc: string
+}
 
 export default defineComponent({
   name: "ToolView",
@@ -14,14 +20,23 @@ export default defineComponent({
     SearchInput,
     MoyuCard,
     LeetcodeCard,
-    ToolCardListItem,
+    ToolCardItem,
   },
 
   data() {
     return {
-      items: [{id: 1}, {id: 2}, {id: 3}],
-      currentTab: "moyu",
-      dialogVisible: false,
+      // 不可变对象，设置为非响应式提高性能
+      items: markRaw([
+        {
+          component: MoyuCard,
+          title: '摸鱼ERP',
+          desc: '摸鱼不积极，思想有问题'
+        }, {
+          component: LeetcodeCard,
+          title: '力扣每日一题',
+          desc: '获取力扣的每日一题，点击可以跳转到力扣答题界面'
+        }
+      ] as CardItem[]),
       searchInput: {
         keyword: ''
       }
@@ -29,9 +44,23 @@ export default defineComponent({
   },
 
   methods: {
-    displayDialog() {
-      this.dialogVisible = true;
+
+    filterCardItem(): CardItem[] {
+      let inputKeywords = this.searchInput.keyword;
+      if (!inputKeywords || inputKeywords === '') {
+        return this.items
+      }
+      let keywords = inputKeywords.split(/\s/)
+      let result = this.items.filter(it => keywords.filter(keyword =>
+              it.title.includes(keyword) || it.desc.includes(keyword)
+          ).length > 0
+      )
+      return result
     },
+
+    inputSearch(str: string) {
+      this.searchInput.keyword = str
+    }
   },
   mounted() {
     window.scrollTo(0, 0);
@@ -49,7 +78,9 @@ export default defineComponent({
               这里或许有你想要的
             </el-col>
             <el-col :span="10">
-              <SearchInput v-model:value="searchInput.keyword"/>
+              <SearchInput v-model:value="searchInput.keyword"
+                           @input="inputSearch($event.target.value)"
+              />
             </el-col>
             <el-col :span="7">
 
@@ -71,24 +102,14 @@ export default defineComponent({
           <!-- 右侧主要内容 -->
           <el-main>
             <el-scrollbar height="80vh">
-              <ToolCardListItem
-                  name="MoyuCard"
-                  title="摸鱼ERP"
-                  desc="摸鱼不积极，思想有问题"
+              <ToolCardItem v-for="it in filterCardItem()" :key="it.title"
+                            :title="it.title"
+                            :desc="it.desc"
               >
                 <template #prefix>
-                  <moyu-card/>
+                  <component :is="it.component"/>
                 </template>
-              </ToolCardListItem>
-              <ToolCardListItem
-                  name="LeetcodeCard"
-                  title="力扣每日一题"
-                  desc="获取力扣的每日一题，点击可以跳转到力扣"
-              >
-                <template #prefix>
-                  <leetcode-card/>
-                </template>
-              </ToolCardListItem>
+              </ToolCardItem>
             </el-scrollbar>
           </el-main>
         </el-container>

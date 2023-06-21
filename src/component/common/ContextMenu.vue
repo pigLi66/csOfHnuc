@@ -1,3 +1,6 @@
+使用方法类似于ElMessage
+可以通过引入types/component/ContextMenu.ts来直接调用右键的菜单
+菜单内容还比较简单，只支持显示文字，不支持显示其他图标（当然，emoji还是可以的）
 <script lang="ts">
 import {defineComponent, ref} from "vue";
 import {MenuOperate} from "@/type/component/MenuOperate";
@@ -5,11 +8,12 @@ import {ElCard} from "element-plus";
 
 export default defineComponent({
 
+  // 这个组件 是动态创建的，所以要引入全局组件，不然就报错了
   components: {
-    ElCard
+    ElCard,
   },
 
-  setup(props, context) {
+  setup() {
     const menuAttr = ref({
       isOpen: false,
       top: 0,

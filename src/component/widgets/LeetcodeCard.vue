@@ -1,8 +1,9 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import ToolCard from "../common/ToolCard.vue";
-import {GetQuestionResp, GetQuestionStateResp} from "@/type/api/Leetcode";
+import {GetQuestionResp} from "@/type/api/Leetcode";
 import {getQuestionOfToday} from "@/api/leetcode";
+import store from "@/store";
 
 export default defineComponent({
   components: {ToolCard},
@@ -15,7 +16,6 @@ export default defineComponent({
     return {
       name: this.$options.name,
       question: {} as GetQuestionResp,
-      state: {} as GetQuestionStateResp,
     };
   },
 
@@ -24,18 +24,17 @@ export default defineComponent({
   },
 
   methods: {
-    getRandomString(n: number) {
-      let str = "";
-      while (str.length < n) {
-        str += Math.random().toString(36).substring(2);
-      }
-      return str.substring(str.length - n);
-    },
+
     initQuestionOfToday() {
-      getQuestionOfToday().then((resp) => {
-        this.question = resp.question;
-        this.state = resp.state;
-      });
+      let cache = store.state.componentCache[this.name]
+      if (cache) {
+        this.question = cache
+      } else {
+        getQuestionOfToday().then((resp) => {
+          this.question = resp.question;
+          store.state.componentCache[this.name] = this.question
+        });
+      }
     },
 
     levelColor(): string {
@@ -69,7 +68,7 @@ export default defineComponent({
       <el-descriptions-item class="desc-item">
         {{ question.translatedTitle }}
       </el-descriptions-item>
-      <el-descriptions-item >
+      <el-descriptions-item>
         <el-tag size="small" v-for="tag in question.topicTags" :key="tag"
                 class="tag">
           {{ tag }}

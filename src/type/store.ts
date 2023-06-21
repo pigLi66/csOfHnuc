@@ -5,3 +5,7 @@ export interface FixedToolCardMap {
 export interface FixedCustomCardMap {
   [key: string]: { top: number; left: number; html: string };
 }
+
+export interface ComponentCache<T> {
+  [key: string]: T
+}

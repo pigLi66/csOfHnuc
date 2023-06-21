@@ -3,7 +3,7 @@ import {defineComponent, PropType} from "vue";
 import store from "../../store";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {MenuOperate} from "@/type/component/MenuOperate";
-import ContextMenu from "@/component/common/ContextMenu";
+import ContextMenu from "@/type/component/ContextMenu";
 
 export default defineComponent({
   name: "ToolCard",

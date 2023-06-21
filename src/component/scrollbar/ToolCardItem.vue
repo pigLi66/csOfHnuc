@@ -8,10 +8,6 @@ export default defineComponent({
   name: "ToolCardListItem",
 
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
     title: {
       type: String,
       required: true,
@@ -64,9 +60,6 @@ export default defineComponent({
       <div style="display: inline">
         <slot name="prefix"></slot>
       </div>
-      <!--      <el-col :span="6" v-if="$slots.prefix">-->
-      <!--        -->
-      <!--      </el-col>-->
       <!--  卡片介绍 -->
       <div style="display: inline;height: auto;float: left;flex-grow: 1">
         <el-row>

@@ -1,29 +1,15 @@
 <!-- eslint-disable indent -->
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import store from "@/store";
-import { loginByGithub } from "@/api/authApi";
-import { ElMessage } from "element-plus";
+import {loginByGithub} from "@/api/authApi";
+import {ElMessage} from "element-plus";
 import Loading from "@/component/common/Loading.vue";
 
 export default defineComponent({
   name: "GithubAuthView",
   async created() {
-    const curUrl = window.location.href;
-    const split = curUrl.split("?");
-    const path = split[0];
-    const param = split[1]
-      ? new Map(
-          split[1].split("&").map((it) => {
-            const paramEntry = it.split("=");
-            return [paramEntry[0], paramEntry[1]];
-          })
-        )
-      : new Map();
     const state = store.state;
-    const stateCurUrl = state.curUrl;
-    stateCurUrl.path = path;
-    stateCurUrl.param = param;
     const code = state.curUrl.param.get("code");
     if (!store.state.user.isLogin && code) {
       const res = await loginByGithub(code);
@@ -47,7 +33,7 @@ export default defineComponent({
       return this.$router.push("/home");
     }, 3000);
   },
-  components: { Loading },
+  components: {Loading},
 });
 </script>
 <template>
