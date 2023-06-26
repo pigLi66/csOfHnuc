@@ -1,11 +1,35 @@
 <script lang="ts">
-import {defineComponent } from "vue";
+import {defineComponent} from "vue";
+import store from "@/store";
+
+function initStyleProperty() {
+  let style = document.body.style;
+  // 设置一些属性值
+  style.setProperty("--el-statistic-content-color", "#cc6c6c")
+  style.setProperty("--el-fill-color-blank", "rgba(0,0,0,0)")
+}
+
+/**
+ * 初始化套件
+ * 遍历本地缓存中以Widget开头的缓存，并将其赋值到fixedWidgetCache中
+ */
+function initWidget() {
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith("Widget:")) {
+      store.state.fixedWidgetCache[key.split("Widget:")[1]] = JSON.parse(
+          localStorage[key]
+      );
+    }
+  }
+}
+
 
 export default defineComponent({
+
   mounted() {
-    let style = document.body.style;
-    style.setProperty("--el-statistic-content-color", "#cc6c6c")
-    style.setProperty("--el-fill-color-blank", "rgba(0,0,0,0)")
+    initStyleProperty() // 初始化全局属性值
+    initWidget() // 初始化套件
   }
 })
 </script>
@@ -34,20 +58,6 @@ body {
 }
 
 body {
-  // background: radial-gradient(
-  //   200% 100% at bottom center,
-  //   #f7f7b6,
-  //   #e96f92,
-  //   #75517d,
-  //   #1b2947
-  // );
-  // background: radial-gradient(
-  //   220% 105% at top center,
-  //   #1b2947 10%,
-  //   #75517d 40%,
-  //   #e96f92 65%,
-  //   #f7f7b6
-  // );
   background-attachment: fixed;
   overflow: hidden;
 }
@@ -61,7 +71,7 @@ body {
 }
 
 .el-popper.is-customized .el-popper__arrow::before {
-  background: linear-gradient(45deg,  rgb(163, 203, 236), rgb(142, 216, 245));
+  background: linear-gradient(45deg, rgb(163, 203, 236), rgb(142, 216, 245));
   right: 0;
 }
 
