@@ -6,6 +6,7 @@ import LeetcodeCard from "@/component/widgets/LeetcodeCard.vue";
 import ToolCardItem from "@/component/scrollbar/ToolCardItem.vue";
 import SearchInput from "@/component/common/SearchInput.vue";
 import ParallaxMountainBg from "@/component/bg/ParallaxMountainBg.vue";
+import Live2d from "@/component/widgets/Live2d.vue";
 
 type CardItem = {
   component: any,
@@ -21,6 +22,7 @@ export default defineComponent({
     MoyuCard,
     LeetcodeCard,
     ToolCardItem,
+    Live2d
   },
 
   data() {
@@ -35,6 +37,10 @@ export default defineComponent({
           component: LeetcodeCard,
           title: '力扣每日一题',
           desc: '获取力扣的每日一题，点击可以跳转到力扣答题界面'
+        }, {
+          component: Live2d,
+          title: "Live2d",
+          desc: "测试"
         }
       ] as CardItem[]),
       searchInput: {
@@ -73,7 +79,7 @@ export default defineComponent({
       <el-container style="align-content: center;flex-wrap: wrap">
         <el-header class="header-container">
           <ParallaxMountainBg style="position: absolute; top:0; left: 0; width: 100%;height: 12vh;z-index: 1"/>
-          <el-row style="padding-top: 20px;z-index: 2;font-family: 'tonsil';color: #4f4f4f">
+          <el-row class="header-row">
             <el-col :span="7">
               这里或许有你想要的
             </el-col>
@@ -103,6 +109,7 @@ export default defineComponent({
           <el-main>
             <el-scrollbar height="80vh">
               <ToolCardItem v-for="it in filterCardItem()" :key="it.title"
+                            :name="it.component.name"
                             :title="it.title"
                             :desc="it.desc"
               >
@@ -152,5 +159,12 @@ body {
 
 .side-card {
   height: 100%;
+}
+
+.header-row {
+  padding-top: 20px;
+  z-index: 2;
+  font-family: '扁桃体';
+  color: #4f4f4f
 }
 </style>

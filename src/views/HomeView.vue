@@ -90,14 +90,7 @@ export default defineComponent({
   mounted() {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
-    // document.body.style.setProperty("--el-text-color-primary", "#FFFFFF");
-
-
     this.state.user.isLogin = localStorage.getItem("token") !== null;
-
-    const param = this.state.curUrl.param;
-    const menuParam = param.get("menu");
-    this.curMenu = menuParam && strIsMenuType(menuParam) ? menuParam : "Home";
   },
 });
 </script>

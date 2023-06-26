@@ -27,7 +27,7 @@ export default defineComponent({
   },
   methods: {
     addFixedToolCard() {
-      const fixedToolCard = this.state.fixedToolCard;
+      const fixedToolCard = this.state.fixedWidgetCache;
       if (fixedToolCard[this.name]) {
         ElMessage.error(`已经添加了，请勿重复添加`);
       } else {
@@ -38,7 +38,7 @@ export default defineComponent({
     },
 
     deleteFixedToolCard() {
-      const fixedToolCard = this.state.fixedToolCard;
+      const fixedToolCard = this.state.fixedWidgetCache;
       if (fixedToolCard[this.name]) {
         delete fixedToolCard[this.name];
         delete localStorage[`ToolCard:${this.name}`];
@@ -46,7 +46,7 @@ export default defineComponent({
     },
 
     isFixed(): boolean {
-      const fixedToolCard = this.state.fixedToolCard;
+      const fixedToolCard = this.state.fixedWidgetCache;
       return fixedToolCard[this.name] !== undefined;
     },
 

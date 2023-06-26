@@ -2,12 +2,11 @@
 <script lang="ts">
 import LoginCard from "@/component/LoginCard.vue";
 import store from "@/store";
-import { Md5 } from "ts-md5";
-import { logout } from "@/api/authApi";
-import { defineComponent } from "vue";
-import { ElMessageBox, FormInstance } from "element-plus";
-import html from "@/views/test";
-import CustomCardListItem from "@/component/scrollbar/CustomCardItem.vue";
+import {Md5} from "ts-md5";
+import {logout} from "@/api/authApi";
+import {defineComponent} from "vue";
+import {ElMessageBox, FormInstance} from "element-plus";
+import CustomCardListItem from "@/component/scrollbar/CustomWidgetItem.vue";
 
 export interface AddCardForm {
   title: string;
@@ -17,17 +16,12 @@ export interface AddCardForm {
 
 export default defineComponent({
   name: "UserView",
-  components: { LoginCard, CustomCardListItem },
+  components: {LoginCard, CustomCardListItem},
   data() {
     return {
       state: store.state,
       userState: store.state.user,
       localStorage,
-      table: [
-        { title: "你好", desc: "你好", html: html },
-        { title: "你好", desc: "你好", html: html },
-        { title: "你好", desc: "你好", html: html },
-      ],
       addDialogVisible: false,
       addCardForm: {
         title: "",
@@ -35,8 +29,8 @@ export default defineComponent({
         html: "",
       } as AddCardForm,
       rules: {
-        title: [{ required: true, message: "请输入卡片名称", trigger: "blur" }],
-        desc: [{ required: true, message: "请输入卡片描述", trigger: "blur" }],
+        title: [{required: true, message: "请输入卡片名称", trigger: "blur"}],
+        desc: [{required: true, message: "请输入卡片描述", trigger: "blur"}],
       },
     };
   },
@@ -52,17 +46,17 @@ export default defineComponent({
     logout() {
       ElMessageBox.confirm("确定退出账号吗？").then(async () => {
         await logout();
-        location.reload();
+        location.reload()
       });
     },
 
     async addCustomCard() {
       await (this.$refs.registerFormRef as FormInstance).validate(
-        (isValid: boolean) => {
-          if (isValid) {
-            // todo 添加到服务器，服务器返回了id
+          (isValid: boolean) => {
+            if (isValid) {
+              // todo 添加到服务器，服务器返回了id
+            }
           }
-        }
       );
     },
   },
@@ -73,17 +67,19 @@ export default defineComponent({
 </script>
 <template>
   <div class="view">
+    <!--    登录的那个滑动卡片-->
     <LoginCard v-if="!state.user.isLogin"></LoginCard>
+    <!--    登录之后的用户详情-->
     <el-card v-if="state.user.isLogin" class="user-card-view">
       <el-container>
         <!-- 左侧的用户个人界面 -->
         <el-aside width="200px">
-          HELLO
-          <el-divider />
+          <span style="font-family: '扁桃体'">HELLO</span>
+          <el-divider/>
           <el-avatar
-            shape="circle"
-            :size="70"
-            :src="localStorage.getItem('avatar')"
+              shape="circle"
+              :size="70"
+              :src="localStorage.getItem('avatar')"
           />
           <div class="main-info">{{ localStorage.getItem("username") }}</div>
           <div class="main-info email-info">
@@ -92,19 +88,19 @@ export default defineComponent({
           <!-- 用户信息设置 -->
           <el-row style="justify-content: center; margin-top: 30px">
             <el-button class="user-info-icon-button" circle>
-              <font-awesome-icon :icon="['fas', 'gear']" size="xl" />
+              <font-awesome-icon :icon="['fas', 'gear']" size="xl"/>
             </el-button>
             <!-- 消息提醒 -->
             <el-button class="user-info-icon-button" circle>
               <el-badge :value="1" class="item" type="primary">
-                <font-awesome-icon :icon="['fas', 'bell']" size="xl" />
+                <font-awesome-icon :icon="['fas', 'bell']" size="xl"/>
               </el-badge>
             </el-button>
             <!-- 登出 -->
             <el-button class="user-info-icon-button" circle @click="logout()">
               <font-awesome-icon
-                :icon="['fas', 'right-from-bracket']"
-                size="xl"
+                  :icon="['fas', 'right-from-bracket']"
+                  size="xl"
               />
             </el-button>
           </el-row>
@@ -119,30 +115,30 @@ export default defineComponent({
               <el-row>
                 <!-- 帮助按钮 -->
                 <el-button class="blank-bg custom-card-menu-btn-help" circle>
-                  <font-awesome-icon :icon="['far', 'circle-question']" />
+                  <font-awesome-icon :icon="['far', 'circle-question']"/>
                 </el-button>
                 <!-- 新增卡片按钮 -->
                 <el-button
-                  class="blank-bg custom-card-menu-btn-add"
-                  circle
-                  @click="addDialogVisible = true"
+                    class="blank-bg custom-card-menu-btn-add"
+                    circle
+                    @click="addDialogVisible = true"
                 >
-                  <font-awesome-icon :icon="['fas', 'plus']" />
+                  <font-awesome-icon :icon="['fas', 'plus']"/>
                 </el-button>
               </el-row>
             </el-col>
           </el-row>
           <el-scrollbar height="80vh">
             <CustomCardListItem
-              name="MoyuCard"
-              title="摸鱼卡片"
-              desc="摸鱼的卡片"
+                name="MoyuCard"
+                title="摸鱼卡片"
+                desc="摸鱼的卡片"
             >
             </CustomCardListItem>
             <CustomCardListItem
-              name="LeetcodeCard"
-              title="力扣每日一题"
-              desc="力扣每日一题"
+                name="LeetcodeCard"
+                title="力扣每日一题"
+                desc="力扣每日一题"
             >
             </CustomCardListItem>
           </el-scrollbar>
@@ -151,12 +147,14 @@ export default defineComponent({
       <div class="user-info"></div>
     </el-card>
     <el-dialog
-      v-model="addDialogVisible"
-      title="新增卡片"
-      width="30%"
-      style="color: black"
+        v-model="addDialogVisible"
+        title="新增卡片"
+        width="30%"
+        style="color: black"
     >
-      <template #header> <div>新增自定义卡片</div> </template>
+      <template #header>
+        <div>新增自定义卡片</div>
+      </template>
       <el-form ref="addFormRef" :model="addCardForm" :rules="rules" status-icon>
         <el-form-item prop="title">
           <el-input placeholder="卡片名称" v-model="addCardForm.title">
@@ -164,16 +162,16 @@ export default defineComponent({
         </el-form-item>
         <el-form-item prop="desc">
           <el-input
-            placeholder="卡片描述"
-            v-model="addCardForm.desc"
+              placeholder="卡片描述"
+              v-model="addCardForm.desc"
           ></el-input>
         </el-form-item>
         <el-from-item prop="html">
           <el-input
-            placeholder="卡片内容/HTML"
-            autosize
-            type="textarea"
-            v-model="addCardForm.html"
+              placeholder="卡片内容/HTML"
+              autosize
+              type="textarea"
+              v-model="addCardForm.html"
           ></el-input>
         </el-from-item>
         <el-form-item>
@@ -194,7 +192,7 @@ export default defineComponent({
 .user-card-view {
   width: 93vw;
   height: 100vh;
-  background: radial-gradient(ellipse at bottom, #253241 0%, #171a27 100%);
+  //background: radial-gradient(ellipse at bottom, #253241 0%, #171a27 100%);
 }
 
 .avatar {

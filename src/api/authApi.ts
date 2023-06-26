@@ -47,7 +47,7 @@ export async function logout() {
     localStorage.removeItem("email");
     localStorage.removeItem("avatar");
     localStorage.removeItem("token");
-    location.reload();
+    location.reload()
     return resp;
   });
 }

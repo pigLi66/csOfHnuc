@@ -177,7 +177,7 @@ export default defineComponent({
 }
 
 .menu-item-content {
-  color: #545454;
+  color: #777777;
   display: flex;
   justify-content: center;
   position: relative;
@@ -186,6 +186,7 @@ export default defineComponent({
   width: 100%;
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
+  font-family: '扁桃体';
 }
 
 .menu-item-content:focus {

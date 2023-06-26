@@ -14,7 +14,7 @@ const html = `
 
 <script>
     L2Dwidget.init({
-        "live2d": {
+        "model": {
             jsonPath: "https://unpkg.com/live2d-widget-model-tororo/assets/tororo.model.json",
             "scale": 1
         },

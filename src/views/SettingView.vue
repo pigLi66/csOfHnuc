@@ -56,21 +56,21 @@ export default defineComponent({
               &nbsp;导出设置文件</el-button
             >
           </div>
-          <div class="setting-button">
-            <el-button style="width: 100%" type="success">
-              <font-awesome-icon
-                :icon="['fas', 'cloud-arrow-down']"
-                size="lg"
-              />
-              &nbsp;载入云端设置</el-button
-            >
-          </div>
-          <div class="setting-button">
-            <el-button style="width: 100%" type="success">
-              <font-awesome-icon :icon="['fas', 'cloud-arrow-up']" size="lg" />
-              &nbsp;同步至云端</el-button
-            >
-          </div>
+<!--          <div class="setting-button">-->
+<!--            <el-button style="width: 100%" type="success">-->
+<!--              <font-awesome-icon-->
+<!--                :icon="['fas', 'cloud-arrow-down']"-->
+<!--                size="lg"-->
+<!--              />-->
+<!--              &nbsp;载入云端设置</el-button-->
+<!--            >-->
+<!--          </div>-->
+<!--          <div class="setting-button">-->
+<!--            <el-button style="width: 100%" type="success">-->
+<!--              <font-awesome-icon :icon="['fas', 'cloud-arrow-up']" size="lg" />-->
+<!--              &nbsp;同步至云端</el-button-->
+<!--            >-->
+<!--          </div>-->
           <div class="setting-button">
             <el-button style="width: 100%" type="danger">
               <font-awesome-icon :icon="['fas', 'eraser']" size="lg" />
@@ -101,7 +101,7 @@ export default defineComponent({
 .setting-card-view {
   width: 93vw;
   height: 100vh;
-  background: radial-gradient(ellipse at bottom, #253241 0%, #171a27 100%);
+  //background: radial-gradient(ellipse at bottom, #253241 0%, #171a27 100%);
 }
 
 .el-form-item__label {

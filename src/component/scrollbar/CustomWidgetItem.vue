@@ -32,7 +32,7 @@ export default defineComponent({
   },
   methods: {
     addFixedCustomCard() {
-      const fixedCustomCard = this.state.fixedCustomCard;
+      const fixedCustomCard = this.state.fixedCustomWidgetCache;
       if (fixedCustomCard[this.id]) {
         ElMessage.error(`已经添加了，请勿重复添加`);
       } else {
@@ -41,7 +41,7 @@ export default defineComponent({
     },
 
     deleteFixedCustomCard() {
-      const fixedCustomCard = this.state.fixedCustomCard;
+      const fixedCustomCard = this.state.fixedCustomWidgetCache;
       if (fixedCustomCard[this.id]) {
         ElMessageBox.confirm("是否移除主页的工具卡片").then(() => {
           delete fixedCustomCard[this.id];
@@ -50,7 +50,7 @@ export default defineComponent({
     },
 
     isFixed(): boolean {
-      const fixedCustomCard = this.state.fixedCustomCard;
+      const fixedCustomCard = this.state.fixedCustomWidgetCache;
       return fixedCustomCard[this.id] !== undefined;
     },
   },

@@ -46,7 +46,7 @@ service.interceptors.response.use(
       localStorage.removeItem("email");
       localStorage.removeItem("avatar");
       localStorage.removeItem("token");
-      location.reload();
+      location.saveAndReload();
     }
     return Promise.reject(error);
   }

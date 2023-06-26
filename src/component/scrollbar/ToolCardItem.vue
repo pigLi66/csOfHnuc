@@ -8,6 +8,10 @@ export default defineComponent({
   name: "ToolCardListItem",
 
   props: {
+    name: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -24,29 +28,27 @@ export default defineComponent({
   },
   methods: {
     addFixedToolCard() {
-      const fixedToolCard = this.state.fixedToolCard;
+      const fixedToolCard = this.state.fixedWidgetCache;
       if (fixedToolCard[this.name]) {
         ElMessage.error(`已经添加了，请勿重复添加`);
       } else {
-        const position = {top: 32, left: 32};
-        fixedToolCard[this.name] = position;
-        localStorage[`ToolCard:${this.name}`] = JSON.stringify(position);
+        console.log("tianjia")
+        fixedToolCard.set(this.name, {top: 64, left: 64})
         ElMessage.success("添加成功，前往主页就能看到")
       }
     },
 
     deleteFixedToolCard() {
-      const fixedToolCard = this.state.fixedToolCard;
+      const fixedToolCard = this.state.fixedWidgetCache;
       if (fixedToolCard[this.name]) {
         ElMessageBox.confirm("是否移除主页的工具卡片").then(() => {
-          delete fixedToolCard[this.name];
-          delete localStorage[`ToolCard:${this.name}`];
+          fixedToolCard.del(this.name)
         });
       }
     },
 
     isFixed(): boolean {
-      const fixedToolCard = this.state.fixedToolCard;
+      const fixedToolCard = this.state.fixedWidgetCache;
       return fixedToolCard[this.name] !== undefined;
     },
   },

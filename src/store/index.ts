@@ -1,9 +1,6 @@
 import {createStore} from "vuex";
-import {ComponentCache, FixedCustomCardMap, FixedToolCardMap} from "@/type/store";
+import {CustomWidgetCacheMap, widgetCache} from "@/type/store";
 
-/**
- * 已固定到导航页的官方工具卡片Map
- */
 
 export default createStore({
   state: {
@@ -14,16 +11,8 @@ export default createStore({
       userId: 0,
       avatar: "",
     },
-    // todo 需要从后台接口初始化
-    fixedToolCard: {} as FixedToolCardMap,
-    fixedCustomCard: {} as FixedCustomCardMap,
-    // 组件的共有缓存
-    componentCache: {} as ComponentCache<any>,
-    curUrl: {
-      path: "",
-      anchors: "",
-      param: new Map<string, string>(),
-    },
+    fixedWidgetCache: widgetCache, // 记录套件的位置，以及状态信息，并可以缓存到local
+    fixedCustomWidgetCache: {} as CustomWidgetCacheMap, // 记录自定义套件的位置，以及html
   },
   getters: {},
   mutations: {},

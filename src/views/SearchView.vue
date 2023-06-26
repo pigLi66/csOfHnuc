@@ -1,19 +1,20 @@
 <script lang="ts">
 import SearchEngine from "@/component/SearchEngine.vue";
-import CustomCard from "@/component/common/CustomCard.vue";
+import CustomCard from "@/component/common/CustomWidget.vue";
 import githubConner from "@/component/common/GithubConner.vue";
 import StarBg from "@/component/bg/StarBg.vue";
 import DragBox from "@/component/drag/DragBox.vue";
 import DragContainer from "@/component/drag/DragContainer.vue";
-import { snapToGrid } from "@/component/drag/types";
+import {snapToGrid} from "@/component/drag/types";
 import LeetcodeCard from "@/component/widgets/LeetcodeCard.vue";
 import MoyuCard from "@/component/widgets/MoyuCard.vue";
 import store from "@/store";
-import html from "@/views/test";
-import { ElMessage } from "element-plus";
-import { defineComponent } from "vue";
+import {ElMessage} from "element-plus";
+import {defineComponent} from "vue";
 import WaveBg from "@/component/bg/WaveBg.vue";
 import SearchBall from "@/component/SearchBall.vue";
+import Live2d from "@/component/widgets/Live2d.vue";
+import {WidgetCacheMap} from "@/type/store";
 
 export default defineComponent({
   name: "SearchView",
@@ -28,6 +29,7 @@ export default defineComponent({
     CustomCard,
     WaveBg,
     SearchBall,
+    Live2d,
   },
 
   data() {
@@ -36,19 +38,13 @@ export default defineComponent({
       opacity: 1,
       state: store.state,
       localStorage,
-      html: html,
     };
   },
 
   methods: {
     dragMove(id: string, left: number, top: number) {
       [left, top] = snapToGrid(left, top);
-      Object.assign(store.state.fixedToolCard[id], { left, top });
-      this.saveDragToLocal(id, left, top);
-    },
-
-    async saveDragToLocal(id: string, left: number, top: number) {
-      localStorage[`ToolCard:${id}`] = JSON.stringify({ left: left, top: top });
+      store.state.fixedWidgetCache.set(id, {left, top})
     },
 
     getComponentByKey(key: string) {
@@ -60,19 +56,15 @@ export default defineComponent({
         ElMessage.error(`卡片${key}加载失败`);
       }
     },
-  },
-  mounted() {
-    // 从localStorage获取官方卡片
-    this.$nextTick(() => {
-      window.scrollTo(0, 0);
-    });
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = this.localStorage.key(i);
-      if (key && key.startsWith("ToolCard:")) {
-        store.state.fixedToolCard[key.split("ToolCard:")[1]] = JSON.parse(
-          localStorage[key]
-        );
+
+    getFixedWidgetCfg(): WidgetCacheMap {
+      let result = {} as WidgetCacheMap
+      for (let fixedWidgetCacheKey in this.state.fixedWidgetCache) {
+        if (fixedWidgetCacheKey !== 'set' && fixedWidgetCacheKey !== 'del') {
+          result[fixedWidgetCacheKey] = this.state.fixedWidgetCache[fixedWidgetCacheKey]
+        }
       }
+      return result
     }
   },
 });
@@ -80,10 +72,10 @@ export default defineComponent({
 
 <template>
   <div class="app" v-if="initial">
-    <github-conner />
+    <github-conner/>
     <!-- <StarBg v-if="true"></StarBg> -->
     <!-- <TwilightBg v-if="false"></TwilightBg> -->
-    <search-engine class="search-engine" />
+    <search-engine class="search-engine"/>
     <SearchBall class="fixed-ball"></SearchBall>
     <WaveBg></WaveBg>
 
@@ -93,32 +85,33 @@ export default defineComponent({
 
     <!-- 组件拖动窗口 -->
     <drag-container
-      class="drag-container"
-      :snap-to-grid="true"
-      :drag-move="dragMove"
+        class="drag-container"
+        :snap-to-grid="true"
+        :drag-move="dragMove"
     >
       <!-- 加载官方的卡片 -->
       <drag-box
-        v-for="(value, key) in state.fixedToolCard"
-        :id="key"
-        :key="key"
-        v-bind="value"
+          v-for="(value, key) in getFixedWidgetCfg()"
+          :id="key"
+          :key="key"
+          v-bind="value"
       >
+        <!--        动态加载组件，注意排除掉set这个属性，这个是个方法-->
         <component :is="getComponentByKey(key as string)" fixed></component>
       </drag-box>
       <!-- 遍历加载用户自定义卡片 -->
       <drag-box
-        v-for="(value, key) in state.fixedCustomCard"
-        :id="key"
-        :key="key"
-        v-bind="value"
+          v-for="(value, key) in state.fixedCustomWidgetCache"
+          :id="key"
+          :key="key"
+          v-bind="value"
       >
-        <CustomCard :name="key" :html="value.html" />
+        <CustomCard :name="key" :html="value.html"/>
       </drag-box>
     </drag-container>
 
     <!--        回到顶部-->
-    <el-backtop :right="40" :bottom="100" />
+    <el-backtop :right="40" :bottom="100"/>
   </div>
 </template>
 
