@@ -19,10 +19,12 @@ export default defineComponent({
       top: 0,
       left: 0
     })
+    const menuWidth = 100 // 菜单默认宽度
+    const itemHeight = 5  // 菜单每项高度
+
     let menuOperate = ref<MenuOperate>({})
     const open = (menu: MenuOperate, e: PointerEvent) => {
       menuOperate.value = menu
-      console.log(menu, menuOperate.value)
       e.preventDefault()
       // 窗口高度
       let winWidth = window.innerWidth;
@@ -31,15 +33,16 @@ export default defineComponent({
       let posX = e.pageX
       let posY = e.pageY
       // 菜单宽高
-      let target: any = e.target
-      let menuWidth = target.getBoundingClientRect().width
-      let menuHeight = target.getBoundingClientRect().height
+      // let target: any = document.getElementById("context-menu")
+      // let menuWidth = target.style.width
+      // let menuHeight = target.style.height
 
       // 菜单显示位置
       let posLeft = posX + menuWidth >= winWidth
           ? posX - menuWidth
           : posX
-      let posTop = posY + menuHeight >= winHeight
+      let menuHeight = itemHeight * Object.keys(menuOperate).length
+      let posTop = posY + itemHeight * menuHeight >= winHeight
           ? posY - menuHeight
           : posY
 
@@ -68,7 +71,7 @@ export default defineComponent({
   <div>
     <!--    右键菜单列表-->
     <!--suppress TypeScriptValidateTypes -->
-    <el-card class="right-click-menu" v-if=" menuAttr.isOpen"
+    <el-card id="context-menu" class="right-click-menu" v-if="menuAttr.isOpen"
              :style="{top: menuAttr.top + 'px', left: menuAttr.left + 'px', zIndex:999}"
              :body-style=" { padding: '2px' }"
     >
@@ -92,7 +95,7 @@ export default defineComponent({
   border-radius: 5%;
   position: absolute;
   z-index: 999;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 1);
   backdrop-filter: blur(10px);
 }
 
@@ -101,7 +104,7 @@ export default defineComponent({
   width: 105%;
   list-style-type: none; // 去掉列表前缀
   font-weight: 10;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 //右键菜单里的每一项
@@ -111,11 +114,11 @@ export default defineComponent({
   border-left: 5px solid var(--gradient-color); // 菜单左边框的值用的菜单聚焦时的颜色
   margin-bottom: 1px;
   position: relative;
-  transition: .5s;
+  transition: .2s;
   display: inline-block;
   margin-left: -5px;
   vertical-align: top;
-  background-color: rgba(255, 255, 255, 0.1);
+  //background-color: rgba(255, 255, 255, 1);
   backdrop-filter: blur(10px);
 }
 
@@ -151,7 +154,7 @@ export default defineComponent({
   right: 0;
   top: 0;
   bottom: 0;
-  transition: .5s;
+  transition: .2s;
   max-width: 0;
   overflow: hidden;
 }
@@ -184,7 +187,7 @@ export default defineComponent({
   text-decoration: none;
   z-index: 1;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.1);
+  //background-color: rgba(255, 255, 255, 1);
   backdrop-filter: blur(5px);
   font-family: '扁桃体';
 }
@@ -202,8 +205,8 @@ export default defineComponent({
   left: 15px;
   height: 3px;
   width: 0;
-  transition: .5s;
-  transition-delay: .2s;
+  transition: .2s;
+  transition-delay: .1s;
 }
 
 .menu-item:focus .menu-item-content:before,

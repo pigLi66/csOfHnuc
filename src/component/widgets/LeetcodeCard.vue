@@ -26,13 +26,14 @@ export default defineComponent({
   methods: {
 
     initQuestionOfToday() {
-      let cache = store.state.componentCache[this.name]
-      if (cache) {
-        this.question = cache
+
+      let cache = store.state.fixedWidgetCache[this.name]
+      if (cache && cache.status) {
+        this.question = cache.status
       } else {
         getQuestionOfToday().then((resp) => {
           this.question = resp.question;
-          store.state.componentCache[this.name] = this.question
+          store.state.fixedWidgetCache.set(this.name, this.question)
         });
       }
     },

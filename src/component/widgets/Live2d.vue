@@ -51,19 +51,32 @@ export default defineComponent({
         },
         display: {
           position: "right", // 看板娘的表现位置
-          width: 100, // 模型的宽度
-          height: 200, // 模型的高度
+          width: 200, // 模型的宽度
+          height: 300, // 模型的高度
           hOffset: 0,
-          vOffset: -20
+          vOffset: 0
         },
         mobile: {
-          show: true,
-          scale: 0.5
+          show: true, // 是否在移动端展示
+          scale: 0.5  // 移动端模型比例
         },
         react: {
           opacityDefault: 0.7,
           opacityOnHover: 0.2
-        }
+        },
+        dialog: {
+          enable: true, //是否开启对话框
+          script: {
+            //每20s，显示一言（调用一言Api返回的句子）
+            'every idle 20s': '$hitokoto$',
+            //触摸到class='star'对象
+            'hover .star': '星星在天上而你在我心里 (*/ω＼*)',
+            //触摸到身体
+            'tap body': '害羞⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄',
+            //触摸到头部
+            'tap face': '~~'
+          }
+        },
       },
       isOpenDialog: false
     }
@@ -84,10 +97,26 @@ export default defineComponent({
         status: this.live2d
       })
       location.reload()
+    },
+
+    async bindDrag() {
+      let timerId =  setInterval(() => {
+        const widgetDiv = document.getElementById("live2d-widget")
+        const widgetEle = document.getElementById("Live2d-Widget")
+        console.log(1)
+        if (widgetDiv && widgetEle) {
+          widgetDiv.style.position = 'relative'
+          widgetEle.appendChild(widgetDiv)
+          clearInterval(timerId)
+        }
+      }, 200)
+      setTimeout(() => {
+        clearInterval(timerId)
+      }, 5000)
     }
   },
 
-  mounted() {
+  created() {
     if (!this.fixed) {
       return
     }
@@ -99,29 +128,34 @@ export default defineComponent({
     // 引入远程js
     let scriptEl = document.createElement("script")
     scriptEl.type = 'text/javascript'
-    scriptEl.src = 'http://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js'
-
+    scriptEl.src = 'https://l2dwidget.js.org/lib/L2Dwidget.min.js'
     document.body.appendChild(scriptEl)
+
+    // let scriptEl1 = document.createElement("script")
+    // scriptEl1.type = 'text/javascript'
+    // scriptEl1.src = 'https://blog-static.cnblogs.com/files/liuzhou1/L2Dwidget.0.min.js'
+    // document.body.appendChild(scriptEl1)
 
     scriptEl.onload = () => {
       L2Dwidget.init(this.live2d);
+      this.bindDrag()
     }
-  }
+  },
 })
 </script>
 
 <template>
-  <Widget :name="this.$options.name" :fixed="fixed"
+  <Widget id="Live2d-Widget" :name="this.$options.name" :fixed="fixed"
           :menu-operate="{
       '设置Live2d': openDialog
     }"
   >
-    <div class="operate-btn">
-      <font-awesome-icon :icon="['far', 'star']"
-                         class="btn-icon"/>
-      <span class="btn-text">LIVE</span>
-      <span class="btn-text2">2D</span>
-    </div>
+<!--    <div class="operate-btn">-->
+<!--      <font-awesome-icon :icon="['far', 'star']"-->
+<!--                         class="btn-icon"/>-->
+<!--      <span class="btn-text">LIVE</span>-->
+<!--      <span class="btn-text2">2D</span>-->
+<!--    </div>-->
     <el-dialog v-model="isOpenDialog" width="30%" center append-to-body>
       <el-form v-model="live2d"
                label-position="right"
@@ -135,24 +169,24 @@ export default defineComponent({
         <el-form-item label="比例（0.0-1.0）">
           <el-input v-model="live2d.model.scale"></el-input>
         </el-form-item>
-        <el-form-item label="模型位置">
-          <el-select v-model="live2d.display.position">
-            <el-option label="右边" value="right"/>
-            <el-option label="左边" value="left"/>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item label="模型位置">-->
+<!--          <el-select v-model="live2d.display.position">-->
+<!--            <el-option label="右边" value="right"/>-->
+<!--            <el-option label="左边" value="left"/>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item label="模型宽度(像素px)">
           <el-input v-model="live2d.display.width"></el-input>
         </el-form-item>
         <el-form-item label="模型高度(像素px)">
           <el-input v-model="live2d.display.height"></el-input>
         </el-form-item>
-        <el-form-item label="模型水平偏移(像素px)">
-          <el-input v-model="live2d.display.hOffset"></el-input>
-        </el-form-item>
-        <el-form-item label="模型垂直偏移(像素px)">
-          <el-input v-model="live2d.display.vOffset"></el-input>
-        </el-form-item>
+<!--        <el-form-item label="模型水平偏移(像素px)">-->
+<!--          <el-input v-model="live2d.display.hOffset"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="模型垂直偏移(像素px)">-->
+<!--          <el-input v-model="live2d.display.vOffset"></el-input>-->
+<!--        </el-form-item>-->
         <el-form-item>
           <el-button
               class="submit-btn"

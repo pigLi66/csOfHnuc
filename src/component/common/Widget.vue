@@ -45,8 +45,7 @@ export default defineComponent({
       const fixedToolCard = this.state.fixedWidgetCache;
       if (fixedToolCard[this.name]) {
         ElMessageBox.confirm("确定要移除吗？").then(() => {
-          delete fixedToolCard[this.name];
-          delete localStorage[`ToolCard:${this.name}`];
+          fixedToolCard.del(this.name)
         })
       }
     },
@@ -78,9 +77,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
+  <div @contextmenu="openMenu" :style="{cursor: fixed ? 'all-scroll': ''}">
     <!--suppress TypeScriptValidateTypes -->
-    <div @contextmenu="openMenu" :style="{cursor: fixed ? 'all-scroll': ''}">
+    <div  >
       <slot/>
     </div>
 
